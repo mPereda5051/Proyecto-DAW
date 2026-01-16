@@ -25,17 +25,17 @@ public class NoteManagementImpl implements NoteManagementService {
     }
 
     @Override
-    public void saveContact(Note note) {
+    public void saveNote(Note note) {
         noteRepository.saveObject(note);
     }
 
     @Override
-    public void updateContact(String id, Note note) {
+    public void updateNote(String id, Note note) {
         noteRepository.updateObject(getIndexById(id), note);
     }
 
     @Override
-    public void removeContact(String id) {
+    public void removeNote(String id) {
         noteRepository.removeObject(getIndexById(id));
     }
     

@@ -37,19 +37,19 @@ public class NotesController {
     
     @PostMapping("/note")
     public ResponseEntity<HttpStatus> createNote(@RequestBody Note note) {
-        noteManagementService.saveContact(note);
+        noteManagementService.saveNote(note);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     
     @PutMapping("/note/{id}")
     public ResponseEntity<Note> updateNote(@PathVariable String id, @RequestBody Note note) {
-        noteManagementService.updateContact(id, note);
+        noteManagementService.updateNote(id, note);
         return new ResponseEntity<>(noteManagementService.getNote(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/note/{id}")
     public ResponseEntity<HttpStatus> removeContact(@PathVariable String id) {
-        noteManagementService.removeContact(id);
+        noteManagementService.removeNote(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
