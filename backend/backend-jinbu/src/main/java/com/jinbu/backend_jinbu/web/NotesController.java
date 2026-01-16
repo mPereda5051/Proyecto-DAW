@@ -48,7 +48,7 @@ public class NotesController {
     }
 
     @DeleteMapping("/note/{id}")
-    public ResponseEntity<HttpStatus> removeContact(@PathVariable String id) {
+    public ResponseEntity<HttpStatus> removeNonte(@PathVariable String id) {
         noteManagementService.removeNote(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
