@@ -18,7 +18,7 @@ public class Note {
     public void setId(String id) {
         this.id = id;
     }
-
+    
     public String getContent() {
         return this.content;
     }
