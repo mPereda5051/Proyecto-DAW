@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jinbu.backend_jinbu.pojo.Note;
+import com.jinbu.backend_jinbu.Entities.Note;
 import com.jinbu.backend_jinbu.service.NoteManagementService;
 
 
