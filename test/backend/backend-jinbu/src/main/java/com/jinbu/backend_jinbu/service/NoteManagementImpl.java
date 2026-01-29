@@ -11,6 +11,7 @@ import com.jinbu.backend_jinbu.repository.NoteRepository;
 
 @Service
 public class NoteManagementImpl implements NoteManagementService {
+    
     @Autowired
     private NoteRepository noteRepository;
 
