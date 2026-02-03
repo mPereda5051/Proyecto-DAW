@@ -1,17 +1,13 @@
 package com.jinbu.backend_jinbu.entities;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.micrometer.common.lang.NonNull;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -36,11 +32,10 @@ public class User {
     private String username;
 
     @NonNull
-    @Column(name = "group", nullable = false)
+    @Column(name = "groups", nullable = false)
     private String group;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<Photo> notes;
-
+    @ManyToOne
+    @JoinColumn(name = "group_id") 
+    private Group groups;
 }

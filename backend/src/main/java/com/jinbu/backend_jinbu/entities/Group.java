@@ -22,7 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "group")
+@Table(name = "groups")
 public class Group {
 
     @Id
@@ -31,6 +31,6 @@ public class Group {
     private Long id;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private List<User> users;
 }
