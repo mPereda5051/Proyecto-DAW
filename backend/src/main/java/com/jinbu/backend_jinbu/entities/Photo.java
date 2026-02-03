@@ -2,7 +2,11 @@ package com.jinbu.backend_jinbu.entities;
 
 import java.util.Date;
 
+import com.jinbu.backend_jinbu.entities.Metadata.ExifData;
+import com.jinbu.backend_jinbu.entities.Metadata.SocialData;
+
 import io.micrometer.common.lang.NonNull;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,4 +45,16 @@ public class Photo {
     @NonNull
     @Column(name = "creation_date", nullable = false)
     private Date uploadDate;
+
+    @OneToOne(mappedBy = "photo", cascade = CascadeType.ALL)
+    private ExifData exifData;
+
+    @OneToOne(mappedBy = "photo", cascade = CascadeType.ALL)
+    private SocialData socialData;
+
+    @OneToOne(mappedBy = "photo", cascade = CascadeType.ALL)
+    private SocialData contenData;
+
+    @OneToOne(mappedBy = "photo", cascade = CascadeType.ALL)
+    private SocialData ModerationData;
 }

@@ -1,5 +1,11 @@
 package com.jinbu.backend_jinbu.entities.Metadata;
 
+import com.jinbu.backend_jinbu.entities.Photo;
+
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+
 public class ExifData {
     private String cameraMaker;
     
@@ -18,4 +24,9 @@ public class ExifData {
     private boolean flash;
 
     private String lensModel;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "photo_id")
+    private Photo photo;
 }
