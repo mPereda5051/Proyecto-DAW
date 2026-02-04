@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.jinbu.backend_jinbu.entities.metadata.ModerationData;
 
-public interface ModerationDataRepository extends CrudRepository<ModerationData, Long> {
+public interface SocialDataRepository extends CrudRepository<ModerationData, Long>{
 
 }

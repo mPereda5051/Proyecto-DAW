@@ -1,4 +1,4 @@
-package com.jinbu.backend_jinbu.entities.Metadata;
+package com.jinbu.backend_jinbu.entities.metadata;
 
 import com.jinbu.backend_jinbu.entities.Photo;
 

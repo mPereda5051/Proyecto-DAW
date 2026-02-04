@@ -1,4 +1,4 @@
-package com.jinbu.backend_jinbu.entities.Metadata;
+package com.jinbu.backend_jinbu.entities.metadata;
 
 import com.jinbu.backend_jinbu.entities.Photo;
 
@@ -20,24 +20,24 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "moderation_data")
-public class ModerationData {
+@Table(name = "social_data")
+public class SocialData {
 
     @Id
     @Column(name = "photo_id")
     private Long id;
 
     @NonNull
-    @Column(name = "is_public", nullable = false)
-    private boolean isPublic;
+    @Column(name = "likes", nullable = false)
+    private int likes;
 
     @NonNull
-    @Column(name = "times_reported", nullable = false)
-    private int timesReported;
+    @Column(name = "views", nullable = false)
+    private int views;
 
     @NonNull
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Column(name = "comments", nullable = false)
+    private int comments;
 
     @OneToOne
     @MapsId

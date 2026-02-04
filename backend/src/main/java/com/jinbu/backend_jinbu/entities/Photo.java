@@ -2,8 +2,8 @@ package com.jinbu.backend_jinbu.entities;
 
 import java.util.Date;
 
-import com.jinbu.backend_jinbu.entities.Metadata.ExifData;
-import com.jinbu.backend_jinbu.entities.Metadata.SocialData;
+import com.jinbu.backend_jinbu.entities.metadata.ExifData;
+import com.jinbu.backend_jinbu.entities.metadata.SocialData;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.CascadeType;

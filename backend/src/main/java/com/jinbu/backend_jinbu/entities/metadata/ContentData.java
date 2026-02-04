@@ -1,4 +1,6 @@
-package com.jinbu.backend_jinbu.entities.Metadata;
+package com.jinbu.backend_jinbu.entities.metadata;
+
+import java.util.List;
 
 import com.jinbu.backend_jinbu.entities.Photo;
 
@@ -20,24 +22,35 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "social_data")
-public class SocialData {
-
+@Table(name = "content_data")
+public class ContentData {
+    
     @Id
     @Column(name = "photo_id")
     private Long id;
 
     @NonNull
-    @Column(name = "likes", nullable = false)
-    private int likes;
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    // Manejar los tags
+    private List<String> tags;
 
     @NonNull
-    @Column(name = "views", nullable = false)
-    private int views;
+    @Column(name = "category", nullable = false)
+    private String category;
 
     @NonNull
-    @Column(name = "comments", nullable = false)
-    private int comments;
+    @Column(name = "location", nullable = false)
+    private String locationName;
+
+    @NonNull
+    @Column(name = "width", nullable = false)
+    private int width;
+
+    @NonNull
+    @Column(name = "height", nullable = false)
+    private int height;
 
     @OneToOne
     @MapsId
