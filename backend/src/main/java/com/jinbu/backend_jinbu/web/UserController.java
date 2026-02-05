@@ -40,6 +40,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    // Devuelve una lista con todos los usuarios creados
     @GetMapping("/all")
     public ResponseEntity<List<User>> getUsers() {
         return new  ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
