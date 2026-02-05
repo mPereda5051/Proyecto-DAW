@@ -14,7 +14,6 @@ import com.drew.metadata.MetadataException;
 import com.drew.metadata.exif.ExifIFD0Directory;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.exif.GpsDirectory;
-import com.jinbu.backend_jinbu.entities.metadata.ContentData;
 import com.jinbu.backend_jinbu.repository.metadataRepository.ContentDataRepository;
 import com.jinbu.backend_jinbu.repository.metadataRepository.ExifDataRepository;
 import com.jinbu.backend_jinbu.repository.metadataRepository.ModerationDataRepository;
