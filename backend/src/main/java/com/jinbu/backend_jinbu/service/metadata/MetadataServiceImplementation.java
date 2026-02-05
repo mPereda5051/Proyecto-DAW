@@ -34,7 +34,7 @@ public class MetadataServiceImplementation implements MetadataService {
     return ImageMetadataReader.readMetadata(file);
     }
 
-    // Metadata-Reader
+    // Accedemos al directorio que nos interesa de metadata y sacamos los datos necesarios
     public Optional<Date> getCreationDate(Metadata metadata) {
         return Optional.ofNullable(metadata)
             .map(m -> m.getFirstDirectoryOfType(ExifIFD0Directory.class))
