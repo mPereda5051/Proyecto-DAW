@@ -1,5 +1,6 @@
 package com.jinbu.backend_jinbu.entities.metadata;
 
+import java.util.Date;
 import java.util.List;
 
 import com.jinbu.backend_jinbu.entities.Photo;
@@ -51,6 +52,10 @@ public class ContentData {
     @NonNull
     @Column(name = "height", nullable = false)
     private int height;
+
+    @NonNull
+    @Column(name = "date")
+    private Date date;
 
     @OneToOne
     @MapsId
