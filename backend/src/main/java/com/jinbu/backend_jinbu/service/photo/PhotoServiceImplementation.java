@@ -1,16 +1,45 @@
 package com.jinbu.backend_jinbu.service.photo;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
+
+import com.jinbu.backend_jinbu.entities.Photo;
+import com.jinbu.backend_jinbu.exception.PhotoNotFoundException;
+import com.jinbu.backend_jinbu.repository.PhotoRepository;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Service
-public class PhotoServiceImplementation {
-    /*
-    El servicio PhotoService se va a tener que comunicar con un S3 de AWS para almacenar las fotos de 
-    manera efectiva sin dañar al servidor.
-    (La IA dice que una buena manera es con procesamiento asíncrono con AWS Lambda, pero habrá que investigar)
+public class PhotoServiceImplementation implements PhotoService{
     
-    */
+    PhotoRepository photoRepository;
+
+    @Override
+    public Photo getPhoto(Long id) {
+        Optional<Photo> user = photoRepository.findById(id);
+        return unwrapUser(user, id);
+    }
+
+    @Override
+    public Photo savePhoto(Photo photo) {
+        return photoRepository.save(photo);
+    }
+
+    @Override
+    public void deletePhoto(Long id) {
+        photoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Photo> getPhotos() {
+        return (List<Photo>)photoRepository.findAll();
+    }
+    
+    static Photo unwrapUser(Optional<Photo> entity, long id) {
+        if (entity.isPresent()) return entity.get();
+        else throw new PhotoNotFoundException(id);
+    }
 }
