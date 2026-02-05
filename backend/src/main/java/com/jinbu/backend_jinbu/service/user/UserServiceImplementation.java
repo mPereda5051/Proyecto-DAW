@@ -38,8 +38,8 @@ public class UserServiceImplementation implements UserService {
         return (List<User>)userRepository.findAll();
     }
 
+    // Si el usuario no existe devuelve error, sino devuelve el usuario
     static User unwrapUser(Optional<User> entity, long id) {
-        if (entity.isPresent()) return entity.get();
-        else throw new UserNotFoundException(id);
+        return entity->orElseThrow(() -> new UserNotFoundException(id));
     }
 }
