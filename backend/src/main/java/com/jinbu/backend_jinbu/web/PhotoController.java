@@ -26,6 +26,7 @@ public class PhotoController {
         return new ResponseEntity<>(photoService.getPhoto(id), HttpStatus.OK);
     }
 
+    // Encontrar la manera de procesar las fotos que los usuarios meten en binario
     @PostMapping
     public ResponseEntity<Photo> savePhoto(@RequestBody Photo photo) {
         return new ResponseEntity<>(photoService.savePhoto(photo), HttpStatus.CREATED);
