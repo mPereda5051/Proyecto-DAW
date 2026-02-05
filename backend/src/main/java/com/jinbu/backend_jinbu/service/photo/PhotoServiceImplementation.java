@@ -37,9 +37,9 @@ public class PhotoServiceImplementation implements PhotoService{
     public List<Photo> getPhotos() {
         return (List<Photo>)photoRepository.findAll();
     }
-    
+
+    // Lanzamos error si la foto no existe, sino devolvemos foto
     static Photo unwrapUser(Optional<Photo> entity, long id) {
-        if (entity.isPresent()) return entity.get();
-        else throw new PhotoNotFoundException(id);
+         return entity->orElseThrow(() -> new PhotoNotFoundException(id));
     }
 }
