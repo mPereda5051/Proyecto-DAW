@@ -33,4 +33,6 @@ public class Group {
     @JsonIgnore
     @OneToMany(mappedBy = "groups", cascade = CascadeType.ALL)
     private List<User> users;
+
+    //hokla
 }
