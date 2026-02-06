@@ -40,6 +40,7 @@ public class UserServiceImplementation implements UserService {
 
     // Si el usuario no existe devuelve error, sino devuelve el usuario
     static User unwrapUser(Optional<User> entity, long id) {
-        return entity->orElseThrow(() -> new UserNotFoundException(id));
+        if (entity.isPresent()) return entity.get();
+        else throw new UserNotFoundException(id);
     }
 }

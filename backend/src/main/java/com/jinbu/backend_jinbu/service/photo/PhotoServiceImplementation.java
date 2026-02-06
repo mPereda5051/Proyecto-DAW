@@ -40,6 +40,7 @@ public class PhotoServiceImplementation implements PhotoService{
 
     // Lanzamos error si la foto no existe, sino devolvemos foto
     static Photo unwrapUser(Optional<Photo> entity, long id) {
-         return entity->orElseThrow(() -> new PhotoNotFoundException(id));
+        if (entity.isPresent()) return entity.get();
+        else throw new PhotoNotFoundException(id);
     }
 }
