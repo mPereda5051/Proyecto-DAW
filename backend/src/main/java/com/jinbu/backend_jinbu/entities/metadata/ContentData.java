@@ -4,12 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import com.jinbu.backend_jinbu.entities.Photo;
+import com.jinbu.backend_jinbu.entities.User;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -26,9 +28,15 @@ import lombok.Setter;
 @Table(name = "content_data")
 public class ContentData {
     
+    User user;
+
     @Id
     @Column(name = "photo_id")
     private Long id;
+
+    @NonNull
+    @Column(name = "name", nullable = false)
+    private String filename;
 
     @NonNull
     @Column(name = "description", nullable = false)
@@ -61,4 +69,6 @@ public class ContentData {
     @MapsId
     @JoinColumn(name = "photo_id")
     private Photo photo;
+
+    
 }
