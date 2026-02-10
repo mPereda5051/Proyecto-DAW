@@ -1,3 +1,4 @@
-# Jinbu (Plataforma gestión proyectos)
+# Jinbu (Red Social Fotografia)
+
 
 
