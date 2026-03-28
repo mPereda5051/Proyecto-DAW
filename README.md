@@ -1,3 +1,0 @@
-# Jinbu (Plataforma gestión proyectos)
-
-
