@@ -59,7 +59,7 @@ public class Photo {
       }
 
     // Con @PrimaryKeyKoinColumn hacemos que compartan ID
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
-//    private Post post;
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Post post;
 }
