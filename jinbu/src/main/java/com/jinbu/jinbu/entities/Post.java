@@ -11,7 +11,6 @@ import java.util.Date;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "posts")
 public class Post {
@@ -40,7 +39,7 @@ public class Post {
     @JoinColumn(name = "photo_id")
     private Photo photo;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private User user;
 }

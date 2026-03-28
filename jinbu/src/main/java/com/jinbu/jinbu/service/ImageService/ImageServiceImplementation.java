@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -25,11 +26,12 @@ public class ImageServiceImplementation implements ImageService{
         Long photoId = localImageStorage.storeMetadata(file);
 
         // Anadir exceptions personalizados
-        try {
-            s3ImageStorage.store(file, photoId);
-        } catch (IOException | RuntimeException e) {
-            throw new RuntimeException("Upload failed", e);
-        }
+//        try {
+//            s3ImageStorage.store(file, photoId);
+//        } catch (IOException | RuntimeException e) {
+//            throw new RuntimeException("Upload failed", e);
+//        }
+        // Esta fallando, corregir
     }
 
     @Override
@@ -38,5 +40,10 @@ public class ImageServiceImplementation implements ImageService{
                 .orElseThrow(() -> new EntityNotFoundException(id, Photo.class));
 
         return photo.getFullUrl();
+    }
+
+    @Override
+    public List<Photo> retrieveAllImages() {
+        return photoRepository.findAll();
     }
 }
