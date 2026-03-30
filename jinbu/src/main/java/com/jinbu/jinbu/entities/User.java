@@ -53,6 +53,6 @@ public class User {
     private Set<User> followers = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
 }
