@@ -13,7 +13,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     UserService userService;
@@ -23,7 +23,7 @@ public class UserController {
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<UserDTO> saveUser(@RequestBody @Valid User user) {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
