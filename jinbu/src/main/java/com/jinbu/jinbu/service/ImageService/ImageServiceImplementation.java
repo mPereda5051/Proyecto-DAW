@@ -1,6 +1,5 @@
 package com.jinbu.jinbu.service.ImageService;
 
-import com.jinbu.jinbu.constants.AppConstants;
 import com.jinbu.jinbu.entities.Photo;
 import com.jinbu.jinbu.exceptions.EntityNotFoundException;
 import com.jinbu.jinbu.repository.PhotoRepository;
@@ -10,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -38,5 +38,10 @@ public class ImageServiceImplementation implements ImageService{
                 .orElseThrow(() -> new EntityNotFoundException(id, Photo.class));
 
         return photo.getFullUrl();
+    }
+
+    @Override
+    public List<Photo> retrieveAllImages() {
+        return photoRepository.findAll();
     }
 }

@@ -39,6 +39,7 @@ public class SecurityConfig {
             .requestMatchers("/h2/**").permitAll()
             .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll()
             .requestMatchers(HttpMethod.GET, "/user/all").permitAll()
+            .requestMatchers(HttpMethod.PUT, "/user/*/followUser/*").permitAll()
             .anyRequest().authenticated())
         .addFilterBefore(new ExceptionHandlerFilter(), AuthenticationFilter.class)
         .addFilter(authenticationFilter)

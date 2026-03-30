@@ -11,7 +11,8 @@ public class UserMapper {
         return new UserDTO(
                 user.getId(),
                 user.getUsername(),
-                user.getEmail()
+                user.getEmail(),
+                user.getFollowers().size()
         );
     }
 }

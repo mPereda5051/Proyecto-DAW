@@ -44,7 +44,7 @@ public class LocalImageStorage {
 
             Photo photo = new Photo(file.getOriginalFilename(), date, iso, aperture, exposureTime, width, height, extension);
 
-            return photo.getId();
+            return photoRepository.save(photo).getId();
 
             // Add custom exceptions
         } catch (ImageProcessingException e) {

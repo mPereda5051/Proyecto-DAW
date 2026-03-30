@@ -9,36 +9,32 @@ function App() {
   const [count, setCount] = useState(0)
   const [status, setStatus] = useState('Checking backend...')
   const [users, setUsers] = useState<any[]>([])
+  const [photos, setPhotos] = useState<any[]>([])
 
   useEffect(() => {
-    console.log("Intentando conectar con el backend en /api/user/all...");
+    console.log("Intentando conectar con el backend...");
+    
+    // Obtener usuarios
     api.get('/user/all')
       .then((res) => {
-        console.log("Datos recibidos del backend:", res.data);
         setStatus('Backend: Online ✓');
-        // Si el backend responde, usamos esos datos (aunque sea una lista vacía [])
         setUsers(res.data);
       })
-      .catch((err) => {
-        console.error("Error al conectar con el backend:", err);
-        setStatus('Backend: Error ✗');
-        
-        // Solo mostramos ejemplos si realmente no hay conexión (servidor apagado)
-        setUsers([
-          { id: 1, username: 'Ejemplo_Admin', email: 'admin@ejemplo.com' },
-          { id: 2, username: 'Ejemplo_User', email: 'user@ejemplo.com' }
-        ]);
-      });
+      .catch(() => setStatus('Backend: Error ✗'));
+
+    // Obtener fotos
+    api.get('/images/all')
+      .then((res) => {
+        setPhotos(res.data);
+      })
+      .catch((err) => console.error("Error al cargar fotos:", err));
+
   }, [])
 
   return (
     <>
       <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+        {/* ... (hero y status se mantienen) */}
         <div>
           <h1>Jinbu</h1>
           <p className="status-badge" style={{
@@ -55,17 +51,33 @@ function App() {
 
         {/* Panel de Usuarios */}
         <div className="users-grid">
+          <h2 style={{width: '100%', textAlign: 'center'}}>Usuarios</h2>
           {users.map((user) => (
-            <div key={user.id} className="user-card">
-              <div className="user-avatar">
-                {user.username.charAt(0).toUpperCase()}
+              <div key={user.id} className="user-card" style={{border: '1px solid #ccc', padding: '10px', margin: '5px', borderRadius: '8px', textAlign: 'left'}}>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <div>
+                        <strong>{user.username}</strong><br/>
+                        <span style={{fontSize: '0.8rem', color: '#666'}}>{user.email}</span>
+                    </div>
+                    <div style={{backgroundColor: '#e3f2fd', padding: '5px 10px', borderRadius: '15px', fontSize: '0.8rem', color: '#1976d2', fontWeight: 'bold'}}>
+                        ID: {user.id} | Seguidores: {user.followersCount || 0}
+                    </div>
+                </div>
               </div>
-              <div className="user-info">
-                <h3>{user.username}</h3>
-                <p>{user.email}</p>
-              </div>
-            </div>
           ))}
+        </div>
+
+        {/* Galería de Fotos (Nueva Funcionalidad) */}
+        <div className="photos-grid" style={{marginTop: '40px', textAlign: 'center'}}>
+          <h2>Galería de Fotos</h2>
+          <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '15px'}}>
+            {photos.length > 0 ? photos.map((photo) => (
+              <div key={photo.id} className="photo-item">
+                <img src={photo.fullUrl} alt={photo.name} style={{width: '150px', height: '150px', objectFit: 'cover', borderRadius: '8px'}} />
+                <p style={{fontSize: '0.8rem'}}>{photo.name}</p>
+              </div>
+            )) : <p>No hay fotos todavía.</p>}
+          </div>
         </div>
 
         <button

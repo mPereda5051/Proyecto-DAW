@@ -4,7 +4,7 @@ const api = axios.create({
   baseURL: 'http://localhost:8090', // Conexión directa al backend
 });
 
-// Interceptor para añadir el Token JWT automáticamente
+// Interceptor para añadir el Token JWT
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
