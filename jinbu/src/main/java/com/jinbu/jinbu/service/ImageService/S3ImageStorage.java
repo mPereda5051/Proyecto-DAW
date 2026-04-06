@@ -16,7 +16,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import java.io.IOException;
 
 @Component
-public class    S3ImageStorage {
+public class S3ImageStorage {
 
     @Autowired
     private S3Client s3Client;
@@ -28,18 +28,19 @@ public class    S3ImageStorage {
         String fileExtension = StringUtils.getFilenameExtension(file.getOriginalFilename());
 
         s3Client.putObject(PutObjectRequest.builder()
-                .bucket(bucketName)
-                .key(id.toString() + fileExtension)
-                .build(),
+                        .bucket(bucketName)
+                        .key(id.toString() + fileExtension)
+                        .contentType(file.getContentType())
+                        .build(),
                 // Usamos inputStream para ir pasando el file poco a poco (al contrario que con fromBytes)
                 RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
     }
 
     public byte[] download(String key) {
         ResponseBytes<GetObjectResponse> objectAsBytes = s3Client.getObjectAsBytes(GetObjectRequest.builder()
-                        .bucket(bucketName)
-                        .key(key)
-                        .build());
+                .bucket(bucketName)
+                .key(key)
+                .build());
         return objectAsBytes.asByteArray();
     }
 }

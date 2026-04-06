@@ -26,11 +26,11 @@ public class ImageServiceImplementation implements ImageService{
         Long photoId = localImageStorage.storeMetadata(file);
 
         // Anadir exceptions personalizados
-//        try {
-//            s3ImageStorage.store(file, photoId);
-//        } catch (IOException | RuntimeException e) {
-//            throw new RuntimeException("Upload failed", e);
-//        }
+        try {
+            s3ImageStorage.store(file, photoId);
+        } catch (IOException | RuntimeException e) {
+            throw new RuntimeException("Upload failed", e);
+        }
         // Esta fallando, corregir
     }
 
