@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -34,6 +35,15 @@ public class S3ImageStorage {
                         .build(),
                 // Usamos inputStream para ir pasando el file poco a poco (al contrario que con fromBytes)
                 RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+    }
+
+    // Revisar si funciona o no
+    public void delete(Long id, String extension) {
+        s3Client.deleteObject(DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(id.toString() + "."+extension)
+                .build());
+
     }
 
     public byte[] download(String key) {

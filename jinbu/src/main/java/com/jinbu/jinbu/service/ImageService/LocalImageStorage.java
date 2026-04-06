@@ -61,5 +61,9 @@ public class LocalImageStorage {
         return -1L;
     }
 
+    public void deleteImageMetadata(Long id) {
+        photoRepository.deleteById(id);
+    }
+
 
 }

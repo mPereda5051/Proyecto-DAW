@@ -13,4 +13,6 @@ public interface ImageService {
     String retrieveImageUrl(Long id);
 
     List<Photo> retrieveAllImages();
+
+    void deleteImageById(Long id);
 }

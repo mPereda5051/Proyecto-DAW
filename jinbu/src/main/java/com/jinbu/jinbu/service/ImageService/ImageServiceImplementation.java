@@ -46,4 +46,16 @@ public class ImageServiceImplementation implements ImageService{
     public List<Photo> retrieveAllImages() {
         return photoRepository.findAll();
     }
+
+    // Revisar si funciona la parte de s3
+    @Override
+    public void deleteImageById(Long id) {
+        Photo photo = photoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id, Photo.class));
+
+        String extension = photo.getExtension();
+
+        photoRepository.delete(photo);
+        s3ImageStorage.delete(id, extension);
+    }
 }
