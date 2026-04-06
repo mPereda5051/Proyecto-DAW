@@ -11,13 +11,12 @@ import java.util.Date;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "posts")
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "photo_id")
     private Long id;
 
     @CreationTimestamp
@@ -35,9 +34,12 @@ public class Post {
     @Column(name = "likes")
     private Long likes;
 
-    // URI para imagenes?
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "photo_id")
+    private Photo photo;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private User user;
 }

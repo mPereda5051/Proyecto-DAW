@@ -1,29 +1,18 @@
+version: '3.3'
 services:
   db:
-    image: postgres:latest
-    container_name: jinbu-db
+    image: mysql/mysql-server:8.0
+    restart: always
     environment:
-      POSTGRES_USER: username
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: jinbu
-      # ESTA ES LA LÍNEA CLAVE:
-      PGDATA: /var/lib/postgresql/data/pgdata
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - "5432:5432"
+      - '3306:3306'
+    expose:
+      - '3306'
     volumes:
-      # Apuntamos a la raíz del volumen, pero PGDATA lo moverá a la subcarpeta interna
-      - postgres_data:/var/lib/postgresql/data
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: jinbu-pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
-    depends_on:
-      - db
-
+      - my-db:/var/lib/mysql
 volumes:
-  postgres_data:
+  my-db:

@@ -2,7 +2,6 @@ package com.jinbu.jinbu.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 
@@ -13,9 +12,10 @@ import java.util.Date;
 @Table(name = "photos")
 public class Photo {
 
-    public Photo(@NonNull String name, Date date, int iso, double aperture, String exposureTime, int width, int height, String extension) {
+    public Photo(@NonNull String name, Date date, String iso, String aperture, String exposureTime, String width, String height, String extension) {
         this.name = name;
         this.date = date;
+        this.iso = iso;
         this.aperture = aperture;
         this.exposure = exposureTime;
         this.width = width;
@@ -28,8 +28,6 @@ public class Photo {
     @Column(name = "id")
     private Long id;
 
-
-
     @Column(name = "name")
     private String name;
 
@@ -37,26 +35,31 @@ public class Photo {
     private Date date;
 
     @Column(name = "ISO")
-    private int iso;
+    private String iso;
 
     @Column(name = "aperture")
-    private double aperture;
+    private String aperture;
 
     @Column(name = "exposure")
     private String exposure;
 
     @Column(name = "width")
-    private int width;
+    private String width;
 
     @Column(name = "height")
-    private int height;
+    private String height;
 
     @Column(name = "extension")
     private String extension;
 
 
     // Cambiar valor hardcodeado
-    public String getFullUrl() {
-        return "https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/" + this.getId() + this.getExtension();
-    }
+      public String getFullUrl() {
+          return "https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/" + this.getId() + this.getExtension();
+      }
+
+    // Con @PrimaryKeyKoinColumn hacemos que compartan ID
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Post post;
 }
