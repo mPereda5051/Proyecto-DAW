@@ -31,7 +31,6 @@ public class ImageServiceImplementation implements ImageService{
         } catch (IOException | RuntimeException e) {
             throw new RuntimeException("Upload failed", e);
         }
-        // Esta fallando, corregir
     }
 
     @Override
