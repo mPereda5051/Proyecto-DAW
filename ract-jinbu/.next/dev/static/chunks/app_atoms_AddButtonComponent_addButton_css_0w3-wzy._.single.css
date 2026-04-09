@@ -1,0 +1,29 @@
+/* [project]/app/atoms/AddButtonComponent/addButton.css [app-client] (css) */
+#addPhoto {
+  background-color: var(--primary-bg-color);
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 5px;
+  align-items: center;
+  margin-top: 4px;
+  padding: 5px;
+  transition: background-color .3s ease-in-out, transform .25s ease-in-out, color .4s;
+  display: flex;
+}
+
+#addIcon {
+  color: #fff;
+}
+
+#addPhoto:hover {
+  cursor: pointer;
+  background-color: var(--button-hover);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+#addPhoto:active {
+  transform: scale(.95);
+}
+
+/*# sourceMappingURL=app_atoms_AddButtonComponent_addButton_css_0w3-wzy._.single.css.map*/

@@ -1,0 +1,84 @@
+/* [project]/app/page.css [app-client] (css) */
+.menu {
+  background-color: var(--main-bg-color);
+  color: #fff;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 75px;
+  padding: 0 15px;
+  display: flex;
+  position: sticky;
+  top: 0;
+}
+
+.menu .menu-item {
+  align-items: center;
+  gap: 8px;
+  height: 80%;
+  display: flex;
+}
+
+.menu .menu-item p {
+  margin: 0;
+  display: inline;
+}
+
+.menu .menu-logo {
+  align-items: center;
+  gap: 20px;
+  height: 80%;
+  display: flex;
+}
+
+.menu .menu-logo p {
+  margin: 0;
+  font-size: 24px;
+  display: inline;
+}
+
+.menu #inputBar {
+  align-items: center;
+  display: flex;
+}
+
+.menu #inputSearch {
+  color: #fff;
+  background-color: var(--main-bg-color);
+  border: 1px solid #0000;
+  border-radius: 10px;
+  padding: 10px 50px;
+}
+
+/* [project]/app/organisms/imageMenu.css [app-client] (css) */
+main {
+  columns: 350px;
+  width: 80%;
+  margin: 1em auto;
+}
+
+main img {
+  border-radius: 1%;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.previewData {
+  color: var(--primary-color);
+  pointer-events: none;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+h2 {
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+/*# sourceMappingURL=app_0i4bk0r._.css.map*/

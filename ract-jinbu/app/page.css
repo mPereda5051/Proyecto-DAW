@@ -1,0 +1,53 @@
+.menu {
+    position: sticky;
+    top: 0;
+    background-color: var(--main-bg-color);
+    display: flex;
+    height: 75px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    color: white;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.menu .menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 80%;
+}
+
+.menu .menu-item p {
+    margin: 0;
+    display: inline;
+}
+
+.menu .menu-logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 80%;
+}
+
+.menu .menu-logo p {
+    font-size: 24px;
+    margin: 0;
+    display: inline;
+}
+
+.menu #inputBar {
+    display: flex;
+    align-items: center;
+}
+
+.menu #inputSearch {
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px 50px;
+    background-color: var(--main-bg-color);
+}
+

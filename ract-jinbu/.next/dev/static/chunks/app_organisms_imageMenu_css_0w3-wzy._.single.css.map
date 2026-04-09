@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/app/organisms/imageMenu.css"],"sourcesContent":[".main {\r\n    width: 80%;\r\n    margin: 1em auto;\r\n    columns: 350px;\r\n}"],"names":[],"mappings":"AAAA"}}]
+}

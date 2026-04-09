@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/cyraco-internship/Desktop/ract-jinbu/app/createEmotionCache.ts"],"sourcesContent":["import createCache from '@emotion/cache';\r\n\r\nexport default function createEmotionCache() {\r\n    return createCache({ key: 'css', prepend: true });\r\n}\r\n"],"names":["createEmotionCache","key","prepend"],"mappings":";;;;AAAA;;AAEe,SAASA;IACpB,OAAO,IAAA,+LAAW,EAAC;QAAEC,KAAK;QAAOC,SAAS;IAAK;AACnD"}},
+    {"offset": {"line": 26, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/cyraco-internship/Desktop/ract-jinbu/app/EmotionRegistsry.tsx"],"sourcesContent":["'use client';\r\n\r\nimport { CacheProvider } from '@emotion/react';\r\nimport createEmotionCache from './createEmotionCache';\r\n\r\nexport default function EmotionRegistry({ children }: { children: React.ReactNode }) {\r\n  const cache = createEmotionCache();\r\n  return <CacheProvider value={cache}>{children}</CacheProvider>;\r\n}\r\n"],"names":["EmotionRegistry","children","cache","value"],"mappings":";;;;;AAEA;AACA;AAHA;;;;AAKe,SAASA,gBAAgB,EAAEC,QAAQ,EAAiC;IACjF,MAAMC,QAAQ,IAAA,oIAAkB;IAChC,qBAAO,8OAAC,yPAAa;QAACC,OAAOD;kBAAQD;;;;;;AACvC"}}]
+}

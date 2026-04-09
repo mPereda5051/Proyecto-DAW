@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/cyraco-internship/Desktop/ract-jinbu/app/organisms/imageMenu.css"],"sourcesContent":["main {\r\n    width: 80%;\r\n    margin: 1em auto;\r\n    columns: 350px;\r\n\r\n    img {\r\n        width: 100%;\r\n        margin-bottom: 1em;\r\n        border-radius: 1%;\r\n    }\r\n}\r\n\r\n.previewData {\r\n    color: var(--primary-color);\r\n    border-radius: 20px;\r\n    margin-bottom:8px;\r\n    font-family: sans-serif;\r\n    font-size: 14px;\r\n    pointer-events: none;\r\n}\r\n\r\nh2 {\r\n    font-weight: bolder;\r\n    font-size: 20px;\r\n    margin-top: 0px;\r\n    margin-bottom: 5px;\r\n    color: white;\r\n}"],"names":[],"mappings":"AAAA;;;;;;AAKI;;;;;;AAOJ;;;;;;;;;AASA"}}]
+}

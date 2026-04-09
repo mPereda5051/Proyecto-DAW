@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+body {
+    background-color: var(--main-bg-color);
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Puede cambiar */
+}
+
+:root {
+    --main-bg-color: #111417;
+    --secondary-bg-color: #0E1113;
+    --primary-color: #B3E1EC;
+
+    --button-hover:rgb(52, 52, 52);
+}

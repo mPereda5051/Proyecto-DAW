@@ -1,0 +1,31 @@
+/* [project]/app/organisms/imageMenu.css [app-client] (css) */
+main {
+  columns: 350px;
+  width: 80%;
+  margin: 1em auto;
+}
+
+main img {
+  border-radius: 1%;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.previewData {
+  color: var(--primary-color);
+  pointer-events: none;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+h2 {
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+/*# sourceMappingURL=app_organisms_imageMenu_0_o9y0-.css.map*/
