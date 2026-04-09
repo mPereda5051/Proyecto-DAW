@@ -3,7 +3,6 @@ package com.jinbu.jinbu.web;
 import com.jinbu.jinbu.DTOs.PostDTO;
 import com.jinbu.jinbu.entities.Post;
 import com.jinbu.jinbu.service.PostService;
-import com.jinbu.jinbu.service.PostServiceImplementation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,7 +11,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +24,7 @@ import java.util.List;
         , description = "Operations related to posts")
 public class PostController {
 
-    PostServiceImplementation postServiceImplementation;
+    PostService postService;
 
     @Operation(summary = "Get Post by Id", description = "Fetch post information by its ID (Long type).")
     @ApiResponses(value = {
@@ -35,7 +33,7 @@ public class PostController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO> getPostById(@PathVariable Long id) {
-        return new ResponseEntity<>(postServiceImplementation.getPost(id), HttpStatus.OK);
+        return new ResponseEntity<>(postService.getPost(id), HttpStatus.OK);
 
     }
 
@@ -46,7 +44,7 @@ public class PostController {
     })
     @GetMapping("/all")
     public ResponseEntity<List<PostDTO>> getPosts() {
-        return new ResponseEntity<>(postServiceImplementation.getPosts(), HttpStatus.OK);
+        return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
     }
 
     @Operation(summary = "Get all post from one user", description = "Fetch all post by a User ID (Long type).")
@@ -56,7 +54,7 @@ public class PostController {
     })
     @GetMapping("/all/{id}")
     public ResponseEntity<List<PostDTO>> getPostByUserId(@PathVariable Long userId) {
-        return new ResponseEntity<>(postServiceImplementation.getPostsByUserId(userId), HttpStatus.OK);
+        return new ResponseEntity<>(postService.getPostsByUserId(userId), HttpStatus.OK);
     }
 
     @Operation(summary = "Save post by Id", description = "Saves post information (Tiene que contener la informacion del schema de post)")
@@ -66,7 +64,7 @@ public class PostController {
     })
     @PostMapping
     public ResponseEntity<PostDTO> savePost(@RequestBody @Valid Post post) {
-        return new ResponseEntity<>(postServiceImplementation.savePost(post), HttpStatus.CREATED);
+        return new ResponseEntity<>(postService.savePost(post), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Delete post by Id", description = "Delete posts by its ID (Long type).")
@@ -76,7 +74,7 @@ public class PostController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deletePost(@PathVariable Long id) {
-        postServiceImplementation.deletePost(id);
+        postService.deletePost(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

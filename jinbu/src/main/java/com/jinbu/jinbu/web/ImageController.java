@@ -1,9 +1,7 @@
 package com.jinbu.jinbu.web;
 
 import com.jinbu.jinbu.entities.Photo;
-import com.jinbu.jinbu.service.ImageService.ImageServiceImplementation;
-import com.jinbu.jinbu.service.ImageService.LocalImageStorage;
-import com.jinbu.jinbu.service.ImageService.S3ImageStorage;
+import com.jinbu.jinbu.service.ImageService.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,7 +25,7 @@ import java.util.List;
         , description = "Operations related to images")
 public class ImageController {
 
-    ImageServiceImplementation imageServiceImplementation;
+    ImageService imageService;
 
     @Operation(summary = "Upload image", description = "Saves photo metadata in localStorage and it sends the photo itself to an S3.")
     @ApiResponses(value = {
@@ -36,7 +34,7 @@ public class ImageController {
     })
     @PostMapping("/upload")
     public ResponseEntity<HttpStatus> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
-        imageServiceImplementation.store(file);
+        imageService.store(file);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -48,7 +46,7 @@ public class ImageController {
     })
     @GetMapping("/all")
     public ResponseEntity<List<Photo>> getAllImages() {
-        return new ResponseEntity<>(imageServiceImplementation.retrieveAllImages(), HttpStatus.OK);
+        return new ResponseEntity<>(imageService.retrieveAllImages(), HttpStatus.OK);
     }
 
     @Operation(summary = "Get image url by it's Id", description = "Fetch imageUrl by its ID (Long type).")
@@ -58,7 +56,7 @@ public class ImageController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<String> getUrlByImageId(@PathVariable Long id) {
-        return new ResponseEntity<>(imageServiceImplementation.retrieveImageUrl(id), HttpStatus.OK);
+        return new ResponseEntity<>(imageService.retrieveImageUrl(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete photo by Id", description = "Deletes photo metadata and S3 file by Id (Long type).")
@@ -68,7 +66,7 @@ public class ImageController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteImage(@PathVariable Long id) {
-        imageServiceImplementation.deleteImageById(id);
+        imageService.deleteImageById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
