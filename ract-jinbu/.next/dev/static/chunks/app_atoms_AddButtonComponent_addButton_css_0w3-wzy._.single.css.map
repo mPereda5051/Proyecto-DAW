@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/app/atoms/AddButtonComponent/addButton.css"],"sourcesContent":["#addPhoto {\r\n    margin-top: 4px;\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 5px;\r\n    background-color: var(--primary-bg-color);\r\n    border: 1px solid black;\r\n    border-radius: 5px;\r\n    color: black;\r\n    transition: background-color 0.3s ease-in-out, \r\n                transform 0.25s ease-in-out,\r\n                color 0.4s ease;\r\n}\r\n\r\n#addIcon {\r\n    color: white;\r\n}\r\n\r\n#addPhoto:hover {\r\n    cursor: pointer;\r\n    background-color: var(--button-hover);\r\n    transform: scale(1.05);\r\n    color: white;\r\n}\r\n\r\n#addPhoto:active {\r\n    transform: scale(0.95);\r\n}"],"names":[],"mappings":"AAAA;;;;;;;;;;;;AAcA;;;;AAIA;;;;;;;AAOA"}}]
-}

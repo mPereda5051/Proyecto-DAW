@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/app/page.css"],"sourcesContent":[".menu {\r\n    position: sticky;\r\n    top: 0;\r\n    background-color: var(--main-bg-color);\r\n    display: flex;\r\n    height: 75px;\r\n    width: 100%;\r\n    align-items: center;\r\n    justify-content: space-between;\r\n    padding: 0 15px;\r\n    color: white;\r\n    box-sizing: border-box;\r\n    z-index: 10;\r\n}\r\n\r\n.menu .menu-item {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 8px;\r\n    height: 80%;\r\n}\r\n\r\n.menu .menu-item p {\r\n    margin: 0;\r\n    display: inline;\r\n}\r\n\r\n.menu .menu-logo {\r\n    display: flex;\r\n    align-items: center;\r\n    gap: 20px;\r\n    height: 80%;\r\n}\r\n\r\n.menu .menu-logo p {\r\n    font-size: 24px;\r\n    margin: 0;\r\n    display: inline;\r\n}\r\n\r\n.menu #inputBar {\r\n    display: flex;\r\n    align-items: center;\r\n}\r\n\r\n.menu #inputSearch {\r\n    color: white;\r\n    border: 1px solid transparent;\r\n    border-radius: 10px;\r\n    padding: 10px 50px;\r\n    background-color: var(--main-bg-color);\r\n}\r\n\r\n"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;;;AAeA;;;;;;;AAOA;;;;;AAKA;;;;;;;AAOA;;;;;;AAMA;;;;;AAKA"}}]
-}
