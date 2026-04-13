@@ -1,0 +1,151 @@
+/* Estilos para el Navbar original */
+.menu {
+    position: sticky;
+    top: 0;
+    background-color: var(--main-bg-color);
+    display: flex;
+    height: 75px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    color: white;
+    box-sizing: border-box;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.menu-logo p {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.search-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    max-width: 500px;
+}
+
+.search-input {
+    width: 100%;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 8px 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    outline: none;
+    transition: 0.3s;
+}
+
+.search-input:focus {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --- SIDEBAR (Menú Lateral) --- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px; /* Escondido por defecto */
+    width: 300px;
+    height: 100%;
+    background-color: #1a1a1a;
+    color: white;
+    z-index: 200;
+    transition: left 0.3s ease;
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+}
+
+.sidebar.open {
+    left: 0; /* Desplegado */
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-links li {
+    margin: 20px 0;
+}
+
+.sidebar-links a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+    display: block;
+}
+
+.sidebar-links a:hover {
+    color: white;
+}
+
+.sidebar-divider {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 20px 0;
+}
+
+/* Overlay (Fondo oscuro) */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 150;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
