@@ -6,7 +6,6 @@ import "./organisms/navbar.css";
 import "./organisms/imageMenu.css";
 import "./molecule/PhotoCardComponent/PhotoCard.css";
 import "./atoms/AddButtonComponent/addButton.css";
-import "./login/login.css";
 import EmotionRegistry from "./EmotionRegistry";
 import Navbar from "./organisms/Navbar";
 
