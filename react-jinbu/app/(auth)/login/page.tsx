@@ -1,6 +1,7 @@
 "use client";
 import {useState} from "react";
 import "./login.css";
+import FormField from "@/app/atoms/FormField/FormField";
 
 export default function Login(){
 
@@ -21,13 +22,7 @@ export default function Login(){
         <div className= "login-container">
             <div className = "login-box">
                 <h1>Iniciar Sesión</h1>
-                <input 
-                    type= "email"
-                    placeholder = "Email"
-                    className="login-input"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
+                <FormField radio="0px" />
                 
                 <input
                     type="password"

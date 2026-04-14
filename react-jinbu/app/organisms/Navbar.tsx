@@ -5,6 +5,7 @@ import Link from 'next/link';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import AddButton from '../atoms/AddButtonComponent/AddButton';
+import FormField from '../atoms/FormField/FormField';
 
 /**
  * Navbar - Componente global con Menú Lateral (Sidebar)
@@ -38,13 +39,7 @@ export default function Navbar() {
         </div>
 
         {/* Buscador */}
-        <div className="search-container">
-          <input 
-            type="text" 
-            placeholder="Buscar fotos..." 
-            className="search-input" 
-          />
-        </div>
+        <FormField radio='20px' />
 
         {/* perfil */}
         <div className="menu-actions">
