@@ -1,9 +1,10 @@
+import Link from "next/link";
 import { PhotoData } from "./PhotoData";
 
 export default function PhotoCard(photoProps: PhotoData) {
     const photo = photoProps;
     return (
-        <a href="#" className="link">
+        <Link href={`/photo/${photo.id}`} className="link">
                 <div className="imageContainer" key={photo.id}>
                     {photo.title && <h2>{photo.title}</h2>}
                     <div className="previewData">
@@ -16,6 +17,6 @@ export default function PhotoCard(photoProps: PhotoData) {
                         alt={photo.title || "Photo"} 
                     />
                 </div>
-        </a>
+        </Link>
     );
 }
