@@ -23,6 +23,8 @@ h2 {
 
 .link {
     background-color: transparent;
+    text-decoration: none;
+    color: inherit;
 }
 
 .link:hover {
