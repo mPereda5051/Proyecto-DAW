@@ -35,7 +35,7 @@ public class Post {
     @Column(name = "likes")
     private Long likes;
 
-    @OneToOne(mappedBy = "photos", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
     private Photo photo;
 
     @ManyToOne

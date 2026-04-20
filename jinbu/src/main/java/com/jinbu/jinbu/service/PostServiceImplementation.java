@@ -5,8 +5,12 @@ import com.jinbu.jinbu.entities.Photo;
 import com.jinbu.jinbu.entities.Post;
 import com.jinbu.jinbu.exceptions.EntityNotFoundException;
 import com.jinbu.jinbu.mappers.PostMapper;
+import com.jinbu.jinbu.repository.PhotoRepository;
 import com.jinbu.jinbu.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +19,7 @@ import java.util.List;
 @Service
 public class PostServiceImplementation implements PostService {
 
+    PhotoRepository photoRepository;
     PostRepository postRepository;
     PostMapper postMapper;
 
@@ -56,5 +61,18 @@ public class PostServiceImplementation implements PostService {
         photo.setPost(post);
     }
 
+    // Se puede optimizar haciend una query personalizada en el JPA
+    @Override
+    public Photo retrievePostWithPhoto(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id, Post.class));
 
+        return post.getPhoto();
+    }
+
+    @Override
+    public Page<Photo> retrievePostWithPhotoPagination(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 10);
+        return photoRepository.findAll(pageable);
+    }
 }
