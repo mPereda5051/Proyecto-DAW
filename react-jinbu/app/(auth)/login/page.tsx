@@ -1,10 +1,13 @@
 "use client";
 import {useState} from "react";
-import "./login.css";
-import FormField from "@/app/atoms/FormField/FormField";
+import FormField from "@/app/molecule/FormField/FormField";
+import Button from "@/app/atoms/Button/Button";
+import "./login.css"
+import { useRouter } from "next/navigation";
 
 export default function Login(){
 
+    const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -14,34 +17,36 @@ export default function Login(){
             return;
         }
         console.log("Login exitoso");
-        console.log("Email:", email);
-        console.log("Password", password);
+        router.push("/")
 
     };
     return (
         <div className= "login-container">
             <div className = "login-box">
                 <h1>Iniciar Sesión</h1>
-                <div style={{ marginBottom: '15px' }}>
-                    <FormField 
-                        type="email"
-                        placeholder="Correo Electrónico"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        radio="5px" 
-                    />
-                </div>
-                
-                <input
+                <FormField
+                    label="Email"
+                    type="email"
+                    placeholder="tu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+                <FormField
+                    label="Contraseña"
                     type="password"
                     placeholder="Contraseña"
-                    className="login-input"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button className="login-button" onClick={handleLogin}>
-                    Iniciar Sesión
-                </button>
+
+                <Button
+                    label= "Iniciar Sesión" onClick={handleLogin}
+                />
+                <p className="register-link">
+                     ¿No tienes cuenta? <a href="/register">Regístrate</a>
+                </p>
+                
+                
             </div>
 
             

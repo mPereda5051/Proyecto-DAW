@@ -1,10 +1,16 @@
 "use client";
 import {useState} from "react";
+import FormField from "@/app/molecule/FormField/FormField";
+import Button from "@/app/atoms/Button/Button";
 import "./register.css";
 
 
 export default function Register(){
 
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleRegister = () => {
 
@@ -23,47 +29,43 @@ export default function Register(){
         console.log("Email:", email)
     };
 
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-
     return (
         <div className="register-container">
             <div className="register-box">
                 <h1>Registrarse</h1>
 
-                <input type="text" 
-                placeholder="Nombre de usuario"
-                className="register-input"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                <FormField
+                    label= "Nombre de Usuario"
+                    type="text"
+                    placeholder="Tu nombre"
+                    value={username}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
-
-                <input type="email" 
-                placeholder="email"
-                className="register-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                <FormField
+                    label= "Email"
+                    type="email"
+                    placeholder="Tu@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
-
-                <input type="password" 
-                placeholder="contraseña"
-                className="register-input"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                <FormField
+                    label= "Contraseña"
+                    type="password"
+                    placeholder="Contraseña"
+                    value={password}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
-
-                <input type="password"
-                placeholder="Escribe otra vez tu contraseña"
-                className="register-input"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                <FormField
+                    label= "Confirmar contraseña"
+                    type="password"
+                    placeholder="Repite tu contraseña"
+                    value={confirmPassword}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
-
-                <button className="register-button" onClick={handleRegister}>
-                    Crear Cuenta
-                </button>
+                <Button
+                    label="Crear cuenta"
+                    onClick={handleRegister}
+                />
             </div>
         </div>
         

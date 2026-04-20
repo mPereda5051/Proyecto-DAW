@@ -50,3 +50,19 @@
 .login-button:hover {
   background-color: #2980b9;
 }
+
+  .register-link {
+      color: #aaa;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+  }
+
+  .register-link a {
+      color: #3498db;
+      text-decoration: none;
+  }
+
+  .register-link a:hover {
+      text-decoration: underline;
+  }

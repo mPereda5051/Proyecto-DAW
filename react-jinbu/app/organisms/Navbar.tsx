@@ -5,7 +5,7 @@ import Link from 'next/link';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import AddButton from '../atoms/AddButtonComponent/AddButton';
-import FormField from '../atoms/FormField/FormField';
+import FormField from '../molecule/FormField/FormField';
 
 
 export default function Navbar() {
