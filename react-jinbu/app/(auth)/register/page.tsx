@@ -3,9 +3,12 @@ import {useState} from "react";
 import FormField from "@/app/molecule/FormField/FormField";
 import Button from "@/app/atoms/Button/Button";
 import "./register.css";
+import { useRouter } from "next/navigation";
 
 
 export default function Register(){
+
+    const router = useRouter();
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -25,8 +28,7 @@ export default function Register(){
         }
 
         console.log("Registro exitoso")
-        console.log("Username:", username)
-        console.log("Email:", email)
+        router.push("/login")
     };
 
     return (
