@@ -58,8 +58,7 @@ public class Photo {
           return "https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/" + this.getId() + this.getExtension();
       }
 
-    // Con @PrimaryKeyKoinColumn hacemos que compartan ID
     @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id")
     private Post post;
 }

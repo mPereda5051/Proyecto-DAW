@@ -1,6 +1,7 @@
 package com.jinbu.jinbu.web;
 
 import com.jinbu.jinbu.DTOs.PostDTO;
+import com.jinbu.jinbu.entities.Photo;
 import com.jinbu.jinbu.entities.Post;
 import com.jinbu.jinbu.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,5 +77,11 @@ public class PostController {
     public ResponseEntity<HttpStatus> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<HttpStatus> createPostWithPhoto(@RequestBody Post post, @RequestBody Photo photo) {
+        postService.createPostWithPhoto(post, photo);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

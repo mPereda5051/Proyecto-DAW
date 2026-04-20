@@ -1,6 +1,7 @@
 package com.jinbu.jinbu.service;
 
 import com.jinbu.jinbu.DTOs.PostDTO;
+import com.jinbu.jinbu.entities.Photo;
 import com.jinbu.jinbu.entities.Post;
 import com.jinbu.jinbu.exceptions.EntityNotFoundException;
 import com.jinbu.jinbu.mappers.PostMapper;
@@ -48,4 +49,12 @@ public class PostServiceImplementation implements PostService {
                 .map(postMapper::toDTO)
                 .toList();
     }
+
+    @Override
+    public void createPostWithPhoto(Post post, Photo photo) {
+        post.setPhoto(photo);
+        photo.setPost(post);
+    }
+
+
 }

@@ -16,7 +16,8 @@ import java.util.Date;
 public class Post {
 
     @Id
-    @Column(name = "photo_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
     @CreationTimestamp
@@ -34,9 +35,7 @@ public class Post {
     @Column(name = "likes")
     private Long likes;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "photo_id")
+    @OneToOne(mappedBy = "photos", cascade = CascadeType.ALL)
     private Photo photo;
 
     @ManyToOne
