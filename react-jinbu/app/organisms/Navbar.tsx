@@ -7,9 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddButton from '../atoms/AddButtonComponent/AddButton';
 import FormField from '../atoms/FormField/FormField';
 
-/**
- * Navbar - Componente global con Menú Lateral (Sidebar)
- */
+
 export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +16,6 @@ export default function Navbar() {
     setMounted(true);
   }, []);
 
-  // Función para abrir/cerrar el menú
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -39,7 +36,9 @@ export default function Navbar() {
         </div>
 
         {/* Buscador */}
-        <FormField radio='20px' />
+        <div className="navbar-search-wrapper">
+          <FormField radio='20px' />
+        </div>
 
         {/* perfil */}
         <div className="menu-actions">

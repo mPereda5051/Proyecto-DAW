@@ -22,7 +22,15 @@ export default function Login(){
         <div className= "login-container">
             <div className = "login-box">
                 <h1>Iniciar Sesión</h1>
-                <FormField radio="0px" />
+                <div style={{ marginBottom: '15px' }}>
+                    <FormField 
+                        type="email"
+                        placeholder="Correo Electrónico"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        radio="5px" 
+                    />
+                </div>
                 
                 <input
                     type="password"

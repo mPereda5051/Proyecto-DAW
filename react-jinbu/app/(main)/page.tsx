@@ -1,4 +1,4 @@
-import ImageMenu from './organisms/ImageMenu';
+import ImageMenu from '../organisms/ImageMenu';
 
 export default function Home() {
   return (
