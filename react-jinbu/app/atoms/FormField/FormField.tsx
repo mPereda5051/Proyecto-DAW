@@ -1,3 +1,4 @@
+import SearchIcon from '@mui/icons-material/Search';
 import "./formField.css";
 
 interface InputProps {
@@ -13,6 +14,7 @@ interface InputProps {
 export default function FormField({type = "text", placeholder = "Buscar...", value, radio, onChange }: InputProps) {
     return (
         <div className="search-container">
+            <SearchIcon className="search-icon" />
             <input
                 type={type}
                 placeholder={placeholder}

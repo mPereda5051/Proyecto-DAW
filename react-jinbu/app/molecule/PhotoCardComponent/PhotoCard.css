@@ -1,50 +1,62 @@
-img {
-    width: 100%;
-    margin-bottom: 1em;
-    border-radius: 1%;
-}
-
-.previewData {
-    color: var(--primary-color);
-    border-radius: 20px;
-    margin-bottom: 8px;
-    font-family: sans-serif;
-    font-size: 14px;
-    pointer-events: none;
-}
-
-h2 {
-    font-weight: bold;
-    font-size: 20px;
-    margin-top: 0px;
-    margin-bottom: 5px;
-    color: white;
-}
-
-.link {
-    background-color: transparent;
+.photo-card-link {
     text-decoration: none;
     color: inherit;
-}
-
-.link:hover {
-    cursor: pointer;
-    background-color: red;
-}
-
-.imageContainer {
+    display: block;
+    margin-bottom: 20px;
     break-inside: avoid;
-    background-color: transparent;
-    border-radius: 1%;
-    padding: 10px;
-    margin-bottom: 10px;
-    transition: background-color 0.1s ease,
-                transform 0.25s ease-in,
-                margin-bottom 0.3s ease;
 }
 
-.imageContainer:hover {
-    background-color: var(--button-hover);
+.photo-card-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #222;
+    transition: transform 0.3s ease;
+}
+
+.photo-card-image {
+    width: 100%;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.photo-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 50%);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.photo-card-container:hover .photo-card-overlay {
+    opacity: 1;
+}
+
+.photo-card-container:hover .photo-card-image {
     transform: scale(1.05);
 }
 
+.photo-card-info {
+    color: white;
+    width: 100%;
+}
+
+.photo-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.photo-card-meta {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    gap: 8px;
+}

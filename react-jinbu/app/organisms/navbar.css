@@ -133,3 +133,21 @@
     gap: 10px;
     cursor: pointer;
 }
+
+.user-profile p {
+    margin: 0;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #555;
+    transition: background-color 0.3s;
+}
+
+.user-profile:hover .user-avatar {
+    background-color: var(--primary-color);
+}

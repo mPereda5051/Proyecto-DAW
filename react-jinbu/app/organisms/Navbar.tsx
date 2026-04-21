@@ -5,7 +5,7 @@ import Link from 'next/link';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import AddButton from '../atoms/AddButtonComponent/AddButton';
-import FormField from '../molecule/FormField/FormField';
+import FormField from '../atoms/FormField/FormField';
 
 
 export default function Navbar() {
@@ -44,8 +44,8 @@ export default function Navbar() {
         <div className="menu-actions">
           <AddButton />
           <div className="user-profile">
-            <p style={{ margin: 0, fontSize: '14px' }}>Perfil</p>
-            <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: '#555' }}></div>
+            <p>Perfil</p>
+            <div className="user-avatar"></div>
           </div>
         </div>
       </header>
