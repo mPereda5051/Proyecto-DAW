@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -83,5 +84,15 @@ public class PostController {
     public ResponseEntity<HttpStatus> createPostWithPhoto(@RequestBody Post post, @RequestBody Photo photo) {
         postService.createPostWithPhoto(post, photo);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/pagination/{pageNumber}")
+    public ResponseEntity<Page<Photo>> retrievePostWithPagination(@PathVariable int pageNumber) {
+        return new ResponseEntity<>(postService.retrievePostWithPhotoPagination(pageNumber), HttpStatus.OK);
+    }
+
+    @GetMapping("/completePost/{id}")
+    public ResponseEntity<Photo> retrievePhotoWithPost(@PathVariable Long id) {
+        return new ResponseEntity<>(postService.retrievePostWithPhoto(id), HttpStatus.OK);
     }
 }

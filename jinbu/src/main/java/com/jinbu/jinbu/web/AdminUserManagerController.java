@@ -19,10 +19,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/users")
-@Tag(name = "User management"
-        , description = "Operations related to users")
-public class UserController {
+@RequestMapping("/admin/user")
+@Tag(name = "Admin user management"
+        , description = "Operations for user management from an admin account")
+public class AdminUserManagerController {
 
     UserService userService;
 
