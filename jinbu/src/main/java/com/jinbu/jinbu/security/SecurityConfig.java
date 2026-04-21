@@ -26,15 +26,15 @@ public class SecurityConfig {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(customAuthenticationManager);
         authenticationFilter.setFilterProcessesUrl("/authenticate");
         http
-//        .csrf(csrf -> csrf.disable())
-//        .authorizeHttpRequests(authorize -> authorize
-//            .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll()
-//            .anyRequest().authenticated())
-//        .addFilterBefore(new ExceptionHandlerFilter(), AuthenticationFilter.class)
-//        .addFilter(authenticationFilter)
-//        .addFilterAfter(new JWTAuthorizationFilter(), AuthenticationFilter.class)
-//        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-                .csrf(csrf -> csrf.disable());
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(authorize -> authorize
+            .requestMatchers(HttpMethod.POST, SecurityConstants.REGISTER_PATH).permitAll()
+            .anyRequest().authenticated())
+        .addFilterBefore(new ExceptionHandlerFilter(), AuthenticationFilter.class)
+        .addFilter(authenticationFilter)
+        .addFilterAfter(new JWTAuthorizationFilter(), AuthenticationFilter.class)
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
 
         return http.build();
     }
