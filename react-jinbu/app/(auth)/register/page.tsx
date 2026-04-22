@@ -41,7 +41,7 @@ export default function Register(){
                     type="text"
                     placeholder="Tu nombre"
                     value={username}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
                 <FormField
                     label= "Email"
@@ -55,14 +55,14 @@ export default function Register(){
                     type="password"
                     placeholder="Contraseña"
                     value={password}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
                 <FormField
                     label= "Confirmar contraseña"
                     type="password"
                     placeholder="Repite tu contraseña"
                     value={confirmPassword}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                 />
                 <Button
                     label="Crear cuenta"
