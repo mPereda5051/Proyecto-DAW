@@ -1,35 +1,42 @@
 "use client";
-import {useState} from "react";
+import { useState } from "react";
 import FormField from "@/app/molecule/FormField/FormField";
 import Button from "@/app/atoms/Button/Button";
 import "./login.css"
 import { useRouter } from "next/navigation";
+import { login } from "@/app/services/authService";
 
-export default function Login(){
+export default function Login() {
 
     const router = useRouter();
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = () => {
-        if (email === "" || password ===""){
-            alert("Por favor completa todos los campos")
+    const handleLogin = async () => {
+        if (username === "" || password === "") {
+            alert("Por favor completa todos los campos");
             return;
         }
-        console.log("Login exitoso");
-        router.push("/")
 
+        try {
+            await login(username, password);
+            console.log("Login exitoso");
+            router.push("/");
+        } catch (error) {
+            alert("Usuario o contraseña incorrectos");
+        }
     };
+
     return (
-        <div className= "login-container">
-            <div className = "login-box">
+        <div className="login-container">
+            <div className="login-box">
                 <h1>Iniciar Sesión</h1>
                 <FormField
-                    label="Email"
-                    type="email"
-                    placeholder="tu@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    label="Usuario"
+                    type="text"
+                    placeholder="Tu nombre de usuario"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
                 <FormField
                     label="Contraseña"
@@ -40,16 +47,12 @@ export default function Login(){
                 />
 
                 <Button
-                    label= "Iniciar Sesión" onClick={handleLogin}
+                    label="Iniciar Sesión" onClick={handleLogin}
                 />
                 <p className="register-link">
-                     ¿No tienes cuenta? <a href="/register">Regístrate</a>
+                    ¿No tienes cuenta? <a href="/register">Regístrate</a>
                 </p>
-                
-                
             </div>
-
-            
         </div>
     );
 }

@@ -1,13 +1,15 @@
 package com.jinbu.jinbu;
 
-import com.jinbu.jinbu.entities.User;
-import com.jinbu.jinbu.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.jinbu.jinbu.entities.User;
+import com.jinbu.jinbu.repository.UserRepository;
+
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @SpringBootApplication
@@ -21,10 +23,15 @@ public class JinbuApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User[] users = new User[] {
-				new User("pep", "sui", "pep@gmail.com"),
-				new User("test", "sui", "test@gmail.com")
-		};
+		if (userRepository.findByUsername("test") == null) {
+			User[] users = new User[] {
+					new User("pep", bCryptPasswordEncoder().encode("sui"), "pep@gmail.com"),
+					new User("test", bCryptPasswordEncoder().encode("sui"), "test@gmail.com")
+			};
+			for (User user : users) {
+				userRepository.save(user);
+			}
+		}
 	}
 
 	@Bean
