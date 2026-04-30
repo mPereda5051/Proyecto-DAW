@@ -1,68 +1,68 @@
-.login-container {
+.login-page {
+    position: relative;
+    min-height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1452780212940-6f5c0d14d848?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 0;
+}
+
+.login-logo {
+    position: relative;
+    z-index: 1;
+    padding: 24px 48px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 2px;
+}
+
+.login-center {
+    position: relative;
+    z-index: 1;
+    flex:1;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #000;
+    padding: 20px;
 }
 
-.login-box{
-    background-color: #1a1a1a;
-    padding: 40px;
+.login-box {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 48px 48px 40px;
     border-radius: 8px;
-    width: 400px;
-}
-
-.login-box h1{
-    color: white;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.login-input {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    background-color: #2a2a2a;
-    border: 1px solid grey;
-    border-radius: 5px;
+    max-width: 420px;
+}
+
+.login-box h1 {
     color: white;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 28px;
+}
+
+.register-link {
+    color: #aaa;
+    text-align: center;
+    margin-top: 20px;
     font-size: 14px;
 }
 
-.login-input:focus {
-    outline: none;
-    border-color: #666;
+.register-link a {
+    color: #3498db;
+    text-decoration:none;
+    font-weight: 500;
 }
 
-.login-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
+.register-link a:hover {
+    text-decoration: underline;
 }
-
-.login-button:hover {
-  background-color: #2980b9;
-}
-
-  .register-link {
-      color: #aaa;
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-  }
-
-  .register-link a {
-      color: #3498db;
-      text-decoration: none;
-  }
-
-  .register-link a:hover {
-      text-decoration: underline;
-  }

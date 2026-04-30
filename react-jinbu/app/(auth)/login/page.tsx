@@ -28,31 +28,37 @@ export default function Login() {
     };
 
     return (
-        <div className="login-container">
-            <div className="login-box">
-                <h1>Iniciar Sesión</h1>
-                <FormField
-                    label="Usuario"
-                    type="text"
-                    placeholder="Tu nombre de usuario"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <FormField
-                    label="Contraseña"
-                    type="password"
-                    placeholder="Contraseña"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+        <div className="login-page">
+            <div className="login-overlay"></div>
+            
+            <div className="login-logo">Jinbu</div>
+            
+            <div className="login-center">
+                        <div className="login-box">
+                            <h1>Iniciar Sesión</h1>
+                            <FormField
+                                label="Usuario"
+                                type="text"
+                                placeholder="Tu nombre de usuario"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                            <FormField
+                                label="Contraseña"
+                                type="password"
+                                placeholder="Contraseña"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
 
-                <Button
-                    label="Iniciar Sesión" onClick={handleLogin}
-                />
-                <p className="register-link">
-                    ¿No tienes cuenta? <a href="/register">Regístrate</a>
-                </p>
-            </div>
+                            <Button
+                                label="Iniciar Sesión" onClick={handleLogin}
+                            />
+                            <p className="register-link">
+                                ¿No tienes cuenta? <a href="/register">Regístrate</a>
+                            </p>
+                        </div>
+                </div>
         </div>
     );
 }
