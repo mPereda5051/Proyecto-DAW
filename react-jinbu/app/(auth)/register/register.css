@@ -1,22 +1,53 @@
-.register-container {
+.register-page {
+    position: relative;
+    min-height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1452780212940-6f5c0d14d848?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.register-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 0;
+}
+
+.register-logo {
+    position: relative;
+    z-index: 1;
+    padding: 24px 48px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 2px;
+}
+
+.register-center {
+    position: relative;
+    z-index: 1;
+    flex:1;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    background-color: #000;
+    padding: 20px;
 }
 
-.register-box{
-    background-color: #1a1a1a;
-    padding: 40px;
+.register-box {
+    background-color: rgba(0, 0, 0, 0.75);
+    padding: 48px 48px 40px;
     border-radius: 8px;
-    width: 400px;
+    width: 100%;
+    max-width: 420px;
 }
 
-.register-box h1{
+.register-box h1 {
     color: white;
-    text-align: center;
-    margin-bottom: 30px;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 28px;
 }
 
 .register-input {
