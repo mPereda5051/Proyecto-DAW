@@ -34,7 +34,6 @@ public class LoginController {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
-    // No funciona todavia
     @Operation(summary = "Login", description = "Login controller")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Login successful", content = @Content(schema = @Schema(implementation = UserDTO.class))),

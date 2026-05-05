@@ -30,21 +30,8 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public PostDTO savePost(Post post) {
-        return postMapper.toDTO(postRepository.save(post));
-    }
-
-    @Override
     public void deletePost(Long id) {
         postRepository.deleteById(id);
-    }
-
-    @Override
-    public List<PostDTO> getPosts() {
-        return postRepository.findAll()
-                .stream()
-                .map(postMapper::toDTO)
-                .toList();
     }
 
     @Override
@@ -56,23 +43,17 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public void createPostWithPhoto(Post post, Photo photo) {
+    public void createPost(Post post, Photo photo) {
         post.setPhoto(photo);
         photo.setPost(post);
     }
 
-    // Se puede optimizar haciend una query personalizada en el JPA
     @Override
-    public Photo retrievePostWithPhoto(Long id) {
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(id, Post.class));
-
-        return post.getPhoto();
-    }
-
-    @Override
-    public Page<Photo> retrievePostWithPhotoPagination(int pageNumber) {
+    public List<PostDTO> retrievePosts(int pageNumber) {
         Pageable pageable = PageRequest.of(pageNumber, 10);
-        return photoRepository.findAll(pageable);
+        return postRepository.findAll(pageable)
+                .stream()
+                .map(postMapper::toDTO)
+                .toList();
     }
 }

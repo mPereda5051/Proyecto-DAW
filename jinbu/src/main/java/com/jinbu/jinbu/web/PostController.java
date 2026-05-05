@@ -40,14 +40,14 @@ public class PostController {
     }
 
     // Temporal, solo para test
-    @Operation(summary = "Get alls post", description = "Get all posts (WARNING: Puede causar problemas de optimizacion).")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Posts retrieved", content = @Content(schema = @Schema(implementation = PostDTO.class)))
-    })
-    @GetMapping("/all")
-    public ResponseEntity<List<PostDTO>> getPosts() {
-        return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
-    }
+//    @Operation(summary = "Get alls post", description = "Get all posts (WARNING: Puede causar problemas de optimizacion).")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Posts retrieved", content = @Content(schema = @Schema(implementation = PostDTO.class)))
+//    })
+//    @GetMapping("/all")
+//    public ResponseEntity<List<PostDTO>> getPosts() {
+//        return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
+//    }
 
     @Operation(summary = "Get all post from one user", description = "Fetch all post by a User ID (Long type).")
     @ApiResponses(value = {
@@ -59,14 +59,15 @@ public class PostController {
         return new ResponseEntity<>(postService.getPostsByUserId(userId), HttpStatus.OK);
     }
 
-    @Operation(summary = "Save post by Id", description = "Saves post information (Tiene que contener la informacion del schema de post)")
+    @Operation(summary = "Save post with text and image", description = "Saves post information (Tiene que contener la informacion del schema de post)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Post created", content = @Content(schema = @Schema(implementation = PostDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
     @PostMapping
-    public ResponseEntity<PostDTO> savePost(@RequestBody @Valid Post post) {
-        return new ResponseEntity<>(postService.savePost(post), HttpStatus.CREATED);
+    public ResponseEntity<HttpStatus> savePost(@RequestBody @Valid Post post, @RequestBody Photo photo) {
+        postService.createPost(post, photo);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @Operation(summary = "Delete post by Id", description = "Delete posts by its ID (Long type).")
@@ -80,19 +81,13 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<HttpStatus> createPostWithPhoto(@RequestBody Post post, @RequestBody Photo photo) {
-        postService.createPostWithPhoto(post, photo);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @GetMapping("/pagination/{pageNumber}")
-    public ResponseEntity<Page<Photo>> retrievePostWithPagination(@PathVariable int pageNumber) {
-        return new ResponseEntity<>(postService.retrievePostWithPhotoPagination(pageNumber), HttpStatus.OK);
-    }
-
-    @GetMapping("/completePost/{id}")
-    public ResponseEntity<Photo> retrievePhotoWithPost(@PathVariable Long id) {
-        return new ResponseEntity<>(postService.retrievePostWithPhoto(id), HttpStatus.OK);
+    @Operation(summary = "Get Posts list by page number", description = "Get Post list by page number in packs of 10.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Posts retrieved", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
+    })
+    @GetMapping("/retrieve/{pageNumber}")
+    public ResponseEntity<List<PostDTO>> retrievePostWithPagination(@PathVariable int pageNumber) {
+        return new ResponseEntity<>(postService.retrievePosts(pageNumber), HttpStatus.OK);
     }
 }

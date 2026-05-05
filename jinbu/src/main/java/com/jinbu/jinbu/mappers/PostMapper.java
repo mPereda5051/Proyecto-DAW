@@ -14,7 +14,8 @@ public class PostMapper {
                 post.getContent(),
                 post.getUser().getId(),
                 post.getUser().getUsername(),
-                post.getLikes()
+                post.getLikes(),
+                post.getPhoto()
         );
     }
 }
