@@ -8,6 +8,7 @@ public record PostDTO(
         String content,
         Long userId,
         String username,
-        Long likes
+        Long likes,
+        Photo photo
 ) {
 }

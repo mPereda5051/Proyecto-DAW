@@ -10,11 +10,8 @@ import java.util.List;
 public interface PostService {
 
     PostDTO getPost(Long id);
-    PostDTO savePost(Post post);
     void deletePost(Long id);
-    List<PostDTO> getPosts();
     List<PostDTO> getPostsByUserId(Long userId);
-    void createPostWithPhoto(Post post, Photo photo);
-    Photo retrievePostWithPhoto(Long id);
-    Page<Photo> retrievePostWithPhotoPagination(int pageNumber);
+    void createPost(Post post, Photo photo);
+    List<PostDTO> retrievePosts(int pageNumber);
 }
