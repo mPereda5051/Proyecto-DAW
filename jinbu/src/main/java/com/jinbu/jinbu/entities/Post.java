@@ -1,5 +1,6 @@
 package com.jinbu.jinbu.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -41,4 +43,8 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private User user;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 }
