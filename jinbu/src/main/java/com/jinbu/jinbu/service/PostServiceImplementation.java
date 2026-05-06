@@ -56,4 +56,22 @@ public class PostServiceImplementation implements PostService {
                 .map(postMapper::toDTO)
                 .toList();
     }
+
+    @Override
+    public void likePost(Long id) {
+        Post likedPost = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id, Post.class));
+
+        likedPost.setLikes(likedPost.getLikes() + 1L);
+    }
+
+    @Override
+    public void dislike(Long id) {
+        Post unlikedPost = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id, Post.class));
+
+        unlikedPost.setLikes(unlikedPost.getLikes() - 1L);
+    }
+
+
 }

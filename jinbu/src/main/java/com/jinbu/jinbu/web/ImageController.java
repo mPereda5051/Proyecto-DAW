@@ -1,5 +1,6 @@
 package com.jinbu.jinbu.web;
 
+import com.jinbu.jinbu.DTOs.PostDTO;
 import com.jinbu.jinbu.entities.Photo;
 import com.jinbu.jinbu.service.ImageService.ImageService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,5 +72,27 @@ public class ImageController {
     public ResponseEntity<HttpStatus> deleteImage(@PathVariable Long id) {
         imageService.deleteImageById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/photos/search")
+    public ResponseEntity<Page<Photo>> searchPhotos(
+            @RequestParam(required = false) String iso,
+            @RequestParam(required = false) String aperture,
+            @RequestParam(required = false) String exposure,
+            @RequestParam(required = false) String name,
+            @PageableDefault(size = 10, sort = "date") Pageable pageable
+    ) {
+        Page<Photo> filteredPhotos = imageService.getFilteredPhotos(name, iso, aperture, exposure, pageable);
+        return new ResponseEntity<>(filteredPhotos, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get Photos list by page number", description = "Get Photos list by page number in packs of 10.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Photos retrieved", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Photos not found", content = @Content)
+    })
+    @GetMapping("/retrieve/{pageNumber}")
+    public ResponseEntity<Page<Photo>> retrievePostWithPagination(@PathVariable int pageNumber) {
+        return new ResponseEntity<>(imageService.retrievePhotosPageable(pageNumber), HttpStatus.OK);
     }
 }
