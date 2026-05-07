@@ -1,0 +1,64 @@
+.opciones-page {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    color: white;
+}
+
+.opciones-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.opciones-header h1 {
+    font-size: 32px;
+    margin: 0;
+}
+
+.profile-photo-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--primary-color);
+}
+
+.opciones-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.opciones-card {
+    background-color: var(--secondary-bg-color);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.opciones-card h2 {
+    font-size: 20px;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #aaa;
+}
+
+@media (max-width: 600px) {
+    .opciones-sections {
+        grid-template-columns: 1fr;
+    }
+}

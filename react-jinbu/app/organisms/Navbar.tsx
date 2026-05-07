@@ -66,6 +66,7 @@ export default function Navbar() {
         <ul className="sidebar-links">
           <li><Link href="/" onClick={toggleMenu}>Inicio</Link></li>
           <li><Link href="/cuenta" onClick={toggleMenu}>Cuenta</Link></li>
+          <li><Link href="/opciones" onClick={toggleMenu}>Opciones</Link></li>
           <li><Link href="/soporte" onClick={toggleMenu}>Soporte</Link></li>
           <hr className="sidebar-divider" />
           <li><Link href="/cookies" onClick={toggleMenu}>Política de Cookies</Link></li>
