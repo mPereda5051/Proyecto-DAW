@@ -1,0 +1,20 @@
+.profile-Stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.profileStat h3 {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.profile-Stat h3 {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.profile-Stat p {
+    color: #aaa;
+    font-size: 0.85rem;
+}
