@@ -1,3 +1,5 @@
+'use client';
+
 import "./Input.css";
 
 interface InputProps {

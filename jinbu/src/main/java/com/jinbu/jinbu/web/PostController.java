@@ -90,4 +90,26 @@ public class PostController {
     public ResponseEntity<List<PostDTO>> retrievePostWithPagination(@PathVariable int pageNumber) {
         return new ResponseEntity<>(postService.retrievePosts(pageNumber), HttpStatus.OK);
     }
+
+    @Operation(summary = "Like post by Id", description = "Like a post by its id (Long type).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Posts liked", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
+    })
+    @PutMapping("/{id}/like")
+    public ResponseEntity<HttpStatus> likePost(@PathVariable Long id) {
+        postService.likePost(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(summary = "Unlike post by Id", description = "Unlike a post by its id (Long type).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Posts unliked", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Post not unliked", content = @Content)
+    })
+    @PutMapping("/{id}/dislike")
+    public ResponseEntity<HttpStatus> dislikePost(@PathVariable Long id) {
+        postService.dislike(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

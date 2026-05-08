@@ -14,4 +14,6 @@ public interface PostService {
     List<PostDTO> getPostsByUserId(Long userId);
     void createPost(Post post, Photo photo);
     List<PostDTO> retrievePosts(int pageNumber);
+    void likePost(Long id);
+    void dislike(Long id);
 }
