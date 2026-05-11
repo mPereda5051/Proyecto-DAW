@@ -30,8 +30,7 @@ public class CommentServiceImplementation implements CommentService {
     }
 
     @Override
-    public Page<Comment> retrieveComments(int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber, 20);
+    public Page<Comment> retrieveComments(Pageable pageable) {
         return commentRepository.findAll(pageable);
     }
 

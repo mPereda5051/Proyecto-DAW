@@ -53,8 +53,7 @@ public class ImageServiceImplementation implements ImageService{
     }
 
     @Override
-    public Page<Photo> retrievePhotosPageable(int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber, 10);
+    public Page<Photo> retrievePhotosPageable(Pageable pageable ) {
         return photoRepository.findAll(pageable);
     }
 
@@ -71,30 +70,61 @@ public class ImageServiceImplementation implements ImageService{
     }
 
     @Override
-    public Page<Photo> getFilteredPhotos(
-            String iso,
-            String aperture,
-            String exposure,
-            String name,
+    public Page<Photo> getFilteredPhotosSingleValue(
+            Integer iso,
+            Double aperture,
+            Double exposure,
             Pageable pageable) {
 
         return photoRepository.findAll((root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (iso != null && !iso.isEmpty()) {
+            if (iso != null) {
                 predicates.add(cb.equal(root.get("iso"), iso));
             }
 
-            if (aperture != null && !aperture.isEmpty()) {
+            if (aperture != null) {
                 predicates.add(cb.equal(root.get("aperture"), aperture));
             }
 
-            if (exposure != null && !exposure.isEmpty()) {
+            if (exposure != null) {
                 predicates.add(cb.greaterThan(root.get("exposure"), exposure));
             }
 
-            if (name != null && !name.isEmpty()) {
-                predicates.add(cb.like(cb.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
+            return cb.and(predicates.toArray(new Predicate[0]));
+        }, pageable);
+    }
+
+    @Override
+    public Page<Photo> getFilteredPhotosBetweenValue(
+            Integer isoMin, Integer isoMax,
+            Double apertureMin, Double apertureMax,
+            Double exposureMin, Double exposureMax,
+            Pageable pageable) {
+
+        return photoRepository.findAll((root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+
+            if (isoMin != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("iso"), isoMin));
+            }
+            if (isoMax != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("iso"), isoMax));
+            }
+
+            if (apertureMin != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("aperture"), apertureMin));
+            }
+            if (apertureMax != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("aperture"), apertureMax));
+            }
+
+            if (exposureMin != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("exposure"), exposureMin));
+            }
+            if (exposureMax != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("exposure"), exposureMax));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

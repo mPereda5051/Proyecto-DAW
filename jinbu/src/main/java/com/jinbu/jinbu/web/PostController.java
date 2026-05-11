@@ -13,6 +13,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -87,8 +89,8 @@ public class PostController {
             @ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
     })
     @GetMapping("/retrieve/{pageNumber}")
-    public ResponseEntity<List<PostDTO>> retrievePostWithPagination(@PathVariable int pageNumber) {
-        return new ResponseEntity<>(postService.retrievePosts(pageNumber), HttpStatus.OK);
+    public ResponseEntity<List<PostDTO>> retrievePostWithPagination(@PageableDefault(size = 10, sort = "date")Pageable pageable) {
+        return new ResponseEntity<>(postService.retrievePosts(pageable), HttpStatus.OK);
     }
 
     @Operation(summary = "Like post by Id", description = "Like a post by its id (Long type).")

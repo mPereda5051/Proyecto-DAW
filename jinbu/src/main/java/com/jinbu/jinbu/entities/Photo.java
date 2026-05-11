@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "photos")
 public class Photo {
 
-    public Photo(@NonNull String name, Date date, String iso, String aperture, String exposureTime, String width, String height, String extension) {
+    public Photo(@NonNull String name, Date date, Integer iso, Double aperture, Double exposureTime, String width, String height, String extension) {
         this.name = name;
         this.date = date;
         this.iso = iso;
@@ -35,13 +35,13 @@ public class Photo {
     private Date date;
 
     @Column(name = "ISO")
-    private String iso;
+    private Integer iso;
 
     @Column(name = "aperture")
-    private String aperture;
+    private Double aperture;
 
     @Column(name = "exposure")
-    private String exposure;
+    private Double exposure;
 
     @Column(name = "width")
     private String width;

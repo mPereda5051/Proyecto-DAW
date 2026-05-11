@@ -74,15 +74,14 @@ public class ImageController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/photos/search")
+    @GetMapping("/photos/searchStatic")
     public ResponseEntity<Page<Photo>> searchPhotos(
-            @RequestParam(required = false) String iso,
-            @RequestParam(required = false) String aperture,
-            @RequestParam(required = false) String exposure,
-            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer iso,
+            @RequestParam(required = false) Double aperture,
+            @RequestParam(required = false) Double exposure,
             @PageableDefault(size = 10, sort = "date") Pageable pageable
     ) {
-        Page<Photo> filteredPhotos = imageService.getFilteredPhotos(name, iso, aperture, exposure, pageable);
+        Page<Photo> filteredPhotos = imageService.getFilteredPhotosSingleValue(iso, aperture, exposure, pageable);
         return new ResponseEntity<>(filteredPhotos, HttpStatus.OK);
     }
 
@@ -91,8 +90,8 @@ public class ImageController {
             @ApiResponse(responseCode = "201", description = "Photos retrieved", content = @Content),
             @ApiResponse(responseCode = "404", description = "Photos not found", content = @Content)
     })
-    @GetMapping("/retrieve/{pageNumber}")
-    public ResponseEntity<Page<Photo>> retrievePostWithPagination(@PathVariable int pageNumber) {
-        return new ResponseEntity<>(imageService.retrievePhotosPageable(pageNumber), HttpStatus.OK);
+    @GetMapping("/retrieve")
+    public ResponseEntity<Page<Photo>> retrievePostWithPagination(@PageableDefault(size = 10, sort = "date") Pageable pageable) {
+        return new ResponseEntity<>(imageService.retrievePhotosPageable(pageable), HttpStatus.OK);
     }
 }

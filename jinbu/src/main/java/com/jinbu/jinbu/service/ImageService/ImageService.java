@@ -17,15 +17,21 @@ public interface ImageService {
 
     List<Photo> retrieveAllImages();
 
-    Page<Photo> retrievePhotosPageable(int pageNumber);
+    Page<Photo> retrievePhotosPageable(Pageable pageable);
 
     void deleteImageById(Long id);
 
-    Page<Photo> getFilteredPhotos(
-            String name,
-            String iso,
-            String aperture,
-            String exposure,
+    Page<Photo> getFilteredPhotosSingleValue(
+            Integer iso,
+            Double aperture,
+            Double exposure,
+            Pageable pageable
+    );
+
+    Page<Photo> getFilteredPhotosBetweenValue(
+            Integer isoMin, Integer isoMax,
+            Double apertureMin, Double apertureMax,
+            Double exposureMin, Double exposureMax,
             Pageable pageable
     );
 }

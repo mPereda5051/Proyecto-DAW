@@ -13,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,9 +59,9 @@ public class CommentController {
             @ApiResponse(responseCode = "200", description = "Comments found", content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "404", description = "Comments not found", content = @Content)
     })
-    @GetMapping("/{pageNumber}")
-    public ResponseEntity<Page<Comment>> getCommentById(@PathVariable int pageNumber) {
-        return new ResponseEntity<>(commentService.retrieveComments(pageNumber), HttpStatus.OK);
+    @GetMapping("/retrieve")
+    public ResponseEntity<Page<Comment>> getCommentById(@PageableDefault(size = 20) Pageable pageable) {
+        return new ResponseEntity<>(commentService.retrieveComments(pageable), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete comment by Id", description = "Deletes comment by Id (Long type).")

@@ -49,8 +49,7 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public List<PostDTO> retrievePosts(int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber, 10);
+    public List<PostDTO> retrievePosts(Pageable pageable) {
         return postRepository.findAll(pageable)
                 .stream()
                 .map(postMapper::toDTO)
