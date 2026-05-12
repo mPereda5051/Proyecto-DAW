@@ -52,7 +52,7 @@ export default function Login() {
                             />
 
                             <Button
-                                label="Iniciar Sesión" onClick={handleLogin}
+                                label="Iniciar Sesión" onClick={handleLogin} width="100%"
                             />
                             <p className="register-link">
                                 ¿No tienes cuenta? <a href="/register">Regístrate</a>
