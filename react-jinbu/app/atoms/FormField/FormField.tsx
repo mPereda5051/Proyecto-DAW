@@ -6,15 +6,23 @@ interface InputProps {
     placeholder?: string;
     value?: string;
     radio?: string;
+    Icon?: React.ElementType;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 
 
-export default function FormField({type = "text", placeholder = "Buscar...", value, radio, onChange }: InputProps) {
-    return (
+export default function FormField({
+    type = "text", 
+    placeholder = "Buscar...", 
+    value, 
+    radio, 
+    Icon = SearchIcon, 
+    
+    onChange }: InputProps) {
+        return (
         <div className="search-container">
-            <SearchIcon className="search-icon" />
+            <Icon className="search-icon" />
             <input
                 type={type}
                 placeholder={placeholder}
@@ -22,7 +30,6 @@ export default function FormField({type = "text", placeholder = "Buscar...", val
                 style={{ borderRadius: radio }}
                 onChange={onChange}
                 className="search-input"
-                         
             />
         </div>
     );

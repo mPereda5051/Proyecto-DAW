@@ -1,15 +1,13 @@
-  .btn {
-      width: 100%;
-      padding: 12px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-  }
+.btn {
+    padding: 12px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
 
-  .btn:hover {
-      background-color: #2980b9;
-  }
+.btn:hover {
+    background-color: var(--button-hover);
+}

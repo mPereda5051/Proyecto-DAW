@@ -35,7 +35,7 @@ export default function OpcionesPage() {
                         <label>Teléfono</label>
                         <Input type="text" placeholder="+34 600 000 000" value="+34 600 000 000" />
                     </div>
-                    <Button label="Guardar Cambios" onClick={() => {}} />
+                    <Button label="Guardar Cambios" onClick={() => {}} width='100%' />
                 </section>
 
                 <section className="opciones-card">
@@ -52,7 +52,7 @@ export default function OpcionesPage() {
                         <label>Confirmar nueva contraseña</label>
                         <Input type="password" placeholder="Confirmar nueva contraseña" value="" />
                     </div>
-                    <Button label="Cambiar Contraseña" onClick={() => {}} />
+                    <Button label="Cambiar Contraseña" onClick={() => {}} width='100%' />
                 </section>
             </div>
         </div>
