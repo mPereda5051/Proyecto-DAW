@@ -21,6 +21,7 @@ export const login = async (username: string, password: string) => {
   return response;
 };
 
+// Servicio que extraer el metadata de una foto. No guarda informacion en la base de datos
 export const extractMetadata = async (photo: File) => {
     const bearerToken = getToken();
 

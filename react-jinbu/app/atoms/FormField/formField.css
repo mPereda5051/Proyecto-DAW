@@ -29,3 +29,10 @@
     border: 1px solid white;
     background-color: rgba(255, 255, 255, 0.2);
 }
+
+.search-input:disabled {
+    cursor: not-allowed;
+    background-color: rgba(255, 255, 255, 0.05); 
+    color: rgba(255, 255, 255, 0.3); 
+    border-color: rgba(255, 255, 255, 0.1); 
+}

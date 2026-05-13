@@ -6,6 +6,7 @@ interface InputProps {
     placeholder?: string;
     value?: string;
     radio?: string;
+    disabled?: boolean;
     Icon?: React.ElementType;
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -16,7 +17,8 @@ export default function FormField({
     type = "text", 
     placeholder = "Buscar...", 
     value, 
-    radio, 
+    radio,
+    disabled = false, 
     Icon = SearchIcon, 
     
     onChange }: InputProps) {
@@ -28,6 +30,7 @@ export default function FormField({
                 placeholder={placeholder}
                 value={value}
                 style={{ borderRadius: radio }}
+                disabled={disabled}
                 onChange={onChange}
                 className="search-input"
             />

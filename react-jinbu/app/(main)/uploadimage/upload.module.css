@@ -1,6 +1,5 @@
-
-
-.upload-container {
+.uploadContainer {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,12 +8,12 @@
     gap: 20px;
 }
 
-.upload-title {
+.uploadTitle {
     color: white;
     font-family: sans-serif;
 }
 
-.droppable-area {
+.droppableArea {
     width: 500px;
     height: 300px;
     border: 2px dashed #444;
@@ -28,13 +27,13 @@
 }
 
 
-.droppable-area.is-over {
+.droppableArea.isOver {
     border-color: var(--primary-color);
     background-color: rgba(45, 212, 191, 0.1);
     transform: scale(1.02);
 }
 
-.upload-placeholder {
+.uploadPlceholder {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,13 +41,13 @@
     pointer-events: none;
 }
 
-.preview-img {
+.previewImg {
     width: 100%;
     height: 100%;
     object-fit: cover; 
 }
 
-.reset-btn {
+.resetBtn {
     padding: 10px 20px;
     background-color: #333;
     color: white;
@@ -57,7 +56,7 @@
     cursor: pointer;
 }
 
-.reset-btn:hover {
+.resetBtn:hover {
     background-color: #444;
 }
 
@@ -65,4 +64,18 @@
     display: flex;
     flex-direction: row;
     gap: 20px;
+}
+
+.main {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.form {
+    flex: 1; 
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
 }

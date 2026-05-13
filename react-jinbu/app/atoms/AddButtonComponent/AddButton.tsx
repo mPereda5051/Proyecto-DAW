@@ -10,7 +10,7 @@ export default function AddButton() {
 
     return (
         <button id="addPhoto" onClick={() => imageUploadPage()}>
-            <p id="addPhotoText">Add photo</p>
+            <p id="addPhotoText">Subir foto</p>
             <span id="addIcon"><AddIcon /></span>
         </button>
     );
