@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styles from './upload.module.css';
 import Button from '@/app/atoms/Button/Button';
 import { useRouter } from 'next/navigation';
-import { extractMetadata } from '@/app/services/authService';
+import { extractMetadata } from '@/app/services/postService';
 import FormField from '@/app/atoms/FormField/FormField';
 
 import { Title, AddComment, Exposure, Iso, Camera } from '@mui/icons-material';
@@ -11,8 +11,12 @@ import { Title, AddComment, Exposure, Iso, Camera } from '@mui/icons-material';
 export default function UploadImage() {
     const router = useRouter();
 
-     // Boolean que cambia cuando el usuario sube una foto
+    // Boolean que cambia cuando el usuario sube una foto
+    const [metadata, setMetadata] = useState<any>(null);
     const [isPhotoNotUpload, setIsPhotoNotUpload] = useState(true);
+
+    const [title, setTitle] = useState('');
+    const [message, setMessage] = useState('');
 
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [imageFile, setImage] = useState<File | null>(null);
@@ -42,10 +46,8 @@ export default function UploadImage() {
         if (!imageFile) return; // Meter mensaje de error para informar al usuario
 
         try {
-            const metadata = await extractMetadata(imageFile);
-
-            // Se guarda la imagen en el localStorage 
-            localStorage.setItem('metadata', JSON.stringify(metadata));
+            // Guardamos metadata en el useState
+            setMetadata(await extractMetadata(imageFile));
 
             // Desbloqueamos los campos de ISO, Aperture, Exposure y Submit
             setIsPhotoNotUpload(false);
@@ -59,12 +61,12 @@ export default function UploadImage() {
         setImage(null);
         setImagePreview(null);
         setIsPhotoNotUpload(true);
+        setMetadata(null);
     };
 
     const redirectionHandler = () => {
         alert("Redireccion");
-
-        router.push('/')
+        alert(metadata.exposure)
     }
 
     return (
@@ -94,19 +96,68 @@ export default function UploadImage() {
                     <>
                         <div className={styles.dragDropButtons}>
                             <Button label='Remove Image' onClick={() => removeImage()} width='150px' />
-                            <Button label='Next' onClick={() => finishUpload()} width='150px' />
+                            <Button label='Next' onClick={() => finishUpload()} width='150px' disabled={!isPhotoNotUpload} />
                         </div>
                     </>
                 )}
             </div>
 
-
             <div className={styles.form}>
-                <FormField placeholder='Título' Icon={Title} radio='10px' />
-                <FormField placeholder='Mensaje' Icon={AddComment} radio='10px' />
-                <FormField placeholder='ISO' Icon={Iso} radio='10px' disabled={isPhotoNotUpload} />
-                <FormField placeholder='Apertura' Icon={Camera} radio='10px' disabled={isPhotoNotUpload}/>
-                <FormField placeholder='Exposición' Icon={Exposure} radio='10px' disabled={isPhotoNotUpload}/>
+                <FormField 
+                placeholder='Título' 
+                Icon={Title} 
+                radio='10px' 
+                onChange={(e :React.ChangeEvent<HTMLInputElement>) => {
+                    setTitle(e.target.value);
+                }}
+                />
+                <FormField 
+                placeholder='Mensaje' 
+                Icon={AddComment} 
+                radio='10px' 
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setMessage(e.target.value);
+                }}
+                />
+                <FormField
+                    placeholder='ISO'
+                    Icon={Iso}
+                    radio='10px'
+                    disabled={isPhotoNotUpload}
+                    value={metadata?.iso || ''}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setMetadata({
+                            ...metadata,          
+                            iso: e.target.value 
+                        });
+                    }}
+                />
+                <FormField
+                    placeholder='Apertura'
+                    Icon={Camera}
+                    radio='10px'
+                    disabled={isPhotoNotUpload}
+                    value={metadata?.aperture || ''}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setMetadata({
+                            ...metadata,          
+                            aperture: e.target.value 
+                        });
+                    }}
+                />
+                <FormField
+                    placeholder='Exposición'
+                    Icon={Exposure}
+                    radio='10px'
+                    disabled={isPhotoNotUpload}
+                    value={metadata?.exposure || ''}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setMetadata({
+                            ...metadata,          
+                            exposure: e.target.value 
+                        });
+                    }}
+                />
                 <Button label='Enviar' onClick={() => redirectionHandler()} width='100%' disabled={isPhotoNotUpload} />
             </div>
         </div>

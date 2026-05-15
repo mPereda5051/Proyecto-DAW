@@ -37,8 +37,8 @@ public class ImageController {
             @ApiResponse(responseCode = "500", description = "Error uploading image", content = @Content)
     })
     @PostMapping("/upload")
-    public ResponseEntity<HttpStatus> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
-        imageService.store(file);
+    public ResponseEntity<HttpStatus> uploadImage(@RequestBody Photo photo,@RequestParam("file") MultipartFile file) throws IOException {
+        imageService.store(photo, file);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
