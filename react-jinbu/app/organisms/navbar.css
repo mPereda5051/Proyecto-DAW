@@ -209,3 +209,22 @@
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin: 5px 0;
   }
+
+  @media (max-width: 768px) {
+
+    /* Oculta la barra de búsqueda */
+    .navbar-search-wrapper {
+      display: none;
+    }
+
+    /* Oculta el texto "Subir foto", deja solo el icono */
+    #addPhotoText {
+      display: none;
+    }
+
+    /* Oculta el texto "Perfil", deja solo el avatar */
+    .user-profile p {
+      display: none;
+    }
+
+  }
