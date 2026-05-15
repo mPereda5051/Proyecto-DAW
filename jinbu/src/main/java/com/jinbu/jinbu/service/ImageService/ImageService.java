@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ImageService {
 
-    void store(MultipartFile file) throws IOException;
+    void store(Photo photo, MultipartFile file) throws IOException;
 
     String retrieveImageUrl(Long id);
 

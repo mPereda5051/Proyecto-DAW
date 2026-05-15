@@ -28,8 +28,8 @@ public class ImageServiceImplementation implements ImageService{
 
     @Transactional
     @Override
-    public void store(MultipartFile file) throws IOException {
-        Long photoId = localImageStorage.storeMetadata(file);
+    public void store(Photo photo, MultipartFile file) throws IOException {
+        Long photoId = localImageStorage.storeMetadata(photo);
 
         // Anadir exceptions personalizados
         try {

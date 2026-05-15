@@ -7,6 +7,7 @@ import com.jinbu.jinbu.exceptions.EntityNotFoundException;
 import com.jinbu.jinbu.mappers.PostMapper;
 import com.jinbu.jinbu.repository.PhotoRepository;
 import com.jinbu.jinbu.repository.PostRepository;
+import com.jinbu.jinbu.service.ImageService.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,7 @@ public class PostServiceImplementation implements PostService {
     PhotoRepository photoRepository;
     PostRepository postRepository;
     PostMapper postMapper;
+    ImageService imageService;
 
     @Override
     public PostDTO getPost(Long id) {
