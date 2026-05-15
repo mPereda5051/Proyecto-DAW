@@ -157,3 +157,55 @@
 .user-profile:hover .user-avatar {
     background-color: var(--primary-color);
 }
+
+  .user-profile-wrapper {
+    position: relative;
+  }
+
+  .profile-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px 0;
+    min-width: 180px;
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-dropdown p {
+    padding: 8px 16px;
+    margin: 0;
+    font-size: 13px;
+    color: #888;
+  }
+
+  .profile-dropdown a,
+  .profile-dropdown button {
+    padding: 10px 16px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .profile-dropdown a:hover,
+  .profile-dropdown button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+  }
+
+  .profile-dropdown hr {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 5px 0;
+  }
