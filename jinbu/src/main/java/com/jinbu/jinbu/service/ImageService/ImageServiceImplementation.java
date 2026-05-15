@@ -48,6 +48,15 @@ public class ImageServiceImplementation implements ImageService{
     }
 
     @Override
+    public Photo retrieveLocalMetadata(MultipartFile photo) {
+        try {
+            return localImageStorage.retrieveMetadata(photo);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Photo> retrieveAllImages() {
         return photoRepository.findAll();
     }
