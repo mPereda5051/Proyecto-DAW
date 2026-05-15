@@ -15,6 +15,8 @@ public interface ImageService {
 
     String retrieveImageUrl(Long id);
 
+    Photo retrieveLocalMetadata(MultipartFile photo);
+
     List<Photo> retrieveAllImages();
 
     Page<Photo> retrievePhotosPageable(Pageable pageable);
