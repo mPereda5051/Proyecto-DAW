@@ -13,6 +13,7 @@ public interface PostService {
     PostDTO getPost(Long id);
     void deletePost(Long id);
     List<PostDTO> getPostsByUserId(Long userId);
+    List<PostDTO> getPostsByUsername(String username);
     void createPost(Post post, Photo photo);
     List<PostDTO> retrievePosts(Pageable pageable);
     void likePost(Long id);

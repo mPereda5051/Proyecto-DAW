@@ -43,6 +43,14 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
+    public List<PostDTO> getPostsByUsername(String username) {
+        return postRepository.findByUserUsername(username)
+                .stream()
+                .map(postMapper::toDTO)
+                .toList();
+    }
+
+    @Override
     public void createPost(Post post, Photo photo) {
         post.setPhoto(photo);
         photo.setPost(post);

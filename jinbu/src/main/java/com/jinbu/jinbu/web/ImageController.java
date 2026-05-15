@@ -42,12 +42,6 @@ public class ImageController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    // Temporal/Testing, no podemos pedir all en la aplicacion final
-    @Operation(summary = "Get all images", description = "Get all images from the database (Metadata and S3 link (Warning: Puede causar problemas de estabilidad))")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Images retrieved",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Photo.class))))
-    })
     @GetMapping("/all")
     public ResponseEntity<List<Photo>> getAllImages() {
         return new ResponseEntity<>(imageService.retrieveAllImages(), HttpStatus.OK);

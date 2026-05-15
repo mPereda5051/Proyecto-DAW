@@ -37,9 +37,9 @@ public class LocalImageStorage {
             ExifSubIFDDirectory exifDirectory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 
             Date date = exifDirectory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
-            String iso = exifDirectory.getString(ExifSubIFDDirectory.TAG_ISO_EQUIVALENT);
-            String aperture = exifDirectory.getString(ExifSubIFDDirectory.TAG_FNUMBER);
-            String exposureTime = exifDirectory.getString(ExifSubIFDDirectory.TAG_EXPOSURE_TIME);
+            Integer iso = exifDirectory.getInteger(ExifSubIFDDirectory.TAG_ISO_EQUIVALENT);
+            Double aperture = exifDirectory.getDoubleObject(ExifSubIFDDirectory.TAG_FNUMBER);
+            Double exposureTime = exifDirectory.getDoubleObject(ExifSubIFDDirectory.TAG_EXPOSURE_TIME);
             String width = exifDirectory.getString(ExifSubIFDDirectory.TAG_EXIF_IMAGE_WIDTH);
             String height = exifDirectory.getString(ExifSubIFDDirectory.TAG_EXIF_IMAGE_HEIGHT);
 

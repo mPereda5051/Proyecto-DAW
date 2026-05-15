@@ -11,6 +11,7 @@ export default function Login() {
     const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleLogin = async () => {
         if (username === "" || password === "") {
@@ -18,12 +19,14 @@ export default function Login() {
             return;
         }
 
+        setLoading(true);
         try {
             await login(username, password);
-            console.log("Login exitoso");
             router.push("/");
         } catch (error) {
             alert("Usuario o contraseña incorrectos");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -52,7 +55,10 @@ export default function Login() {
                             />
 
                             <Button
-                                label="Iniciar Sesión" onClick={handleLogin} width="100%"
+                                label={loading ? "Cargando..." : "Iniciar Sesión"} 
+                                onClick={handleLogin} 
+                                width="100%"
+                                disabled={loading}
                             />
                             <p className="register-link">
                                 ¿No tienes cuenta? <a href="/register">Regístrate</a>

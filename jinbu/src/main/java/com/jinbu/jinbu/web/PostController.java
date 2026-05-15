@@ -38,27 +38,21 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO> getPostById(@PathVariable Long id) {
         return new ResponseEntity<>(postService.getPost(id), HttpStatus.OK);
-
     }
 
-    // Temporal, solo para test
-//    @Operation(summary = "Get alls post", description = "Get all posts (WARNING: Puede causar problemas de optimizacion).")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Posts retrieved", content = @Content(schema = @Schema(implementation = PostDTO.class)))
-//    })
-//    @GetMapping("/all")
-//    public ResponseEntity<List<PostDTO>> getPosts() {
-//        return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
-//    }
+    @GetMapping("/all/{id}")
+    public ResponseEntity<List<PostDTO>> getPostByUserId(@PathVariable Long userId) {
+        return new ResponseEntity<>(postService.getPostsByUserId(userId), HttpStatus.OK);
+    }
 
-    @Operation(summary = "Get all post from one user", description = "Fetch all post by a User ID (Long type).")
+    @Operation(summary = "Get all post from one user by username", description = "Fetch all post by a username.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Posts retrieved", content = @Content(schema = @Schema(implementation = PostDTO.class))),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
-    @GetMapping("/all/{id}")
-    public ResponseEntity<List<PostDTO>> getPostByUserId(@PathVariable Long userId) {
-        return new ResponseEntity<>(postService.getPostsByUserId(userId), HttpStatus.OK);
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<PostDTO>> getPostsByUsername(@PathVariable String username) {
+        return new ResponseEntity<>(postService.getPostsByUsername(username), HttpStatus.OK);
     }
 
     @Operation(summary = "Save post with text and image", description = "Saves post information (Tiene que contener la informacion del schema de post)")

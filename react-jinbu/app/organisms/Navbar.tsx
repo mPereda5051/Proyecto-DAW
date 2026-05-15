@@ -6,14 +6,17 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import AddButton from '../atoms/AddButtonComponent/AddButton';
 import FormField from '../atoms/FormField/FormField';
+import { getCurrentUsername } from '@/app/services/authService';
 
 
 export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [username, setUsername] = useState<string | null>(null);
   
   useEffect(() => {
     setMounted(true);
+    setUsername(getCurrentUsername());
   }, []);
 
   const toggleMenu = () => {
@@ -43,10 +46,12 @@ export default function Navbar() {
         {/* perfil */}
         <div className="menu-actions">
           <AddButton />
-          <div className="user-profile">
-            <p>Perfil</p>
-            <div className="user-avatar"></div>
-          </div>
+          <Link href={username ? `/profile/${username}` : "/login"} className="user-profile-link">
+            <div className="user-profile">
+              <p>Perfil</p>
+              <div className="user-avatar"></div>
+            </div>
+          </Link>
         </div>
       </header>
 

@@ -1,23 +1,8 @@
+"use client";
+import { useEffect, useState } from "react";
 import ProfileSection from "@/app/organisms/ProfileSection/ProfileSection";
 import ProfileGrid from "@/app/organisms/ProfileGrid/ProfileGrid";
-const UserTest = {
-    avatarSrc: "https://i.pravatar.cc/150",
-    avatarAlt: "User Avatar",
-    username: "David_foto",
-    bio: "Fotógrafo apasionado por capturar momentos únicos.",
-    posts: 120,
-    followers: 450,
-    following: 180
-}
-
-const photosTest = [
-    { id: 1, title: "Foto 1", src: "https://picsum.photos/seed/1/300" },
-    { id: 2, title: "Foto 2", src: "https://picsum.photos/seed/2/300" },
-    { id: 3, title: "Foto 3", src: "https://picsum.photos/seed/3/300" },
-    { id: 4, title: "Foto 4", src: "https://picsum.photos/seed/4/300" },
-    { id: 5, title: "Foto 5", src: "https://picsum.photos/seed/5/300" },
-    { id: 6, title: "Foto 6", src: "https://picsum.photos/seed/6/300" },
-];
+import { getUserProfile, getUserPosts } from "@/app/services/userService";
 
 interface ProfilePageProps {
     params: {
@@ -26,18 +11,50 @@ interface ProfilePageProps {
 }
 
 export default function ProfilePage({ params }: ProfilePageProps) {
+    const [user, setUser] = useState<any>(null);
+    const [photos, setPhotos] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                // Pedimos los datos del perfil y los posts en paralelo
+                const [profileData, postsData] = await Promise.all([
+                    getUserProfile(params.username),
+                    getUserPosts(params.username)
+                ]);
+                
+                setUser(profileData);
+                setPhotos(postsData);
+            } catch (error) {
+                console.error("Error cargando el perfil:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadData();
+    }, [params.username]);
+
+    if (loading) return <div style={{ padding: "2rem", textAlign: "center" }}>Cargando perfil...</div>;
+    if (!user) return <div style={{ padding: "2rem", textAlign: "center" }}>Usuario no encontrado</div>;
+
     return (
         <main>
             <ProfileSection
-                avatarSrc={UserTest.avatarSrc}
-                avatarAlt={UserTest.avatarAlt}
-                username={params.username}
-                bio={UserTest.bio}
-                posts={UserTest.posts}
-                followers={UserTest.followers}
-                following={UserTest.following}
+                avatarSrc={user.avatarUrl || "https://i.pravatar.cc/150"} // Usar avatar de la DB o uno por defecto
+                avatarAlt={user.username}
+                username={user.username}
+                bio={user.bio || "Sin biografía"}
+                posts={photos.length}
+                followers={user.followersCount || 0}
+                following={user.followingCount || 0}
             />
-            <ProfileGrid photos={photosTest} />
+            <ProfileGrid photos={photos.map(p => ({
+                id: p.id,
+                title: p.title || "Sin título",
+                src: p.photoUrl || "https://picsum.photos/seed/error/300"
+            }))} />
         </main>
     );
 }

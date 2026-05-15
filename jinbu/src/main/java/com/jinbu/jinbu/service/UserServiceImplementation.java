@@ -6,6 +6,7 @@ import com.jinbu.jinbu.exceptions.EntityNotFoundException;
 import com.jinbu.jinbu.mappers.UserMapper;
 import com.jinbu.jinbu.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ public class UserServiceImplementation implements UserService {
 
     UserRepository userRepository;
     UserMapper userMapper;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDTO getUser(Long id) {
@@ -26,12 +28,20 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public UserDTO getUserByUsername(String username) {
+        return userMapper.toDTO(userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException(0L, User.class)));
+    }
+
+    @Override
+    public User getUserEntityByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException(0L, User.class));
     }
 
     @Override
     public UserDTO saveUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userMapper.toDTO(userRepository.save(user));
     }
 

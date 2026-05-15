@@ -23,7 +23,7 @@ public class JinbuApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		if (userRepository.findByUsername("test") == null) {
+		if (userRepository.findByUsername("test").isEmpty()) {
 			User[] users = new User[] {
 					new User("pep", bCryptPasswordEncoder().encode("sui"), "pep@gmail.com"),
 					new User("test", bCryptPasswordEncoder().encode("sui"), "test@gmail.com")

@@ -122,10 +122,16 @@
 }
 
 .menu-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
+
+.user-profile-link {
+  text-decoration: none;
+  color: inherit;
+}
+
 
 .user-profile {
     display: flex;

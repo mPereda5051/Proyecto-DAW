@@ -36,6 +36,16 @@ public class AdminUserManagerController {
         return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get user by username", description = "Fetch user information by its username.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User found", content = @Content(schema = @Schema(implementation = UserDTO.class))),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
+    @GetMapping("/profile/{username}")
+    public ResponseEntity<UserDTO> getUserByUsername(@PathVariable String username) {
+        return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
+    }
+
     @Operation(summary = "Save user", description = "Saves user information (Tiene que contener la informacion del schema de user)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User created", content = @Content(schema = @Schema(implementation = UserDTO.class))),
