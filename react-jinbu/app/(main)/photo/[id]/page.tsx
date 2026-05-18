@@ -1,5 +1,6 @@
 import "./photoDetail.css";
 import SendIcon from '@mui/icons-material/Send';
+import LikeButton from "@/app/atoms/LikeButton/LikeButton";
 
 // Aqui se llamaria a la API para obtener la foto
 export default async function PhotoDetailPage(props: { params: Promise<{ id: string }> }) {
@@ -39,6 +40,7 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
                     </div>
                 </main>
 
+                <LikeButton initialCount={42} />
                 <footer className="comment-input-section">
                     <input 
                         type="text" 

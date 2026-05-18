@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PhotoData } from "./PhotoData";
+import LikeButton from "@/app/atoms/LikeButton/LikeButton";
 
 export default function PhotoCard(photoProps: PhotoData) {
     const photo = photoProps;
@@ -21,6 +22,7 @@ export default function PhotoCard(photoProps: PhotoData) {
                             <span> • </span>
                             <span>f/2.8</span>
                         </div>
+                        <LikeButton />
                     </div>
                 </div>
             </div>
