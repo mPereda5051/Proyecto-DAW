@@ -2,6 +2,7 @@ package com.jinbu.jinbu.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -29,9 +30,11 @@ public class Post {
     private Instant updatedOn;
 
     @Column(name = "title")
+    @NotBlank
     private String title;
 
     @Column(name = "content")
+    @NotBlank
     private String content;
 
     @Column(name = "likes")

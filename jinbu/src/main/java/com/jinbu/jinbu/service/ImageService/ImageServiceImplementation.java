@@ -1,14 +1,11 @@
 package com.jinbu.jinbu.service.ImageService;
 
-import com.jinbu.jinbu.DTOs.PostDTO;
-import com.jinbu.jinbu.constants.AppConstants;
 import com.jinbu.jinbu.entities.Photo;
 import com.jinbu.jinbu.exceptions.EntityNotFoundException;
 import com.jinbu.jinbu.repository.PhotoRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -28,7 +26,7 @@ public class ImageServiceImplementation implements ImageService{
 
     @Transactional
     @Override
-    public void store(Photo photo, MultipartFile file) throws IOException {
+    public Optional<Photo> store(Photo photo, MultipartFile file) throws IOException {
         Long photoId = localImageStorage.storeMetadata(photo);
 
         // Anadir exceptions personalizados
@@ -37,6 +35,8 @@ public class ImageServiceImplementation implements ImageService{
         } catch (IOException | RuntimeException e) {
             throw new RuntimeException("Upload failed", e);
         }
+
+        return photoRepository.findById(photoId);
     }
 
     @Override

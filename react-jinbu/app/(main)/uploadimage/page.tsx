@@ -3,10 +3,14 @@ import React, { useState } from 'react';
 import styles from './upload.module.css';
 import Button from '@/app/atoms/Button/Button';
 import { useRouter } from 'next/navigation';
-import { extractMetadata } from '@/app/services/postService';
 import FormField from '@/app/atoms/FormField/FormField';
-
 import { Title, AddComment, Exposure, Iso, Camera } from '@mui/icons-material';
+// Models
+import { Photo } from '@/app/services/models/photo';
+import { Post } from '@/app/services/models/post';
+// Servicios
+import { extractMetadata } from '@/app/services/postService';
+import { uploadPhotoAndPost } from '@/app/services/postService';
 
 export default function UploadImage() {
     const router = useRouter();
@@ -64,9 +68,31 @@ export default function UploadImage() {
         setMetadata(null);
     };
 
-    const redirectionHandler = () => {
-        alert("Redireccion");
-        alert(metadata.exposure)
+    const redirectionHandler = async () => {
+        const photo: Photo = {
+            name: '',
+            iso: metadata.iso,
+            aperture: metadata.aperture,
+            exposure: metadata.exposure,
+            width: metadata.width,
+            height: metadata.height,
+            extension: metadata.extension
+        }
+
+        const post: Post = {
+            title: title,
+            content: message
+        }
+        try {
+            if (!imageFile) return; 
+
+            await uploadPhotoAndPost(post, photo, imageFile);
+
+            alert("Redireccion");
+        } catch (error) {
+            console.error("Error subiendo archivo: ", error);
+            alert("error temporal")
+        }
     }
 
     return (

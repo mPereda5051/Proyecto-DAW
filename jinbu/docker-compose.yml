@@ -14,5 +14,18 @@ services:
       - '3306'
     volumes:
       - my-db:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 300M
+    depends_on:
+      - db
+
 volumes:
   my-db:

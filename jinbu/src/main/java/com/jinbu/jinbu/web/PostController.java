@@ -1,6 +1,7 @@
 package com.jinbu.jinbu.web;
 
 import com.jinbu.jinbu.DTOs.PostDTO;
+import com.jinbu.jinbu.DTOs.PostWithPhotoDTO;
 import com.jinbu.jinbu.entities.Photo;
 import com.jinbu.jinbu.entities.Post;
 import com.jinbu.jinbu.service.PostService;
@@ -18,7 +19,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @AllArgsConstructor
@@ -60,9 +63,14 @@ public class PostController {
             @ApiResponse(responseCode = "201", description = "Post created", content = @Content(schema = @Schema(implementation = PostDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
-    @PostMapping
-    public ResponseEntity<HttpStatus> savePost(@RequestBody @Valid Post post, @RequestBody Photo photo) {
-        postService.createPost(post, photo);
+    @PostMapping("/upload")
+    public ResponseEntity<HttpStatus> savePost(
+            @RequestPart("post") @Valid Post post,
+            @RequestPart("photo") Photo photo,
+            @RequestPart("file") MultipartFile file
+    ) throws IOException {
+        postService.createPost(post, photo, file);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

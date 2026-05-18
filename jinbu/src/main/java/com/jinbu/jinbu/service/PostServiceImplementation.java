@@ -9,11 +9,15 @@ import com.jinbu.jinbu.repository.PhotoRepository;
 import com.jinbu.jinbu.repository.PostRepository;
 import com.jinbu.jinbu.service.ImageService.ImageService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @AllArgsConstructor
@@ -53,9 +57,12 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public void createPost(Post post, Photo photo) {
-        post.setPhoto(photo);
-        photo.setPost(post);
+    public void createPost(Post post, Photo photo, MultipartFile multipartFile) throws IOException {
+        Photo photoSaved = imageService.store(photo, multipartFile)
+                .orElseThrow(() -> new EntityNotFoundException(photo.getId(), Photo.class));
+
+        post.setPhoto(photoSaved);
+        postRepository.save(post);
     }
 
     @Override
