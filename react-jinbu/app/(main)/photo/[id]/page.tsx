@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import "./photoDetail.css";
 import SendIcon from '@mui/icons-material/Send';
 import LikeButton from "@/app/atoms/LikeButton/LikeButton";
@@ -11,11 +12,7 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
     try {
         post = await getPost(id);
     } catch (error) {
-        return (
-            <div className="photo-detail-container">
-                <p>Error al cargar la foto o el post no existe.</p>
-            </div>
-        );
+        notFound();
     }
 
     const imageUrl = `https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/${post.photo.id}${post.photo.extension}`;
