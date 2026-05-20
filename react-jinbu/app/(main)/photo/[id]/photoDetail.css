@@ -60,6 +60,18 @@
     max-height: 400px;
 }
 
+.post-content {
+    margin-bottom: 20px;
+    font-style: italic;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+.interaction-section {
+    padding: 10px 20px;
+    border-bottom: 1px solid #333;
+}
+
 .comment {
     margin-bottom: 15px;
 }

@@ -38,7 +38,7 @@ public class Post {
     private String content;
 
     @Column(name = "likes")
-    private Long likes;
+    private Long likes = 0L;
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
     private Photo photo;

@@ -1,46 +1,59 @@
 import "./photoDetail.css";
 import SendIcon from '@mui/icons-material/Send';
 import LikeButton from "@/app/atoms/LikeButton/LikeButton";
+import { getPost } from "@/app/services/postService";
 
-// Aqui se llamaria a la API para obtener la foto
 export default async function PhotoDetailPage(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
     const { id } = params;
+
+    let post;
+    try {
+        post = await getPost(id);
+    } catch (error) {
+        return (
+            <div className="photo-detail-container">
+                <p>Error al cargar la foto o el post no existe.</p>
+            </div>
+        );
+    }
+
+    const imageUrl = `https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/${post.photo.id}${post.photo.extension}`;
 
     return (
         <div className="photo-detail-container">
             {/* Panel Izquierdo: La Imagen */}
             <div className="image-panel">
                 <img 
-                    src="https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/2JPG" //Placeholder
-                    alt="Foto de detalle" 
+                    src={imageUrl}
+                    alt={post.title} 
                 />
             </div>
 
             {/* Panel Derecho: Información y Comentarios */}
             <div className="info-panel">
                 <header className="info-header">
-                    <h1>Título de la foto {id}</h1>
+                    <h1>{post.title}</h1>
                     <div className="metadata">
-                        <span>ISO 100</span>
-                        <span>F/11</span>
-                        <span>1/200s</span>
+                        <span>ISO {post.photo.iso}</span>
+                        <span>F/{post.photo.aperture}</span>
+                        <span>{post.photo.exposure}s</span>
                     </div>
                 </header>
-                    {/* Comentarios de ejemplo para visualizar como se veria*/}
 
                 <main className="comments-section">
+                    <p className="post-content">{post.content}</p>
+                    {/* Comentarios de ejemplo - En el futuro se podrian traer de la API */}
                     <div className="comment">
                         <span className="comment-user">usuario_123</span>
                         <span className="comment-text">dios mio que es eso?!!</span>
                     </div>
-                    <div className="comment">
-                        <span className="comment-user">NoobMaster69</span>
-                        <span className="comment-text">e visto mejores</span>
-                    </div>
                 </main>
 
-                <LikeButton initialCount={42} />
+                <div className="interaction-section">
+                    <LikeButton initialCount={post.likes} postId={Number(id)} />
+                </div>
+
                 <footer className="comment-input-section">
                     <input 
                         type="text" 

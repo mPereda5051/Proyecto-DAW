@@ -1,16 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import ProfileSection from "@/app/organisms/ProfileSection/ProfileSection";
 import ProfileGrid from "@/app/organisms/ProfileGrid/ProfileGrid";
 import { getUserProfile, getUserPosts } from "@/app/services/userService";
 
 interface ProfilePageProps {
-    params: {
+    params: Promise<{
         username: string;
-    }
+    }>
 }
 
 export default function ProfilePage({ params }: ProfilePageProps) {
+    const { username } = use(params);
     const [user, setUser] = useState<any>(null);
     const [photos, setPhotos] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -20,8 +21,8 @@ export default function ProfilePage({ params }: ProfilePageProps) {
             try {
                 // Pedimos los datos del perfil y los posts en paralelo
                 const [profileData, postsData] = await Promise.all([
-                    getUserProfile(params.username),
-                    getUserPosts(params.username)
+                    getUserProfile(username),
+                    getUserPosts(username)
                 ]);
                 
                 setUser(profileData);
@@ -34,7 +35,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
         };
 
         loadData();
-    }, [params.username]);
+    }, [username]);
 
     if (loading) return <div style={{ padding: "2rem", textAlign: "center" }}>Cargando perfil...</div>;
     if (!user) return <div style={{ padding: "2rem", textAlign: "center" }}>Usuario no encontrado</div>;

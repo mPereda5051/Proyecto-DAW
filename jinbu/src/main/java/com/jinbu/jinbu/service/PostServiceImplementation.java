@@ -79,6 +79,7 @@ public class PostServiceImplementation implements PostService {
                 .orElseThrow(() -> new EntityNotFoundException(id, Post.class));
 
         likedPost.setLikes(likedPost.getLikes() + 1L);
+        postRepository.save(likedPost);
     }
 
     @Override
@@ -87,6 +88,7 @@ public class PostServiceImplementation implements PostService {
                 .orElseThrow(() -> new EntityNotFoundException(id, Post.class));
 
         unlikedPost.setLikes(unlikedPost.getLikes() - 1L);
+        postRepository.save(unlikedPost);
     }
 
 

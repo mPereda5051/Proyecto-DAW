@@ -62,6 +62,54 @@ export const uploadPhotoAndPost = async (post: Post, photo: Photo, file: File) =
     return response; 
 };
 
+export const getPost = async (id: string) => {
+    const response = await fetch(`http://localhost:9090/posts/${id}`, {
+        method: 'GET',
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al obtener el post");
+    }
+
+    return response.json();
+};
+
+export const likePost = async (id: number) => {
+    const bearerToken = getToken();
+    if (!bearerToken) throw new Error("UNAUTHORIZED");
+
+    const response = await fetch(`http://localhost:9090/posts/${id}/like`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al dar like");
+    }
+
+    return response;
+};
+
+export const dislikePost = async (id: number) => {
+    const bearerToken = getToken();
+    if (!bearerToken) throw new Error("UNAUTHORIZED");
+
+    const response = await fetch(`http://localhost:9090/posts/${id}/dislike`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al quitar like");
+    }
+
+    return response;
+};
+
 export const getToken = () => {
     return localStorage.getItem('token');
 };
