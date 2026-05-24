@@ -20,7 +20,8 @@ public class S3Config {
     @Value("${cloud.aws.region.static}")
     private String region;
 
-    private String sessionKey = "";
+    // Token session key
+    private String sessionKey = "IQoJb3JpZ2luX2VjEIf//////////wEaCXVzLXdlc3QtMiJIMEYCIQDVq99aqRy65mpsxKWdj+3KgKHdk0ycmeXfXAPESKGbdAIhALIW+4zxNxjWwM25HHeS+2Z7ExAco5cXX0eOhDtv1U8JKrgCCFAQARoMNjgzOTk5MzYxNjcxIgzltW4p/IW+o9InI44qlQIMUGlXWekS1nk4XdgWSJ+cOH/TJOiTi6UgGuxgTh4Uj4J/6vIh2aQzSo2atWX0tvXiN8jvQvccXGNihBgxHcpx+/s3m0EsWlGvRdYZfj/SszPEnxoSbA+EfZ1x2AuHgHz0+/XHnzXz9gMd4kDH+cki9OTEQ4jPzn4pXRQQPm3uAy0HMbfslnyLb1eVw6IZkM4Sf5Zdc8HZcgtQq/XgCZokoCKOJKkUW9bsBK5twJvlm3Ggz+D24qTOK7/ZHrwHFCeTCC4AdQ/lZhOOwT1Cl0Qb9lf8RgYFFy3XvmjRtGlBrDQrbe5rE9rm6vKdct2wU0tcEIY2DjUsrHVtK47K8yTC5Q77xAFVnaPf3rJ/4x+rRXxwDBgZMN+rzNAGOpwBNeGQ/hLzoUSOB1lIKyIs5Wv+HQB+GFl0E1TO5jWBTIVJ9vnUrCk9gBnevV0Sn8g2Al50TtoKnfqIg/ncO++pV0JC68aOXdzSYz6Nb2ZAZqfNhytoBELpjOXiqb1fzmLyXZK8f6TTSqL1yrmKcM6V/njf+M1MHSTkDnQhqUfRhFEyqLy7AwC/50POVmj5hAXKELtO/p49UpxmvoBY";
 
     @Bean
     public S3Client s3Client() {

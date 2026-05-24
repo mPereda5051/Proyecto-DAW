@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './upload.module.css';
 import Button from '@/app/atoms/Button/Button';
 import { useRouter } from 'next/navigation';
@@ -26,6 +26,9 @@ export default function UploadImage() {
     const [imageFile, setImage] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState(false);
 
+    // Referencia para el input del archivo a traves del boton
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
     const handleDragOver = (e: React.DragEvent) => {
         e.preventDefault();
         setIsDragging(true);
@@ -36,6 +39,19 @@ export default function UploadImage() {
         setIsDragging(false);
 
         const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            setImage(file);
+            reader.onload = () => {
+                setImagePreview(reader.result as string)
+            }
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // Evento para boton dragandrop
+    const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
         if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
             setImage(file);
@@ -113,7 +129,14 @@ export default function UploadImage() {
                         <img src={imagePreview} alt="Preview" className={styles.previewImg} />
                     ) : (
                         <div className={styles.uploadPlaceholder}>
-                            <span style={{ fontSize: '3rem', color: 'white' }}>Button for opening files</span>
+                            <Button label="Seleccionar archivo" onClick={() => fileInputRef.current?.click()} width="200px" />
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleFileInputChange}
+                                accept="image/*"
+                                style={{ display: 'none' }}
+                            />
                         </div>
                     )}
                 </div>

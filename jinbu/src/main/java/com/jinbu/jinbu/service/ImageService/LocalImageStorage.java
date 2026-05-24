@@ -29,6 +29,11 @@ public class LocalImageStorage {
 
             ExifSubIFDDirectory exifDirectory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 
+            // Si la photo no tiene metadata devolvemos una foto vacia (evitamos el nullpointer)
+            if (exifDirectory == null) {
+                return new Photo();
+            }
+
             Date date = exifDirectory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
             Integer iso = exifDirectory.getInt(ExifSubIFDDirectory.TAG_ISO_EQUIVALENT);
             Double aperture = exifDirectory.getDouble(ExifSubIFDDirectory.TAG_FNUMBER);
@@ -41,9 +46,12 @@ public class LocalImageStorage {
             // Add custom exceptions
         } catch (ImageProcessingException e) {
             System.err.println("Error de formato de imagen: " + e.getMessage());
+            System.err.println("Error null pointer Image");
         } catch (IOException e) {
             System.err.println("Error al leer el archivo: " + e.getMessage());
+            System.err.println("Error null pointer IOException");
         } catch (MetadataException e) {
+            System.err.println("Error null pointer MetadataException");
             throw new RuntimeException(e);
         }
 
