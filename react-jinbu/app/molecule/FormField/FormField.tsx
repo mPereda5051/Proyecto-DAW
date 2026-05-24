@@ -1,6 +1,6 @@
 import Input from "@/app/atoms/Input/Input";
 import "@/app/atoms/Input/Input.css";
-import "./FormField.css";
+import "./formField.css";
 
 interface FormFieldProps {
     label: string;
