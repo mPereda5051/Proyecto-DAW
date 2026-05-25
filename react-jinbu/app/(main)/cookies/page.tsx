@@ -15,8 +15,9 @@ export default function Cookies() {
       </p>
       <h2>¿Qué cookies usamos?</h2>
       <p>
-        Únicamente cookies técnicas necesarias para el funcionamiento de la
-        sesión, como el token de autenticación.
+        Jinbu utiliza <strong>únicamente una cookie de sesión</strong>, de carácter
+        técnico y estrictamente necesario para mantener tu sesión activa mientras navegas por la plataforma. 
+        Esta cookie se borra automáticamente al cerrar el navegador y no se utiliza para ningún otro propósito.
       </p>
       <h2>¿Cómo desactivarlas?</h2>
       <p>
