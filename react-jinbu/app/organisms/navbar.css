@@ -211,20 +211,57 @@
   }
 
   @media (max-width: 768px) {
+    .menu {
+      height: 60px;
+      padding: 0 12px;
+    }
 
-    /* Oculta la barra de búsqueda */
+    .menu-logo {
+      gap: 8px;
+    }
+
+    .menu-logo p {
+      display: none;
+    }
+
+    /* Ocultamos el buscador en la fila principal para evitar el colapso */
     .navbar-search-wrapper {
       display: none;
     }
 
-    /* Oculta el texto "Subir foto", deja solo el icono */
+    .menu-actions {
+      gap: 12px;
+    }
+
+    /* Ajuste del botón de subir foto para que sea solo un círculo con el "+" */
+    #addPhoto {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
     #addPhotoText {
       display: none;
     }
 
-    /* Oculta el texto "Perfil", deja solo el avatar */
+    #addIcon {
+      margin: 0;
+    }
+
+    /* Perfil */
+    .user-profile {
+      gap: 0;
+    }
+
     .user-profile p {
       display: none;
     }
 
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
   }

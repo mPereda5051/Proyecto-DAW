@@ -1,40 +1,46 @@
 "use client";
-import {useState} from "react";
+import { useState } from "react";
 import FormField from "@/app/molecule/FormField/FormField";
 import Button from "@/app/atoms/Button/Button";
 import "./register.css";
 import { useRouter } from "next/navigation";
+import { register } from "@/app/services/authService";
 
-
-export default function Register(){
-
+export default function Register() {
     const router = useRouter();
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleRegister = () => {
-
-        if( username ==="" || email === "" || password ==="" || confirmPassword === "" ){
-            alert("por favor completa todos los campos");
+    const handleRegister = async () => {
+        if (!username || !email || !password || !confirmPassword) {
+            alert("Por favor completa todos los campos");
             return;
         }
 
-        if(password !== confirmPassword){
+        if (password !== confirmPassword) {
             alert("Las contraseñas no coinciden");
             return;
         }
 
-        console.log("Registro exitoso")
-        router.push("/login")
+        setLoading(true);
+        try {
+            await register(username, email, password);
+            alert("Registro exitoso. Ahora puedes iniciar sesión.");
+            router.push("/login");
+        } catch (error) {
+            alert("Error al registrar el usuario. Inténtalo de nuevo.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <div className="register-page">
             <div className="register-overlay"></div>
-                        
             <div className="register-logo">Jinbu</div>
 
             <div className="register-center">
@@ -42,40 +48,46 @@ export default function Register(){
                     <h1>Registrarse</h1>
 
                     <FormField
-                        label= "Nombre de Usuario"
+                        label="Nombre de Usuario"
                         type="text"
                         placeholder="Tu nombre"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <FormField
-                        label= "Email"
+                        label="Email"
                         type="email"
                         placeholder="Tu@email.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <FormField
-                        label= "Contraseña"
+                        label="Contraseña"
                         type="password"
                         placeholder="Contraseña"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <FormField
-                        label= "Confirmar contraseña"
+                        label="Confirmar contraseña"
                         type="password"
                         placeholder="Repite tu contraseña"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
+                    
                     <Button
-                        label="Crear cuenta"
+                        label={loading ? "Registrando..." : "Crear cuenta"}
                         onClick={handleRegister}
+                        width="100%"
+                        disabled={loading}
                     />
+
+                    <p className="login-link" style={{ marginTop: '1rem', textAlign: 'center' }}>
+                        ¿Ya tienes cuenta? <a href="/login" style={{ color: '#0070f3', textDecoration: 'none' }}>Inicia sesión</a>
+                    </p>
                 </div>
             </div>
         </div>
-        
     );
 }

@@ -21,6 +21,17 @@ export const login = async (username: string, password: string) => {
   return response;
 };
 
+export const register = async (username: string, email: string, password: string) => {
+  const response = await fetch('http://localhost:9090/user/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, email, password }),
+  });
+
+  if (!response.ok) throw new Error('Error en el registro');
+  return response;
+};
+
 export const logout = () => {
   localStorage.removeItem('token');
 };
