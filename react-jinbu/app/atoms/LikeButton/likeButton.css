@@ -6,8 +6,7 @@
     border: none;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.75);
-    margin-top: 10px;
-    margin-left: 18px;
+    margin: 0;
     font-size: 14px;
     line-height: 1;
     transition: color 0.2s ease;

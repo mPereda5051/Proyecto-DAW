@@ -17,12 +17,14 @@ export default function PhotoCard(photoProps: PhotoData) {
                 <div className="photo-card-overlay">
                     <div className="photo-card-info">
                         {photo.title && <h2 className="photo-card-title">{photo.title}</h2>}
-                        <div className="photo-card-meta">
-                            <span>ISO 100</span>
-                            <span> • </span>
-                            <span>f/2.8</span>
+                        <div className="photo-card-bottom">
+                            <LikeButton />
+                            <div className="photo-card-meta">
+                                <span>ISO 100</span>
+                                <span> • </span>
+                                <span>f/2.8</span>
+                            </div>
                         </div>
-                        <LikeButton />
                     </div>
                 </div>
             </div>

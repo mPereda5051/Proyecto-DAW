@@ -54,6 +54,12 @@
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
+.photo-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .photo-card-meta {
     font-size: 13px;
     color: rgba(255, 255, 255, 0.8);
