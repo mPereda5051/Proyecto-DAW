@@ -104,7 +104,7 @@ export default function UploadImage() {
 
             await uploadPhotoAndPost(post, photo, imageFile);
 
-            alert("Redireccion");
+            router.push("/")
         } catch (error) {
             console.error("Error subiendo archivo: ", error);
             alert("error temporal")
