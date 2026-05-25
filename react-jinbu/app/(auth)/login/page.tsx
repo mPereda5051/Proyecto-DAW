@@ -13,6 +13,11 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        handleLogin();
+    };
+
     const handleLogin = async () => {
         if (username === "" || password === "") {
             alert("Por favor completa todos los campos");
@@ -39,6 +44,7 @@ export default function Login() {
             <div className="login-center">
                         <div className="login-box">
                             <h1>Iniciar Sesión</h1>
+                            <form onSubmit={handleSubmit}>
                             <FormField
                                 label="Usuario"
                                 type="text"
@@ -55,11 +61,12 @@ export default function Login() {
                             />
 
                             <Button
-                                label={loading ? "Cargando..." : "Iniciar Sesión"} 
-                                onClick={handleLogin} 
+                                label={loading ? "Cargando..." : "Iniciar Sesión"}
+                                type="submit"
                                 width="100%"
                                 disabled={loading}
                             />
+                            </form>
                             <p className="register-link">
                                 ¿No tienes cuenta? <a href="/register">Regístrate</a>
                             </p>

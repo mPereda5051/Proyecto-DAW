@@ -5,12 +5,13 @@ interface ButtonProps{
     label: string;
     width: string;
     disabled?: boolean;
-    onClick: () => void;
+    onClick?: () => void;
+    type?: "button" | "submit" | "reset";
 }
 
-export default function Button ({label, onClick, width, disabled = false}: ButtonProps){
+export default function Button ({label, onClick, width, disabled = false, type = "button"}: ButtonProps){
     return(
-        <button className="btn" onClick={onClick} style={{width: width}} disabled={disabled} >
+        <button className="btn" type={type} onClick={onClick} style={{width: width}} disabled={disabled} >
             {label}
         </button>
     )

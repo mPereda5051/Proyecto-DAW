@@ -109,7 +109,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/cuenta" onClick={toggleMenu}>
+            <Link href={`/profile/${username}`} onClick={toggleMenu}>
               Cuenta
             </Link>
           </li>
