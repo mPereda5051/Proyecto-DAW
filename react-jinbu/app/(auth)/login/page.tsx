@@ -5,9 +5,11 @@ import Button from "@/app/atoms/Button/Button";
 import "./login.css"
 import { useRouter } from "next/navigation";
 import { login } from "@/app/services/authService";
+import { useSnackbar } from "notistack";
 
 export default function Login() {
 
+    const { enqueueSnackbar } = useSnackbar();
     const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -20,16 +22,17 @@ export default function Login() {
 
     const handleLogin = async () => {
         if (username === "" || password === "") {
-            alert("Por favor completa todos los campos");
+            enqueueSnackbar("Por favor completa todos los campos", { variant: 'warning' });
             return;
         }
 
         setLoading(true);
         try {
             await login(username, password);
+            enqueueSnackbar("¡Bienvenido de nuevo!", { variant: 'success' });
             router.push("/");
         } catch (error) {
-            alert("Usuario o contraseña incorrectos");
+            enqueueSnackbar("Usuario o contraseña incorrectos", { variant: 'error' });
         } finally {
             setLoading(false);
         }

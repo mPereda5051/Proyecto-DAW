@@ -5,6 +5,7 @@ import Button from '@/app/atoms/Button/Button';
 import { useRouter } from 'next/navigation';
 import SearchInput from '@/app/atoms/SearchInput/SearchInput';
 import { Title, AddComment, Exposure, Iso, Camera } from '@mui/icons-material';
+import { useSnackbar } from 'notistack';
 // Models
 import { Photo } from '@/app/services/models/photo';
 import { Post } from '@/app/services/models/post';
@@ -13,6 +14,7 @@ import { extractMetadata } from '@/app/services/postService';
 import { uploadPhotoAndPost } from '@/app/services/postService';
 
 export default function UploadImage() {
+    const { enqueueSnackbar } = useSnackbar();
     const router = useRouter();
 
     // Boolean que cambia cuando el usuario sube una foto
@@ -63,7 +65,10 @@ export default function UploadImage() {
     };
 
     const finishUpload = async () => {
-        if (!imageFile) return; // Meter mensaje de error para informar al usuario
+        if (!imageFile) {
+            enqueueSnackbar("Por favor, selecciona una imagen primero.", { variant: 'warning' });
+            return;
+        }
 
         try {
             // Guardamos metadata en el useState
@@ -71,9 +76,10 @@ export default function UploadImage() {
 
             // Desbloqueamos los campos de ISO, Aperture, Exposure y Submit
             setIsPhotoNotUpload(false);
+            enqueueSnackbar("Metadatos extraídos correctamente", { variant: 'info' });
         } catch (error) {
-            // Meter mensaje de error (No se ha podido subir los datos o algo asi)
-            console.log("Error mensaje: ", error)
+            console.error("Error extrayendo metadatos: ", error);
+            enqueueSnackbar("No se han podido extraer los metadatos", { variant: 'error' });
         }
     }
 
@@ -103,10 +109,11 @@ export default function UploadImage() {
             if (!imageFile) return; 
             
             await uploadPhotoAndPost(post, photo, imageFile);
+            enqueueSnackbar("Imagen subida con éxito", { variant: 'success' });
             router.push("/")
         } catch (error) {
             console.error("Error subiendo archivo: ", error);
-            alert("error temporal")
+            enqueueSnackbar("Error al subir la imagen. Inténtalo de nuevo.", { variant: 'error' });
         }
     }
 

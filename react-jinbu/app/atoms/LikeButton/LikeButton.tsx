@@ -5,6 +5,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import "./likeButton.css";
 import { likePost, dislikePost } from "@/app/services/postService";
+import { useSnackbar } from "notistack";
 
 interface LikeButtonProps {
     initialCount?: number;
@@ -12,6 +13,7 @@ interface LikeButtonProps {
 }
 
 export default function LikeButton({ initialCount = 0, postId }: LikeButtonProps) {
+    const { enqueueSnackbar } = useSnackbar();
     const [liked, setLiked] = useState(false);
     const [count, setCount] = useState(initialCount);
     const [loading, setLoading] = useState(false);
@@ -35,7 +37,7 @@ export default function LikeButton({ initialCount = 0, postId }: LikeButtonProps
             }
         } catch (error) {
             console.error("Error al procesar el like:", error);
-            // Podríamos añadir una notificación al usuario aquí
+            enqueueSnackbar("Error al procesar el like", { variant: "error" });
         } finally {
             setLoading(false);
         }

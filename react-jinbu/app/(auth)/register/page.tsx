@@ -5,8 +5,10 @@ import Button from "@/app/atoms/Button/Button";
 import "./register.css";
 import { useRouter } from "next/navigation";
 import { register } from "@/app/services/authService";
+import { useSnackbar } from "notistack";
 
 export default function Register() {
+    const { enqueueSnackbar } = useSnackbar();
     const router = useRouter();
 
     const [name, setName] = useState("");
@@ -24,22 +26,22 @@ export default function Register() {
 
     const handleRegister = async () => {
         if (!name || !username || !email || !password || !confirmPassword) {
-            alert("Por favor completa todos los campos");
+            enqueueSnackbar("Por favor completa todos los campos", { variant: 'warning' });
             return;
         }
 
         if (password !== confirmPassword) {
-            alert("Las contraseñas no coinciden");
+            enqueueSnackbar("Las contraseñas no coinciden", { variant: 'error' });
             return;
         }
 
         setLoading(true);
         try {
             await register(name, username, email, password);
-            alert("Registro exitoso. Ahora puedes iniciar sesión.");
+            enqueueSnackbar("Registro exitoso. ¡Bienvenido!", { variant: 'success' });
             router.push("/login");
         } catch (error) {
-            alert("Error al registrar el usuario. Inténtalo de nuevo.");
+            enqueueSnackbar("Error al registrar el usuario. Inténtalo de nuevo.", { variant: 'error' });
         } finally {
             setLoading(false);
         }
