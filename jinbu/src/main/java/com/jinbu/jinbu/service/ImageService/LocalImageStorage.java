@@ -31,7 +31,7 @@ public class LocalImageStorage {
 
             // Si la photo no tiene metadata devolvemos una foto vacia (evitamos el nullpointer)
             if (exifDirectory == null) {
-                return new Photo();
+                return new Photo(file.getOriginalFilename(), null, null, null, null, null, null, extension);
             }
 
             Date date = exifDirectory.getDate(ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL);
@@ -59,10 +59,10 @@ public class LocalImageStorage {
         return new Photo();
     }
 
-    public Long storeMetadata(Photo photo) throws IOException {
+    public Photo storeMetadata(Photo photo) throws IOException {
         // Guardamos la photo en el repo
         photoRepository.save(photo);
-        return photo.getId();
+        return photo;
     }
 
     public void deleteImageMetadata(Long id) {

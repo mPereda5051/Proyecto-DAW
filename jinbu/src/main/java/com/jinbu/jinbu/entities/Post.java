@@ -47,7 +47,6 @@ public class Post {
     @JoinColumn(name = "users_id", referencedColumnName = "id")
     private User user;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
 }

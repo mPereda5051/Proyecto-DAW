@@ -37,29 +37,53 @@ export const uploadPhotoAndPost = async (post: Post, photo: Photo, file: File) =
 
     const formData = new FormData();
     formData.append(
-        'post', 
+        'post',
         new Blob([JSON.stringify(post)], { type: 'application/json' })
     );
 
     formData.append(
-        'photo', 
+        'photo',
         new Blob([JSON.stringify(photo)], { type: 'application/json' })
     );
 
     formData.append('file', file);
 
-    const response = await fetch('http://localhost:9090/posts/upload', { 
+    const response = await fetch('http://localhost:9090/posts/upload', {
         method: 'POST',
         headers: {
             'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`,
         },
-        body: formData, 
+        body: formData,
     });
 
     if (!response.ok) {
         throw new Error("Error al guardar el post y la foto");
     }
-    return response; 
+    return response;
+};
+
+// Servicio para devolver post con ids desde la base de datos con paginacion
+export const retrievePostsWithPagination = async (pageNumber: number) => {
+    const bearerToken = getToken();
+
+    if (!bearerToken) {
+        throw new Error("UNAUTHORIZED");
+    }
+
+    const url = `http://localhost:9090/posts/retrieve/${pageNumber}?page=${pageNumber}`;
+
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al obtener la página de posts");
+    }
+
+    return response.json();
 };
 
 export const getPost = async (id: string) => {

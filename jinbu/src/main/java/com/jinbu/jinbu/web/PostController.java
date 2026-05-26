@@ -69,6 +69,7 @@ public class PostController {
             @RequestPart("photo") Photo photo,
             @RequestPart("file") MultipartFile file
     ) throws IOException {
+        System.out.println(photo.getExtension());
         postService.createPost(post, photo, file);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -91,7 +92,8 @@ public class PostController {
             @ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
     })
     @GetMapping("/retrieve/{pageNumber}")
-    public ResponseEntity<List<PostDTO>> retrievePostWithPagination(@PageableDefault(size = 10, sort = "date")Pageable pageable) {
+    public ResponseEntity<List<PostDTO>> retrievePostWithPagination(@PageableDefault(size = 30, sort = "createdOn")Pageable pageable) {
+        System.out.println(postService.retrievePosts(pageable));
         return new ResponseEntity<>(postService.retrievePosts(pageable), HttpStatus.OK);
     }
 

@@ -27,16 +27,17 @@ public class ImageServiceImplementation implements ImageService{
     @Transactional
     @Override
     public Optional<Photo> store(Photo photo, MultipartFile file) throws IOException {
-        Long photoId = localImageStorage.storeMetadata(photo);
+        Photo metadataPhoto = localImageStorage.storeMetadata(photo);
+
 
         // Anadir exceptions personalizados
         try {
-            s3ImageStorage.store(file, photoId);
+            s3ImageStorage.store(file, metadataPhoto.getId());
         } catch (IOException | RuntimeException e) {
             throw new RuntimeException("Upload failed", e);
         }
 
-        return photoRepository.findById(photoId);
+        return Optional.ofNullable(photo);
     }
 
     @Override
