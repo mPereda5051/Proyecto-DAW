@@ -1,5 +1,6 @@
 package com.jinbu.jinbu.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -58,6 +59,7 @@ public class Photo {
           return "https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/" + this.getId() + this.getExtension();
       }
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id", referencedColumnName = "post_id")
     private Post post;

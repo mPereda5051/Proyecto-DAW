@@ -3,10 +3,12 @@ package com.jinbu.jinbu.service;
 import com.jinbu.jinbu.DTOs.PostDTO;
 import com.jinbu.jinbu.entities.Photo;
 import com.jinbu.jinbu.entities.Post;
+import com.jinbu.jinbu.entities.User;
 import com.jinbu.jinbu.exceptions.EntityNotFoundException;
 import com.jinbu.jinbu.mappers.PostMapper;
 import com.jinbu.jinbu.repository.PhotoRepository;
 import com.jinbu.jinbu.repository.PostRepository;
+import com.jinbu.jinbu.repository.UserRepository;
 import com.jinbu.jinbu.service.ImageService.ImageService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +31,7 @@ public class PostServiceImplementation implements PostService {
     PostRepository postRepository;
     PostMapper postMapper;
     ImageService imageService;
+    UserRepository userRepository;
 
     @Override
     public PostDTO getPost(Long id) {
@@ -58,10 +62,21 @@ public class PostServiceImplementation implements PostService {
 
     @Override
     public void createPost(Post post, Photo photo, MultipartFile multipartFile) throws IOException {
+
+        String username = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         Photo photoSaved = imageService.store(photo, multipartFile)
                 .orElseThrow(() -> new EntityNotFoundException(photo.getId(), Photo.class));
 
+        post.setUser(user);
         post.setPhoto(photoSaved);
+        photoSaved.setPost(post);
+
         postRepository.save(post);
     }
 

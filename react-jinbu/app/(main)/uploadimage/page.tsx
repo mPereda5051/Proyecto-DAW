@@ -101,9 +101,8 @@ export default function UploadImage() {
         }
         try {
             if (!imageFile) return; 
-
+            
             await uploadPhotoAndPost(post, photo, imageFile);
-
             router.push("/")
         } catch (error) {
             console.error("Error subiendo archivo: ", error);
