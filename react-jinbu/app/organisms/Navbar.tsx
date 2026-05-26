@@ -5,10 +5,9 @@ import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import AddButton from "../atoms/AddButtonComponent/AddButton";
-import FormField from "../atoms/FormField/FormField";
+import SearchInput from "../atoms/SearchInput/SearchInput";
 import { getCurrentUsername, logout } from "@/app/services/authService";
 import { useRouter } from "next/navigation";
-import { dividerClasses } from "@mui/material";
 
 export default function Navbar() {
   const [mounted, setMounted] = useState(false);
@@ -49,7 +48,7 @@ export default function Navbar() {
 
         {/* Buscador */}
         <div className="navbar-search-wrapper">
-          <FormField radio="20px" />
+          <SearchInput radio="20px" />
         </div>
 
         {/* perfil */}

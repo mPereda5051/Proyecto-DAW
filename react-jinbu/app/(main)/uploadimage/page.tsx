@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import styles from './upload.module.css';
 import Button from '@/app/atoms/Button/Button';
 import { useRouter } from 'next/navigation';
-import FormField from '@/app/atoms/FormField/FormField';
+import SearchInput from '@/app/atoms/SearchInput/SearchInput';
 import { Title, AddComment, Exposure, Iso, Camera } from '@mui/icons-material';
 // Models
 import { Photo } from '@/app/services/models/photo';
@@ -151,7 +151,7 @@ export default function UploadImage() {
             </div>
 
             <div className={styles.form}>
-                <FormField 
+                <SearchInput
                 placeholder='Título' 
                 Icon={Title} 
                 radio='10px' 
@@ -159,7 +159,7 @@ export default function UploadImage() {
                     setTitle(e.target.value);
                 }}
                 />
-                <FormField 
+                <SearchInput
                 placeholder='Mensaje' 
                 Icon={AddComment} 
                 radio='10px' 
@@ -167,7 +167,7 @@ export default function UploadImage() {
                     setMessage(e.target.value);
                 }}
                 />
-                <FormField
+                <SearchInput
                     placeholder='ISO'
                     Icon={Iso}
                     radio='10px'
@@ -180,7 +180,7 @@ export default function UploadImage() {
                         });
                     }}
                 />
-                <FormField
+                <SearchInput
                     placeholder='Apertura'
                     Icon={Camera}
                     radio='10px'
@@ -193,7 +193,7 @@ export default function UploadImage() {
                         });
                     }}
                 />
-                <FormField
+                <SearchInput
                     placeholder='Exposición'
                     Icon={Exposure}
                     radio='10px'
