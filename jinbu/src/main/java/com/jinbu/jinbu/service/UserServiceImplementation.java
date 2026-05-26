@@ -67,6 +67,25 @@ public class UserServiceImplementation implements UserService {
         followedUser.getFollowers().add(followerUser);
     }
 
+    @Override
+    public void updateProfile(String username, UserDTO userDTO) {
+        User user = getUserEntityByUsername(username);
+        user.setName(userDTO.name());
+        user.setUsername(userDTO.username());
+        user.setEmail(userDTO.email());
+        userRepository.save(user);
+    }
+
+    @Override
+    public void changePassword(String username, String currentPassword, String newPassword) {
+        User user = getUserEntityByUsername(username);
+        if (!bCryptPasswordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new RuntimeException("Current password does not match");
+        }
+        user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id, User.class));

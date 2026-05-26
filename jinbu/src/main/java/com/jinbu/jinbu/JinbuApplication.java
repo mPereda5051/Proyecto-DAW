@@ -25,8 +25,8 @@ public class JinbuApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		if (userRepository.findByUsername("test").isEmpty()) {
 			User[] users = new User[] {
-					new User("pep", bCryptPasswordEncoder().encode("sui"), "pep@gmail.com"),
-					new User("test", bCryptPasswordEncoder().encode("sui"), "test@gmail.com")
+					new User("pep", "Pep", bCryptPasswordEncoder().encode("sui"), "pep@gmail.com"),
+					new User("test", "Test User", bCryptPasswordEncoder().encode("sui"), "test@gmail.com")
 			};
 			for (User user : users) {
 				userRepository.save(user);

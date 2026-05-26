@@ -14,5 +14,7 @@ public interface UserService {
     void deleteUser(Long id);
     List<UserDTO> getUsers();
     void followUser(Long followerId, Long followedId);
+    void updateProfile(String username, UserDTO userDTO);
+    void changePassword(String username, String currentPassword, String newPassword);
 
 }

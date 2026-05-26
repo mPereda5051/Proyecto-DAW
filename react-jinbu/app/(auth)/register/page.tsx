@@ -9,6 +9,7 @@ import { register } from "@/app/services/authService";
 export default function Register() {
     const router = useRouter();
 
+    const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -22,7 +23,7 @@ export default function Register() {
     };
 
     const handleRegister = async () => {
-        if (!username || !email || !password || !confirmPassword) {
+        if (!name || !username || !email || !password || !confirmPassword) {
             alert("Por favor completa todos los campos");
             return;
         }
@@ -34,7 +35,7 @@ export default function Register() {
 
         setLoading(true);
         try {
-            await register(username, email, password);
+            await register(name, username, email, password);
             alert("Registro exitoso. Ahora puedes iniciar sesión.");
             router.push("/login");
         } catch (error) {
@@ -55,9 +56,16 @@ export default function Register() {
                     <form onSubmit={handleSubmit}>
 
                         <FormField
+                            label="Nombre"
+                            type="text"
+                            placeholder="Tu nombre completo"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                        <FormField
                             label="Nombre de Usuario"
                             type="text"
-                            placeholder="Tu nombre"
+                            placeholder="Tu nombre de usuario"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />

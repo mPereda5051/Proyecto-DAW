@@ -33,9 +33,65 @@ export const getUserPosts = async (username: string) => {
         },
     });
 
+    return response.json();
+};
+
+//funcion para obtener los datos del usuario
+export const getCurrentUser = async () => {
+    const token = getToken();
+    
+    const response = await fetch(`${BASE_URL}/users/me`, {
+        method: 'GET',
+        headers: {
+            'Authorization': token ? (token.startsWith('Bearer ') ? token : `Bearer ${token}`) : '',
+            'Content-Type': 'application/json',
+        },
+    });
+
     if (!response.ok) {
-        throw new Error('No se pudieron cargar las fotos');
+        throw new Error('No se pudo cargar el usuario actual');
     }
 
     return response.json();
 };
+
+//funcion para actualizar los datos del usuario
+export const updateProfile = async (userData: { username: string; email: string; name: string }) => {
+    const token = getToken();
+
+    const response = await fetch(`${BASE_URL}/users/me`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': token ? (token.startsWith('Bearer ') ? token : `Bearer ${token}`) : '',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+        throw new Error('No se pudo actualizar el perfil');
+    }
+
+    return response;
+};
+
+//funcion para cambiar contraseña
+export const changePassword = async (passwordData: { currentPassword: string; newPassword: string }) => {
+    const token = getToken();
+
+    const response = await fetch(`${BASE_URL}/users/me/password`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': token ? (token.startsWith('Bearer ') ? token : `Bearer ${token}`) : '',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(passwordData),
+    });
+
+    if (!response.ok) {
+        throw new Error('No se pudo cambiar la contraseña');
+    }
+
+    return response;
+};
+

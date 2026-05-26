@@ -27,10 +27,16 @@ public class User {
 
     @NonNull
     @Size(min = 3, message = "Username must be at least 3 characters long")
-    @Size(max = 30, message = "Name cannot be more than 30 characters long")
+    @Size(max = 30, message = "Username cannot be more than 30 characters long")
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Username cannot contain special characters")
     @Column(name = "username", nullable = false)
     private String username;
+
+    @NonNull
+    @Size(min = 3, message = "Name must be at least 3 characters long")
+    @Size(max = 50, message = "Name cannot be more than 50 characters long")
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @NonNull
     @Column(name = "password", nullable = false)
