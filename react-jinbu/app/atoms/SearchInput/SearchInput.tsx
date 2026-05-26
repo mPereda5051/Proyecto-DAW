@@ -1,7 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
-import "./formField.css";
+import "./searchInput.css";
 
-interface InputProps {
+interface SearchInputProps {
     type?: string;
     placeholder?: string;
     value?: string;
@@ -11,18 +11,15 @@ interface InputProps {
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-
-
-export default function FormField({
-    type = "text", 
-    placeholder = "Buscar...", 
-    value, 
+export default function SearchInput({
+    type = "text",
+    placeholder = "Buscar...",
+    value,
     radio,
-    disabled = false, 
-    Icon = SearchIcon, 
-    
-    onChange }: InputProps) {
-        return (
+    disabled = false,
+    Icon = SearchIcon,
+    onChange }: SearchInputProps) {
+    return (
         <div className="search-container">
             <Icon className="search-icon" />
             <input
