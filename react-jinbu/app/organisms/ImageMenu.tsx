@@ -51,7 +51,6 @@ export default function ImageMenu() {
         <main className="main">
             <div className="gallery-container">
                 {photos.map((item) => (
-                    console.log(item.photo?.fullUrl),
                     <PhotoCard
                         key={item.id}
                         id={item.id}
