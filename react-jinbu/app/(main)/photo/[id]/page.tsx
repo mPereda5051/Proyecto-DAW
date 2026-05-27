@@ -19,7 +19,6 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
 
     return (
         <div className="photo-detail-container">
-            {/* Panel Izquierdo: La Imagen */}
             <div className="image-panel">
                 <img 
                     src={imageUrl}
@@ -27,7 +26,6 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
                 />
             </div>
 
-            {/* Panel Derecho: Información y Comentarios */}
             <div className="info-panel">
                 <header className="info-header">
                     <h1>{post.title}</h1>
@@ -40,7 +38,6 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
 
                 <main className="comments-section">
                     <p className="post-content">{post.content}</p>
-                    {/* Comentarios de ejemplo - En el futuro se podrian traer de la API */}
                     <div className="comment">
                         <span className="comment-user">usuario_123</span>
                         <span className="comment-text">dios mio que es eso?!!</span>
