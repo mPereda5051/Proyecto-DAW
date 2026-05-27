@@ -66,17 +66,16 @@ export const uploadPhotoAndPost = async (post: Post, photo: Photo, file: File) =
 export const retrievePostsWithPagination = async (pageNumber: number) => {
     const bearerToken = getToken();
 
-    if (!bearerToken) {
-        throw new Error("UNAUTHORIZED");
-    }
-
     const url = `http://localhost:9090/posts/retrieve/${pageNumber}?page=${pageNumber}`;
+
+    const headers: HeadersInit = {};
+    if (bearerToken) {
+        headers['Authorization'] = bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`;
+    }
 
     const response = await fetch(url, {
         method: 'GET',
-        headers: {
-            'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`
-        }
+        headers: headers
     });
 
     if (!response.ok) {
@@ -89,17 +88,16 @@ export const retrievePostsWithPagination = async (pageNumber: number) => {
 export const getPost = async (id: string, serverToken?: string | null) => {
     const bearerToken = serverToken !== undefined ? serverToken : getToken();
 
-    if (!bearerToken) {
-        throw new Error("UNAUTHORIZED");
-    }
-
     const url = `http://localhost:9090/posts/${id}`;
+
+    const headers: HeadersInit = {};
+    if (bearerToken) {
+        headers['Authorization'] = bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`;
+    }
 
     const response = await fetch(url, {
         method: 'GET',
-        headers: {
-            'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`
-        }
+        headers: headers
     });
 
     if (!response.ok) {

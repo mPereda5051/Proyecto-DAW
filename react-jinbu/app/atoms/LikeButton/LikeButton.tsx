@@ -10,11 +10,12 @@ import { useSnackbar } from "notistack";
 interface LikeButtonProps {
     initialCount?: number;
     postId: number;
+    isLiked?: boolean;
 }
 
-export default function LikeButton({ initialCount = 0, postId }: LikeButtonProps) {
+export default function LikeButton({ initialCount = 0, postId, isLiked = false }: LikeButtonProps) {
     const { enqueueSnackbar } = useSnackbar();
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(isLiked);
     const [count, setCount] = useState(initialCount);
     const [loading, setLoading] = useState(false);
 

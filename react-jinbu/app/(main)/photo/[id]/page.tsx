@@ -49,7 +49,11 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
                 </main>
 
                 <div className="interaction-section">
-                    <LikeButton initialCount={post.likes} postId={Number(id)} />
+                    <LikeButton 
+                        initialCount={post.likes} 
+                        postId={Number(id)} 
+                        isLiked={post.likedByUser}
+                    />
                 </div>
 
                 <footer className="comment-input-section">

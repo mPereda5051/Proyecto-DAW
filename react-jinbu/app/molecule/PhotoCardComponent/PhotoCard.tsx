@@ -22,7 +22,11 @@ export default function PhotoCard(photoProps: PhotoData) {
                     <div className="photo-card-info">
                         {photo.title && <h2 className="photo-card-title">{photo.title}</h2>}
                         <div className="photo-card-bottom">
-                            <LikeButton postId={Number(photo.id)} />
+                            <LikeButton 
+                                postId={Number(photo.id)} 
+                                initialCount={photo.likes} 
+                                isLiked={photo.likedByUser}
+                            />
                             <div className="photo-card-meta">
                                 <span>ISO 100</span>
                                 <span> • </span>
