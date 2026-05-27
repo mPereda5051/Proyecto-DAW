@@ -66,3 +66,87 @@
     display: flex;
     gap: 8px;
 }
+
+/* Botón de basura — esquina superior derecha, aparece al hacer hover */
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    padding: 6px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease, background 0.2s ease;
+}
+
+/* Se hace visible cuando el ratón está sobre la card */
+.photo-card-container:hover .delete-btn {
+    opacity: 1;
+}
+
+/* Al pasar el ratón por encima se pone rojo */
+.delete-btn:hover {
+    background: rgba(220, 53, 69, 0.85);
+}
+
+/* Capa semitransparente oscura que cubre toda la foto */
+.confirm-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: white;
+}
+
+.confirm-overlay p {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+/* Estilos compartidos de los botones de confirmar y cancelar */
+.confirm-yes,
+.confirm-no {
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.confirm-yes {
+    background: #4caf50;
+}
+
+.confirm-yes:hover {
+    background: #388e3c;
+}
+
+.confirm-no {
+    background: #e53935;
+}
+
+.confirm-no:hover {
+    background: #b71c1c;
+}

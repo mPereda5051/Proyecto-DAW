@@ -3,6 +3,7 @@ import { useEffect, useState, use } from "react";
 import ProfileSection from "@/app/organisms/ProfileSection/ProfileSection";
 import ProfileGrid from "@/app/organisms/ProfileGrid/ProfileGrid";
 import { getUserProfile, getUserPosts } from "@/app/services/userService";
+import { getCurrentUsername } from "@/app/services/authService";
 
 interface ProfilePageProps {
     params: Promise<{
@@ -16,10 +17,12 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     const [photos, setPhotos] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const loggedUser = getCurrentUsername();
+    const isOwnProfile = loggedUser === username;
+
     useEffect(() => {
         const loadData = async () => {
             try {
-                // Pedimos los datos del perfil y los posts en paralelo
                 const [profileData, postsData] = await Promise.all([
                     getUserProfile(username),
                     getUserPosts(username)
@@ -43,7 +46,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     return (
         <main>
             <ProfileSection
-                avatarSrc={user.avatarUrl || "https://i.pravatar.cc/150"} // Usar avatar de la DB o uno por defecto
+                avatarSrc={user.avatarUrl || "https://i.pravatar.cc/150"} 
                 avatarAlt={user.username}
                 username={user.username}
                 bio={user.bio || "Sin biografía"}
@@ -51,11 +54,14 @@ export default function ProfilePage({ params }: ProfilePageProps) {
                 followers={user.followersCount || 0}
                 following={user.followingCount || 0}
             />
-            <ProfileGrid photos={photos.map(p => ({
-                id: p.id,
-                title: p.title || "Sin título",
-                src: p.photoUrl || "https://picsum.photos/seed/error/300"
-            }))} />
+            <ProfileGrid
+                photos={photos.map(p => ({
+                    id: p.id,
+                    title: p.title || "Sin título",
+                    src: p.photoUrl || "https://picsum.photos/seed/error/300"
+                }))}
+                showDelete={isOwnProfile}
+            />
         </main>
     );
 }
