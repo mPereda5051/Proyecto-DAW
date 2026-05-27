@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { PhotoData } from "./PhotoData";
+
+import { PostItem } from "@/app/services/models/postItem";
 import LikeButton from "@/app/atoms/LikeButton/LikeButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
