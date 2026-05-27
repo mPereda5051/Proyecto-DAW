@@ -20,7 +20,9 @@ interface PostItem {
 }
 
 export default function ImageMenu() {
-    const [photos, setPhotos] = useState<PostItem[]>([]);
+
+    const [photos, setPost] = useState<PostItem[]>([]);
+
     const [pageNumber, setPageNumber] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -33,7 +35,7 @@ export default function ImageMenu() {
             try {
                 const data = await retrievePostsWithPagination(pageNumber);
                 const fetchedPosts = data.content ? data.content : data;
-                setPhotos(fetchedPosts);
+                setPost(fetchedPosts);
             } catch (err: any) {
                 setError(err.message || "Ocurrió un error al cargar las imágenes");
             } finally {
@@ -51,7 +53,7 @@ export default function ImageMenu() {
         <main className="main">
             <div className="gallery-container">
                 {photos.map((item) => (
-                    console.log(item.photo?.fullUrl),
+                    console.log(item.id),
                     <PhotoCard
                         key={item.id}
                         id={item.id}

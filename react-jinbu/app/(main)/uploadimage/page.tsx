@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState, useRef } from 'react';
 import styles from './upload.module.css';
 import Button from '@/app/atoms/Button/Button';

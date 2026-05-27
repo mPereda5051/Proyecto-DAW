@@ -1,16 +1,20 @@
 import { notFound } from "next/navigation";
 import "./photoDetail.css";
+import { cookies } from "next/headers";
 import SendIcon from '@mui/icons-material/Send';
 import LikeButton from "@/app/atoms/LikeButton/LikeButton";
 import { getPost } from "@/app/services/postService";
+
 
 export default async function PhotoDetailPage(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
     const { id } = params;
 
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value || null;
     let post;
     try {
-        post = await getPost(id);
+        post = await getPost(id, token);
     } catch (error) {
         notFound();
     }

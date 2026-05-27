@@ -1,5 +1,6 @@
-//servicio que realiza llamada al backend
+import Cookies from 'js-cookie';
 
+//servicio que realiza llamada al backend
 export const login = async (username: string, password: string) => {
   const response = await fetch('http://localhost:9090/authenticate', {
     method: 'POST',
@@ -16,6 +17,7 @@ export const login = async (username: string, password: string) => {
   const token = response.headers.get('Authorization');
   if (token) {
     localStorage.setItem('token', token);
+    Cookies.set('token', token, { expires: 1 });
   }
 
   return response;
@@ -34,6 +36,7 @@ export const register = async (name: string, username: string, email: string, pa
 
 export const logout = () => {
   localStorage.removeItem('token');
+  Cookies.remove('token');
 };
 
 export const getToken = () => {
