@@ -101,8 +101,8 @@ export default function Register() {
                         />
                     </form>
 
-                    <p className="login-link" style={{ marginTop: '1rem', textAlign: 'center' }}>
-                        ¿Ya tienes cuenta? <a href="/login" style={{ color: '#0070f3', textDecoration: 'none' }}>Inicia sesión</a>
+                    <p className="login-link">
+                        ¿Ya tienes cuenta? <a href="/login">Inicia sesión</a>
                     </p>
                 </div>
             </div>
