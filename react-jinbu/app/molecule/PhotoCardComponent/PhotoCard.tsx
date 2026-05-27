@@ -1,5 +1,9 @@
+
 import Link from "next/link";
+// PhotoData antiguo, cambiar futuro
 import { PhotoData } from "./PhotoData";
+
+import { PostItem } from "@/app/services/models/postItem";
 import LikeButton from "@/app/atoms/LikeButton/LikeButton";
 
 export default function PhotoCard(photoProps: PhotoData) {

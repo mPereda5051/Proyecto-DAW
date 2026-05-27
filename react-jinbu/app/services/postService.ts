@@ -86,9 +86,20 @@ export const retrievePostsWithPagination = async (pageNumber: number) => {
     return response.json();
 };
 
-export const getPost = async (id: string) => {
-    const response = await fetch(`http://localhost:9090/posts/${id}`, {
+export const getPost = async (id: string, serverToken?: string | null) => {
+    const bearerToken = serverToken !== undefined ? serverToken : getToken();
+
+    if (!bearerToken) {
+        throw new Error("UNAUTHORIZED");
+    }
+
+    const url = `http://localhost:9090/posts/${id}`;
+
+    const response = await fetch(url, {
         method: 'GET',
+        headers: {
+            'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`
+        }
     });
 
     if (!response.ok) {
@@ -135,5 +146,8 @@ export const dislikePost = async (id: number) => {
 };
 
 export const getToken = () => {
-    return localStorage.getItem('token');
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('token');
+    }
+    return null;
 };
