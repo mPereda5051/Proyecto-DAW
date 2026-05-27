@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class PostServiceImplementation implements PostService {
     UserRepository userRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public PostDTO getPost(Long id) {
         return postMapper.toDTO(postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id, Post.class)));
@@ -45,6 +47,7 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PostDTO> getPostsByUserId(Long userId) {
         return postRepository.findByUserId(userId)
                 .stream()
@@ -53,6 +56,7 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PostDTO> getPostsByUsername(String username) {
         return postRepository.findByUserUsername(username)
                 .stream()
@@ -61,6 +65,7 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
+    @Transactional
     public void createPost(Post post, Photo photo, MultipartFile multipartFile) throws IOException {
 
         String username = SecurityContextHolder.getContext()
@@ -81,6 +86,7 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PostDTO> retrievePosts(Pageable pageable) {
         return postRepository.findAll(pageable)
                 .stream()
@@ -89,20 +95,36 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
+    @Transactional
     public void likePost(Long id) {
         Post likedPost = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id, Post.class));
 
-        likedPost.setLikes(likedPost.getLikes() + 1L);
+        String username = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        likedPost.getLikedByUsers().add(user);
         postRepository.save(likedPost);
     }
 
     @Override
+    @Transactional
     public void dislike(Long id) {
         Post unlikedPost = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id, Post.class));
 
-        unlikedPost.setLikes(unlikedPost.getLikes() - 1L);
+        String username = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        unlikedPost.getLikedByUsers().remove(user);
         postRepository.save(unlikedPost);
     }
 

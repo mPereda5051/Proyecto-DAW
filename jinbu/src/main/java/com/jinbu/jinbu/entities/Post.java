@@ -9,7 +9,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -37,8 +39,13 @@ public class Post {
     @NotBlank
     private String content;
 
-    @Column(name = "likes")
-    private Long likes = 0L;
+    @ManyToMany
+    @JoinTable(
+            name = "post_likes",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> likedByUsers = new HashSet<>();
 
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL)
     private Photo photo;

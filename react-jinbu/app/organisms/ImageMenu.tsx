@@ -12,6 +12,7 @@ interface PostItem {
     userId: number;
     username: string;
     likes: number;
+    likedByUser: boolean;
     photo: {
         fullUrl: string;
         iso?: number;
@@ -58,6 +59,8 @@ export default function ImageMenu() {
                         id={item.id}
                         src={item.photo?.fullUrl ?? img1}
                         title={item.title || "Sin título"}
+                        likes={item.likes}
+                        likedByUser={item.likedByUser}
                     />
                 ))}
             </div>
