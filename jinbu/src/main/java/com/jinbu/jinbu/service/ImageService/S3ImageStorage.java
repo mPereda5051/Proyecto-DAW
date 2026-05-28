@@ -36,12 +36,12 @@ public class S3ImageStorage {
                 // Usamos inputStream para ir pasando el file poco a poco (al contrario que con fromBytes)
                 RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
     }
-
-    // Revisar si funciona o no
+    
     public void delete(Long id, String extension) {
+        System.out.println("Intentando eliminar imagen");
         s3Client.deleteObject(DeleteObjectRequest.builder()
                 .bucket(bucketName)
-                .key(id.toString() + "."+extension)
+                .key(id.toString() + extension)
                 .build());
 
     }

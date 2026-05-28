@@ -34,6 +34,7 @@ public class PostServiceImplementation implements PostService {
     ImageService imageService;
     UserRepository userRepository;
 
+
     @Override
     @Transactional(readOnly = true)
     public PostDTO getPost(Long id) {
@@ -50,6 +51,7 @@ public class PostServiceImplementation implements PostService {
             return;
         }
 
+        imageService.deleteImageById(post.getPhoto().getId());
         postRepository.delete(post);
     }
 
