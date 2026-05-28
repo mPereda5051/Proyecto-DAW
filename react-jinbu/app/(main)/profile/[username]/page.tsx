@@ -4,7 +4,7 @@ import ProfileSection from "@/app/organisms/ProfileSection/ProfileSection";
 import ProfileGrid from "@/app/organisms/ProfileGrid/ProfileGrid";
 import { getUserProfile, getUserPosts } from "@/app/services/userService";
 import { getCurrentUsername } from "@/app/services/authService";
-import ProfileGridv2 from "@/app/organisms/ProfileGrid/ProfileGridv2";
+
 
 interface ProfilePageProps {
     params: Promise<{
@@ -55,7 +55,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
                 followers={user.followersCount || 0}
                 following={user.followingCount || 0}
             />
-            <ProfileGridv2
+            <ProfileGrid
                 userId={user.id}
                 showDelete={isOwnProfile}
             />
