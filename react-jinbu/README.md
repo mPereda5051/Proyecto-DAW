@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jinbu 📷
 
-## Getting Started
+Red social para fotógrafos. Permite compartir fotografías con sus metadatos técnicos (ISO, apertura, exposición), explorar el trabajo de otros usuarios y gestionar tu perfil.
 
-First, run the development server:
+## Tecnologías usadas
+
+- Next.js
+- TypeScript
+- React
+- Material UI
+- Notistack
+- CSS
+
+## Instalación y uso
+
+1. Clona el repositorio:
+
+```bash
+git clone https://github.com/mPereda5051/Proyecto-DAW.git
+```
+
+2. Entra en la carpeta del frontend e instala las dependencias:
+
+```bash
+cd react-jinbu
+npm install
+```
+
+3. Arranca el servidor de desarrollo:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Abre [http://localhost:3000](http://localhost:3000) en el navegador.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> ⚠️ El backend (Spring Boot) debe estar corriendo en `http://localhost:9090` para que la app funcione correctamente.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Estructura del proyecto
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/
+├── atoms/           # Componentes básicos reutilizables (Button, Input, LikeButton...)
+├── molecule/        # Componentes formados por átomos (FormField, PhotoCard, ProfileHeader...)
+├── organisms/       # Componentes complejos que forman secciones enteras (Navbar, ProfileSection...)
+├── services/        # Llamadas a la API del backend (auth, posts, usuarios)
+├── (auth)/          # Páginas públicas: login y registro
+│   ├── login/
+│   └── register/
+└── (main)/          # Páginas privadas (requieren sesión iniciada)
+    ├── page.tsx         # Página principal — galería de fotos
+    ├── photo/[id]/      # Detalle de una fotografía
+    ├── profile/[username]/ # Perfil de usuario
+    ├── uploadimage/     # Subir una fotografía
+    ├── opciones/        # Configuración de la cuenta
+    └── soporte/         # Soporte, cookies y privacidad
+```
