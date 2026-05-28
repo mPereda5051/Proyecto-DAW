@@ -10,11 +10,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface CommentService {
-
-    // Unir comentarios y post
     Comment getComment(Long id);
     void deleteComment(Long id);
-    Page<Comment> retrieveComments(Pageable pageable);
-    void createComment(Comment comment);
-
+    List<Comment> getCommentsByPostId(Long postId);
+    Comment createComment(Long postId, String content);
 }

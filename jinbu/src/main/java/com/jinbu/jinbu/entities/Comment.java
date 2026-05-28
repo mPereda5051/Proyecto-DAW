@@ -1,5 +1,6 @@
 package com.jinbu.jinbu.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -22,22 +23,19 @@ public class Comment {
     @Column(name = "comment_id")
     private Long id;
 
-    @Column(name = "date_created")
-    private Date date;
-
     @CreationTimestamp
-    private Instant createdOn;
+    @Column(name = "created_at")
+    private Instant createdAt;
 
-    @UpdateTimestamp
-    private Instant updatedOn;
-
-    @Column(name = "message")
-    private String message;
-
-    @Column(name = "likes")
-    private Long likes;
+    @Column(name = "content", length = 500, nullable = false)
+    private String content;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id")
     private Post post;
 }

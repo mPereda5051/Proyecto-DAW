@@ -1,9 +1,7 @@
 package com.jinbu.jinbu.web;
 
 import com.jinbu.jinbu.entities.Comment;
-import com.jinbu.jinbu.entities.Photo;
 import com.jinbu.jinbu.service.CommentService;
-import com.jinbu.jinbu.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -12,15 +10,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @AllArgsConstructor
@@ -32,21 +25,30 @@ public class CommentController {
 
     CommentService commentService;
 
-    @Operation(summary = "Upload comment", description = "Saves comment.")
+    @Operation(summary = "Create comment", description = "Saves comment for a specific post.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Comment uploaded successfully", content = @Content),
-            @ApiResponse(responseCode = "500", description = "Error uploading comment", content = @Content)
+            @ApiResponse(responseCode = "201", description = "Comment created successfully", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid comment data", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error creating comment", content = @Content)
     })
-    @PostMapping("/upload")
-    public ResponseEntity<HttpStatus> uploadComment(@RequestParam Comment comment) {
-        commentService.createComment(comment);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping("/post/{postId}")
+    public ResponseEntity<Comment> createComment(@PathVariable Long postId, @RequestBody String content) {
+        return new ResponseEntity<>(commentService.createComment(postId, content), HttpStatus.CREATED);
     }
 
-
-    @Operation(summary = "Get comment by it's Id", description = "Fetch comment by its ID (Long type).")
+    @Operation(summary = "Get comments by post Id", description = "Fetch all comments for a post.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Comment found", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "200", description = "Comments found", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Comment.class)))),
+            @ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
+    })
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<List<Comment>> getCommentsByPostId(@PathVariable Long postId) {
+        return new ResponseEntity<>(commentService.getCommentsByPostId(postId), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get comment by Id", description = "Fetch comment by its ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Comment found", content = @Content(schema = @Schema(implementation = Comment.class))),
             @ApiResponse(responseCode = "404", description = "Comment not found", content = @Content)
     })
     @GetMapping("/{id}")
@@ -54,17 +56,7 @@ public class CommentController {
         return new ResponseEntity<>(commentService.getComment(id), HttpStatus.OK);
     }
 
-    @Operation(summary = "Retrieve comments by PageNumber", description = "Retrieve 15 comments by pageNumber.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Comments found", content = @Content(schema = @Schema(implementation = String.class))),
-            @ApiResponse(responseCode = "404", description = "Comments not found", content = @Content)
-    })
-    @GetMapping("/retrieve")
-    public ResponseEntity<Page<Comment>> getCommentById(@PageableDefault(size = 20) Pageable pageable) {
-        return new ResponseEntity<>(commentService.retrieveComments(pageable), HttpStatus.OK);
-    }
-
-    @Operation(summary = "Delete comment by Id", description = "Deletes comment by Id (Long type).")
+    @Operation(summary = "Delete comment by Id", description = "Deletes comment by Id.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Comment deleted", content = @Content),
             @ApiResponse(responseCode = "404", description = "Comment not found", content = @Content)

@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import "./photoDetail.css";
 import { cookies } from "next/headers";
-import SendIcon from '@mui/icons-material/Send';
 import LikeButton from "@/app/atoms/LikeButton/LikeButton";
 import { getPost } from "@/app/services/postService";
+import { getCommentsByPostId } from "@/app/services/commentService";
+import CommentsSection from "./CommentsSection";
 
 
 export default async function PhotoDetailPage(props: { params: Promise<{ id: string }> }) {
@@ -13,10 +14,13 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value || null;
     let post;
+    let initialComments: any[] = [];
+    
     try {
         post = await getPost(id, token);
+        initialComments = await getCommentsByPostId(Number(id), token);
     } catch (error) {
-        notFound();
+        if (!post) notFound();
     }
 
     const imageUrl = `https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/${post.photo.id}${post.photo.extension}`;
@@ -40,13 +44,12 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
                     </div>
                 </header>
 
-                <main className="comments-section">
-                    <p className="post-content">{post.content}</p>
-                    <div className="comment">
-                        <span className="comment-user">usuario_123</span>
-                        <span className="comment-text">dios mio que es eso?!!</span>
-                    </div>
-                </main>
+                <CommentsSection 
+                    initialComments={initialComments}
+                    postId={Number(id)}
+                    token={token}
+                    postContent={post.content}
+                />
 
                 <div className="interaction-section">
                     <LikeButton 
@@ -55,17 +58,6 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
                         isLiked={post.likedByUser}
                     />
                 </div>
-
-                <footer className="comment-input-section">
-                    <input 
-                        type="text" 
-                        placeholder="Añade un comentario..." 
-                        className="comment-input"
-                    />
-                    <button className="post-button">
-                        <SendIcon />
-                    </button>
-                </footer>
             </div>
         </div>
     );

@@ -38,6 +38,7 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @JsonIgnore
     @NonNull
     @Column(name = "password", nullable = false)
     private String password;
@@ -47,6 +48,7 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "user_followers",
@@ -55,6 +57,7 @@ public class User {
     )
     private Set<User> following = new HashSet<>();
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "following")
     private Set<User> followers = new HashSet<>();
 
