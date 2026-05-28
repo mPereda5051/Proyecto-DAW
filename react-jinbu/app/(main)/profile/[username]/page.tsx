@@ -47,13 +47,15 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     return (
         <main>
             <ProfileSection
-                avatarSrc={user.avatarUrl || "https://i.pravatar.cc/150"} 
+                avatarSrc={user.avatarUrl || "https://i.pravatar.cc/150"}
                 avatarAlt={user.username}
                 username={user.username}
                 bio={user.bio || "Sin biografía"}
                 posts={photos.length}
                 followers={user.followersCount || 0}
                 following={user.followingCount || 0}
+                showFollowButton={!isOwnProfile}
+                isFollowing={false}
             />
             <ProfileGrid
                 userId={user.id}
