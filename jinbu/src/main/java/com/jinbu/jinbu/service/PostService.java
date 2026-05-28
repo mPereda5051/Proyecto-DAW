@@ -20,4 +20,6 @@ public interface PostService {
     List<PostDTO> retrievePosts(Pageable pageable);
     void likePost(Long id);
     void dislike(Long id);
+
+    List<PostDTO> getPostsByUserIdWithPagination(Long userId, Pageable pageable);
 }

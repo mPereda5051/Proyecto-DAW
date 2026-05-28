@@ -43,9 +43,13 @@ public class PostController {
         return new ResponseEntity<>(postService.getPost(id), HttpStatus.OK);
     }
 
-    @GetMapping("/all/{userId}")
-    public ResponseEntity<List<PostDTO>> getPostByUserId(@PathVariable Long userId) {
-        return new ResponseEntity<>(postService.getPostsByUserId(userId), HttpStatus.OK);
+    @GetMapping("/{userId}/all")
+    public ResponseEntity<List<PostDTO>> retrieveUserPostWithPagination(
+            @PathVariable Long userId, 
+            @PageableDefault(size = 30, sort = "createdOn")Pageable pageable) {
+        
+        List<PostDTO> posts = postService.getPostsByUserIdWithPagination(userId, pageable);
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     @Operation(summary = "Get all post from one user by username", description = "Fetch all post by a username.")
@@ -93,7 +97,6 @@ public class PostController {
     })
     @GetMapping("/retrieve/{pageNumber}")
     public ResponseEntity<List<PostDTO>> retrievePostWithPagination(@PageableDefault(size = 30, sort = "createdOn")Pageable pageable) {
-        System.out.println(postService.retrievePosts(pageable));
         return new ResponseEntity<>(postService.retrievePosts(pageable), HttpStatus.OK);
     }
 

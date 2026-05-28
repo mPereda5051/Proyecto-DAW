@@ -128,5 +128,14 @@ public class PostServiceImplementation implements PostService {
         postRepository.save(unlikedPost);
     }
 
+    @Override
+    public List<PostDTO> getPostsByUserIdWithPagination(Long userId, Pageable pageable) {
+        List<Post> posts = postRepository.findPostsByUserId(userId, pageable);
+
+        return posts.stream()
+                .map(postMapper::toDTO)
+                .toList();
+    }
+
 
 }

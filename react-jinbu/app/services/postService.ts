@@ -85,6 +85,29 @@ export const retrievePostsWithPagination = async (pageNumber: number) => {
     return response.json();
 };
 
+// Servicio para devolver post de un usuario con ids desde la base de datos con paginacion
+export const retrieveUserPostsWithPagination = async (userId: number, pageNumber: number) => {
+    const bearerToken = getToken();
+
+    const url = `http://localhost:9090/posts/${userId}/all?page=${pageNumber}`;
+
+    const headers: HeadersInit = {};
+    if (bearerToken) {
+        headers['Authorization'] = bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`;
+    }
+
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: headers
+    });
+
+    if (!response.ok) {
+        throw new Error(`Error al obtener la página de posts del usuario ${userId}`);
+    }
+
+    return response.json();
+};
+
 export const getPost = async (id: string, serverToken?: string | null) => {
     const bearerToken = serverToken !== undefined ? serverToken : getToken();
 
