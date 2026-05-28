@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @AllArgsConstructor
@@ -85,8 +86,8 @@ public class PostController {
             @ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deletePost(@PathVariable Long id) {
-        postService.deletePost(id);
+    public ResponseEntity<HttpStatus> deletePost(@PathVariable Long id, Principal principal) {
+        postService.deletePost(id, principal.getName());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

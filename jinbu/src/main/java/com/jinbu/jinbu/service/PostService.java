@@ -13,7 +13,7 @@ import java.util.List;
 public interface PostService {
 
     PostDTO getPost(Long id);
-    void deletePost(Long id);
+    void deletePost(Long id, String username);
     List<PostDTO> getPostsByUserId(Long userId);
     List<PostDTO> getPostsByUsername(String username);
     void createPost(Post post, Photo photo, MultipartFile multipartFile) throws IOException;

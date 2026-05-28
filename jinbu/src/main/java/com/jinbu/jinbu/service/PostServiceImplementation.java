@@ -42,8 +42,15 @@ public class PostServiceImplementation implements PostService {
     }
 
     @Override
-    public void deletePost(Long id) {
-        postRepository.deleteById(id);
+    public void deletePost(Long id, String username) {
+        Post post = postRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(id, Post.class));
+
+        if (!post.getUser().getUsername().equals(username)) {
+            return;
+        }
+
+        postRepository.delete(post);
     }
 
     @Override

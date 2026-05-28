@@ -108,6 +108,30 @@ export const retrieveUserPostsWithPagination = async (userId: number, pageNumber
     return response.json();
 };
 
+// Servicio para eliminar post mediante su id
+export const deletePost = async (id: number) => {
+    const bearerToken = getToken();
+
+    if (!bearerToken) {
+        throw new Error("UNAUTHORIZED");
+    }
+
+    const url = `http://localhost:9090/posts/${id}`;
+
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`Error al obtener la página de posts del usuario ${id}`);
+    }
+
+    return response;
+};
+
 export const getPost = async (id: string, serverToken?: string | null) => {
     const bearerToken = serverToken !== undefined ? serverToken : getToken();
 
