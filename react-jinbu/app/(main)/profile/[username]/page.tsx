@@ -55,7 +55,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
                 followers={user.followersCount || 0}
                 following={user.followingCount || 0}
                 showFollowButton={!isOwnProfile}
-                isFollowing={false}
+                isFollowing={user.isFollowing}
             />
             <ProfileGrid
                 userId={user.id}

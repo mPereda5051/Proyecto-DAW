@@ -44,4 +44,12 @@ public class UserController {
         userService.changePassword(username, currentPassword, newPassword);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "Toggle follow/unfollow a user")
+    @PostMapping("/follow/{username}")
+    public ResponseEntity<Void> toggleFollow(@PathVariable String username) {
+        String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
+        userService.toggleFollow(currentUsername, username);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
