@@ -3,6 +3,7 @@
 import { useState } from "react";
 import "./FollowButton.css"
 import { useSnackbar } from "notistack";
+import { toggleFollow } from "@/app/services/userService";
 
 interface FollowButtonProps {
     username: string;
@@ -19,11 +20,9 @@ export default function FollowButton ({username, isFollowing}: FollowButtonProps
         setLoading(true);
 
         try {
-            if (following) {
-                setFollowing(false);
-            } else {
-                setFollowing(true);
-            }
+            await toggleFollow(username);
+            setFollowing(!following);
+            enqueueSnackbar(following ? "Dejaste de seguir a " + username : "Ahora sigues a " + username, { variant: "success" });
         } catch (error) {
             console.error("Error al procesar el Follow", error);
             enqueueSnackbar ("Error al procesar la acción", {variant: "error"})

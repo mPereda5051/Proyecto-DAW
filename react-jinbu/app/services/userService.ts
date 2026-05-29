@@ -95,3 +95,22 @@ export const changePassword = async (passwordData: { currentPassword: string; ne
     return response;
 };
 
+//funcion para seguir o dejar de seguir a un usuario
+export const toggleFollow = async (username: string) => {
+    const token = getToken();
+
+    const response = await fetch(`${BASE_URL}/users/follow/${username}`, {
+        method: 'POST',
+        headers: {
+            'Authorization': token ? (token.startsWith('Bearer ') ? token : `Bearer ${token}`) : '',
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('No se pudo procesar el follow');
+    }
+
+    return response;
+};
+
