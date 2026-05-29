@@ -55,6 +55,43 @@ export const getCurrentUser = async () => {
     return response.json();
 };
 
+//funcion para obtener los datos del usuario mediante nombre de usuario
+export const getFollowersByUsername = async (username: String) => {
+    const token = getToken();
+    
+    const response = await fetch(`${BASE_URL}/users/${username}/followers`, {
+        method: 'GET',
+        headers: {
+            'Authorization': token ? (token.startsWith('Bearer ') ? token : `Bearer ${token}`) : '',
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('No se pudo cargar el usuario actual');
+    }
+
+    return response.json();
+};
+
+export const getFollowingByUsername = async (username: String) => {
+    const token = getToken();
+    
+    const response = await fetch(`${BASE_URL}/users/${username}/following`, {
+        method: 'GET',
+        headers: {
+            'Authorization': token ? (token.startsWith('Bearer ') ? token : `Bearer ${token}`) : '',
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('No se pudo cargar el usuario actual');
+    }
+
+    return response.json();
+};
+
 //funcion para actualizar los datos del usuario
 export const updateProfile = async (userData: { username: string; email: string; name: string }) => {
     const token = getToken();

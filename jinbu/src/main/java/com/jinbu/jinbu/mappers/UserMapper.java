@@ -18,6 +18,8 @@ public class UserMapper {
                 user.getUsername(),
                 user.getEmail(),
                 user.getName(),
+                user.getFollowers(),
+                user.getFollowing(),
                 user.getFollowers().size(),
                 user.getFollowing().size(),
                 isFollowing

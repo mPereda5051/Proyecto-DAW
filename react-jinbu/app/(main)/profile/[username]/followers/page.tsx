@@ -1,8 +1,9 @@
 'use client';
 
-import { use } from 'react';
+import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import './followers.css';
+import { getFollowersByUsername } from '@/app/services/userService';
 
 const FAKE_FOLLOWERS = [
     { username: 'maria_photo', avatarUrl: 'https://i.pravatar.cc/150?img=1' },
@@ -13,10 +14,28 @@ const FAKE_FOLLOWERS = [
 
 interface FollowersPageProps {
     params: Promise<{ username: string }>;
-}
+} 
 
 export default function FollowersPage({ params }: FollowersPageProps) {
     const { username } = use(params);
+    const [followers, setFollowers] = useState<any[]>([]);
+
+    useEffect(() => {
+        const loadFollowersData = async () => {
+            try {
+                const data = await getFollowersByUsername(username); 
+                
+                setFollowers(data || []);
+                
+            } catch (error) {
+                console.error("Error cargando la lista de seguidos:", error);
+            } 
+        };
+
+        if (username) {
+            loadFollowersData();
+        }
+    }, [username]);
 
     return (
         <main className="follow-page">
@@ -26,10 +45,10 @@ export default function FollowersPage({ params }: FollowersPageProps) {
             </div>
 
             <div className="follow-page__list">
-                {FAKE_FOLLOWERS.map((user) => (
+                {followers?.map((user) => (
                     <Link key={user.username} href={`/profile/${user.username}`} className="follow-page__user">
                         <img
-                            src={user.avatarUrl}
+                            src={user.avatarUrl || 'https://i.pravatar.cc/150'}
                             alt={user.username}
                             className="follow-page__avatar"
                         />

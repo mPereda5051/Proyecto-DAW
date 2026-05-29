@@ -51,22 +51,22 @@ export default function ImageMenu() {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <main className="main">
-            <div className="gallery-container">
-                {photos.map((item) => (
-                    <PhotoCard
-                        key={item.id}
-                        id={item.id}
-                        src={item.photo?.fullUrl ?? img1}
-                        title={item.title || "Sin título"}
-                        likes={item.likes}
-                        likedByUser={item.likedByUser}
-                        username={item.username}
-                    />
-                ))}
-            </div>
-
-            <div className="pagination-controls" style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+        <>
+            <main className="main">
+                <div className="gallery-container">
+                    {photos.map((item) => (
+                        <PhotoCard
+                            key={item.id}
+                            id={item.id}
+                            src={item.photo?.fullUrl ?? img1}
+                            title={item.title || "Sin título"}
+                            likes={item.likes}
+                            likedByUser={item.likedByUser}
+                            username={item.username} />
+                    ))}
+                </div>
+            </main>
+            <div className="pagination-controls">
                 <button
                     onClick={() => setPageNumber((prev) => Math.max(prev - 1, 0))}
                     disabled={pageNumber === 0}
@@ -78,6 +78,6 @@ export default function ImageMenu() {
                     Siguiente
                 </button>
             </div>
-        </main>
+        </>
     );
 }

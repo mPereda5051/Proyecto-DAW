@@ -1,6 +1,7 @@
 package com.jinbu.jinbu.web;
 
 import com.jinbu.jinbu.DTOs.UserDTO;
+import com.jinbu.jinbu.mappers.UserMapper;
 import com.jinbu.jinbu.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -19,6 +21,7 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    UserMapper userMapper;
 
     @Operation(summary = "Get current user profile")
     @GetMapping("/me")
@@ -26,6 +29,20 @@ public class UserController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
     }
+
+    @GetMapping("{username}/followers")
+    public ResponseEntity<List<UserDTO>> getFollowersByUsername(@PathVariable String username) {
+        return new ResponseEntity<>(userService.getUserByUsername(username).followers().
+                stream().map(userMapper::toDTO).toList(), HttpStatus.OK);
+    }
+
+    @GetMapping("{username}/following")
+    public ResponseEntity<List<UserDTO>> getFollowingsByUsername(@PathVariable String username) {
+        return new ResponseEntity<>(userService.getUserByUsername(username).following().
+                stream().map(userMapper::toDTO).toList(), HttpStatus.OK);
+    }
+
+
 
     @Operation(summary = "Update current user profile")
     @PutMapping("/me")
