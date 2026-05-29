@@ -68,6 +68,18 @@ export default function PhotoCard(photoProps: PhotoData) {
                 />
                 <div className="photo-card-overlay">
                     <div className="photo-card-info">
+                        {photo.username && (
+                            <span
+                                className="photo-card-author"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    router.push(`/profile/${photo.username}`);
+                                }}
+                            >
+                                @{photo.username}
+                            </span>
+                        )}
                         {photo.title && <h2 className="photo-card-title">{photo.title}</h2>}
                         <div className="photo-card-bottom">
                             <LikeButton

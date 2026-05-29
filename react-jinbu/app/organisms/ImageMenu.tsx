@@ -61,6 +61,7 @@ export default function ImageMenu() {
                         title={item.title || "Sin título"}
                         likes={item.likes}
                         likedByUser={item.likedByUser}
+                        username={item.username}
                     />
                 ))}
             </div>

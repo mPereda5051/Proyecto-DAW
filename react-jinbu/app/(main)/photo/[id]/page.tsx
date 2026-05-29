@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import "./photoDetail.css";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import LikeButton from "@/app/atoms/LikeButton/LikeButton";
 import { getPost } from "@/app/services/postService";
 import { getCommentsByPostId } from "@/app/services/commentService";
@@ -37,6 +38,11 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
             <div className="info-panel">
                 <header className="info-header">
                     <h1>{post.title}</h1>
+                    {post.username && (
+                        <Link href={`/profile/${post.username}`} className="post-author">
+                            @{post.username}
+                        </Link>
+                    )}
                     <div className="metadata">
                         <span>ISO {post.photo.iso}</span>
                         <span>F/{post.photo.aperture}</span>

@@ -45,6 +45,19 @@
     color: var(--primary-color);
 }
 
+.post-author {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.post-author:hover {
+    text-decoration: underline;
+}
+
 .metadata {
     display: flex;
     gap: 15px;
