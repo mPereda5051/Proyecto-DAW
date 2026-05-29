@@ -78,7 +78,7 @@ export default function ProfileGrid({ userId, showDelete }: ProfileGridProps) {
                 >
                     Anterior
                 </button>
-                <span>Página {pageNumber}</span>
+                <span>{pageNumber}</span>
                 <button onClick={() => setPageNumber((prev) => prev + 1)}>
                     Siguiente
                 </button>
