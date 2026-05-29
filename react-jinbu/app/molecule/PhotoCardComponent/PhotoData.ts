@@ -7,4 +7,5 @@ export interface PhotoData {
     likedByUser?: boolean,
     likes?: number
     showDelete?: boolean
+    username?: string
 }

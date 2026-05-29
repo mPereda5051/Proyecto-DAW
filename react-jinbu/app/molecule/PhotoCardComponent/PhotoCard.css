@@ -47,6 +47,20 @@
     width: 100%;
 }
 
+.photo-card-author {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 6px;
+    cursor: pointer;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+}
+
+.photo-card-author:hover {
+    text-decoration: underline;
+}
+
 .photo-card-title {
     font-size: 18px;
     font-weight: 600;
