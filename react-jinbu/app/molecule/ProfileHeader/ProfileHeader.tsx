@@ -8,6 +8,7 @@ interface ProfileHeaderProps {
     bio?: string;
 }
 
+/** Muestra el avatar, el nombre de usuario y la bio del perfil. */
 export default function ProfileHeader({ avatarSrc, avatarAlt, username, bio }: ProfileHeaderProps) {
     return (
         <div className="profile-header">

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { register } from "@/app/services/authService";
 import { useSnackbar } from "notistack";
 
+/** Página de registro. Gestiona el formulario de creación de cuenta y redirige al login si tiene éxito. */
 export default function Register() {
     const { enqueueSnackbar } = useSnackbar();
     const router = useRouter();
@@ -18,12 +19,13 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-
+    /** Previene el comportamiento por defecto del formulario y llama a handleRegister. */
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         handleRegister();
     };
 
+    /** Valida los campos, comprueba que las contraseñas coincidan y llama al servicio de registro. */
     const handleRegister = async () => {
         if (!name || !username || !email || !password || !confirmPassword) {
             enqueueSnackbar("Por favor completa todos los campos", { variant: 'warning' });

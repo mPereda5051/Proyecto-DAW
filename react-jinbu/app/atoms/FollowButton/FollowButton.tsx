@@ -10,11 +10,13 @@ interface FollowButtonProps {
     isFollowing: boolean;
 }
 
+/** Botón para seguir o dejar de seguir a un usuario. Alterna el estado al hacer clic. */
 export default function FollowButton ({username, isFollowing}: FollowButtonProps){
     const {enqueueSnackbar } = useSnackbar();
     const [following, setFollowing] = useState(isFollowing);
     const [loading, setLoading] = useState(false);
 
+    /** Llama al servicio toggleFollow y actualiza el estado local según el resultado. */
     async function handleClick() {
         if (loading) return;
         setLoading(true);

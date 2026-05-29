@@ -7,6 +7,7 @@ interface ProfileStatProps {
     href?: string;
 }
 
+/** Muestra un número y su etiqueta. Si recibe href, se convierte en enlace clicable. */
 export default function ProfileStat({ count, label, href }: ProfileStatProps) {
     const content = (
         <>

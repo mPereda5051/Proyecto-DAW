@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { login } from "@/app/services/authService";
 import { useSnackbar } from "notistack";
 
+/** Página de inicio de sesión. Gestiona el formulario y redirige al home si el login es correcto. */
 export default function Login() {
 
     const { enqueueSnackbar } = useSnackbar();
@@ -15,11 +16,13 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
+    /** Previene el comportamiento por defecto del formulario y llama a handleLogin. */
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         handleLogin();
     };
 
+    /** Valida los campos, llama al servicio de login y redirige al home. */
     const handleLogin = async () => {
         if (username === "" || password === "") {
             enqueueSnackbar("Por favor completa todos los campos", { variant: 'warning' });
