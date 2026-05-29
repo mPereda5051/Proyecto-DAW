@@ -18,3 +18,13 @@
     color: #aaa;
     font-size: 0.85rem;
 }
+
+.profile-Stat--link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.profile-Stat--link:hover h3,
+.profile-Stat--link:hover p {
+    color: white;
+}

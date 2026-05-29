@@ -5,14 +5,15 @@ interface ProfileStatsProps {
     posts: number;
     followers: number;
     following: number;
+    username: string;
 }
 
-export default function ProfileStats({ posts, followers, following }: ProfileStatsProps) {
+export default function ProfileStats({ posts, followers, following, username }: ProfileStatsProps) {
     return (
         <div className="profile-stats">
-            <ProfileStat count={posts} label="Posts" />
-            <ProfileStat count={followers} label="Followers" />
-            <ProfileStat count={following} label="Following" />
+            <ProfileStat count={posts} label="Publicaciones" />
+            <ProfileStat count={followers} label="Seguidores" href={`/profile/${username}/followers`} />
+            <ProfileStat count={following} label="Siguiendo" href={`/profile/${username}/following`} />
         </div>
     );
 }

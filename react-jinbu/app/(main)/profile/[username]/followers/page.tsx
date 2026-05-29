@@ -1,0 +1,42 @@
+'use client';
+
+import { use } from 'react';
+import Link from 'next/link';
+import './followers.css';
+
+const FAKE_FOLLOWERS = [
+    { username: 'maria_photo', avatarUrl: 'https://i.pravatar.cc/150?img=1' },
+    { username: 'carlos_lens', avatarUrl: 'https://i.pravatar.cc/150?img=2' },
+    { username: 'laura_shots', avatarUrl: 'https://i.pravatar.cc/150?img=3' },
+    { username: 'pepe_foto', avatarUrl: 'https://i.pravatar.cc/150?img=4' },
+];
+
+interface FollowersPageProps {
+    params: Promise<{ username: string }>;
+}
+
+export default function FollowersPage({ params }: FollowersPageProps) {
+    const { username } = use(params);
+
+    return (
+        <main className="follow-page">
+            <div className="follow-page__header">
+                <Link href={`/profile/${username}`} className="follow-page__back">← {username}</Link>
+                <h2 className="follow-page__title">Seguidores</h2>
+            </div>
+
+            <div className="follow-page__list">
+                {FAKE_FOLLOWERS.map((user) => (
+                    <Link key={user.username} href={`/profile/${user.username}`} className="follow-page__user">
+                        <img
+                            src={user.avatarUrl}
+                            alt={user.username}
+                            className="follow-page__avatar"
+                        />
+                        <span className="follow-page__username">@{user.username}</span>
+                    </Link>
+                ))}
+            </div>
+        </main>
+    );
+}
