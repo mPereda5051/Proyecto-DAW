@@ -7,7 +7,6 @@ import { addComment } from '@/app/services/commentService';
 import Link from 'next/link';
 import { useSnackbar } from 'notistack';
 
-
 interface CommentsSectionProps {
     initialComments: Comment[];
     postId: number;

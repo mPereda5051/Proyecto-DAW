@@ -13,6 +13,7 @@ interface FormFieldProps {
 
 
 
+/** Agrupa un label, un input y un mensaje de error opcional en un campo de formulario. */
 export default function FormField({label, type, placeholder, value, onChange, error }: FormFieldProps) {
     return (
         <div className="form-field">

@@ -27,6 +27,7 @@ interface PostItem {
     } | null;
 }
 
+/** Galería de fotos del perfil con paginación. Muestra las publicaciones de un usuario concreto. */
 export default function ProfileGrid({ userId, showDelete }: ProfileGridProps) {
 
     const [photos, setPost] = useState<PostItem[]>([]);
@@ -36,6 +37,7 @@ export default function ProfileGrid({ userId, showDelete }: ProfileGridProps) {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        /** Obtiene las publicaciones del usuario para la página actual. */
         const fetchPosts = async () => {
             setLoading(true);
             setError(null);

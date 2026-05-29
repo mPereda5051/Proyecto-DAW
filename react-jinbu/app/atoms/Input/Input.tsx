@@ -10,6 +10,7 @@ interface InputProps {
 
 }
 
+/** Input estilizado reutilizable. Usado dentro de FormField para los formularios de la app. */
 export default function Input({type, placeholder, value, onChange = () => {} }: InputProps){
     return (
         <input

@@ -15,6 +15,7 @@ interface ProfileSectionProps {
     isFollowing?: boolean;
 }
 
+/** Sección superior del perfil: agrupa el header, las estadísticas y el botón de seguir. */
 export default function ProfileSection({ avatarSrc, avatarAlt, username, bio, posts, followers, following, showFollowButton = false, isFollowing = false }: ProfileSectionProps) {
     return (
         <div className="profile-section">

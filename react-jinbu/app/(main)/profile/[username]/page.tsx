@@ -12,6 +12,7 @@ interface ProfilePageProps {
     }>
 }
 
+/** Página de perfil de usuario. Carga los datos del perfil y sus publicaciones desde el backend. */
 export default function ProfilePage({ params }: ProfilePageProps) {
     const { username } = use(params);
     const [user, setUser] = useState<any>(null);
@@ -22,6 +23,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     const isOwnProfile = loggedUser === username;
 
     useEffect(() => {
+        /** Carga en paralelo el perfil y las publicaciones del usuario. */
         const loadData = async () => {
             try {
                 const [profileData, postsData] = await Promise.all([

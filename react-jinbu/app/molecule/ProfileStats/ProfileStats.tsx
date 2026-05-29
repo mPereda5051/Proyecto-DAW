@@ -8,6 +8,7 @@ interface ProfileStatsProps {
     username: string;
 }
 
+/** Muestra las estadísticas del perfil. Seguidores y siguiendo son enlaces a sus listas. */
 export default function ProfileStats({ posts, followers, following, username }: ProfileStatsProps) {
     return (
         <div className="profile-stats">
