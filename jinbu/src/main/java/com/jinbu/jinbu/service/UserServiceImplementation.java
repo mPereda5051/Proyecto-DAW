@@ -68,6 +68,22 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public void toggleFollow(String followerUsername, String followedUsername) {
+        User follower = getUserEntityByUsername(followerUsername);
+        User followed = getUserEntityByUsername(followedUsername);
+
+        if (follower.getFollowing().contains(followed)) {
+            follower.getFollowing().remove(followed);
+            followed.getFollowers().remove(follower);
+        } else {
+            follower.getFollowing().add(followed);
+            followed.getFollowers().add(follower);
+        }
+        userRepository.save(follower);
+        userRepository.save(followed);
+    }
+
+    @Override
     public void updateProfile(String username, UserDTO userDTO) {
         User user = getUserEntityByUsername(username);
         user.setName(userDTO.name());
