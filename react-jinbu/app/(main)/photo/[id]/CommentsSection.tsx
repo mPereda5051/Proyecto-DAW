@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import { Comment } from '@/app/services/models/comment';
 import { addComment } from '@/app/services/commentService';
+import Link from 'next/link';
 import { useSnackbar } from 'notistack';
+
 
 interface CommentsSectionProps {
     initialComments: Comment[];
@@ -52,7 +54,7 @@ export default function CommentsSection({ initialComments, postId, token, postCo
                 {comments.length === 0 && <p style={{ color: '#888', fontSize: '0.9rem' }}>No hay comentarios aún. ¡Sé el primero!</p>}
                 {comments.map((comment) => (
                     <div key={comment.id} className="comment">
-                        <span className="comment-user">{comment.user.username}</span>
+                        <Link href={`/profile/${comment.user.username}`} className="comment-user">{comment.user.username}</Link>
                         <span className="comment-text">: {comment.content}</span>
                     </div>
                 ))}

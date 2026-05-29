@@ -19,7 +19,7 @@ export default function ProfileSection({ avatarSrc, avatarAlt, username, bio, po
     return (
         <div className="profile-section">
             <ProfileHeader avatarSrc={avatarSrc} avatarAlt={avatarAlt} username={username} bio={bio} />
-            <ProfileStats posts={posts} followers={followers} following={following} />
+            <ProfileStats posts={posts} followers={followers} following={following} username={username} />
             {showFollowButton && (
                 <FollowButton username={username} isFollowing={isFollowing} />
             )}
