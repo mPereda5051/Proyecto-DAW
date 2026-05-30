@@ -11,16 +11,16 @@ import java.net.URI;
 
 @Configuration
 public class S3Config {
-    @Value(("${cloud.aws.credentials.access-key}"))
+    @Value("${S3_ACCESS_KEY}")
     private String accessKey;
 
-    @Value("${cloud.aws.credentials.secret-key}")
+    @Value("${S3_SECRET_KEY}")
     private String secretKey;
 
-    @Value("${cloud.aws.region.static}")
+    @Value("${S3_REGION}")
     private String region;
 
-    @Value("${cloud.aws.s3.endpoint}")
+    @Value("${S3_ENDPOINT}")
     private String endpoint;
 
     @Bean
@@ -30,6 +30,7 @@ public class S3Config {
                 .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(credentials))
                 .endpointOverride(URI.create(endpoint))
+                // VITAL PARA SUPABASE (Path Style Access)
                 .forcePathStyle(true)
                 .build();
     }
