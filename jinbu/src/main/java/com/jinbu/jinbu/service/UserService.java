@@ -17,5 +17,6 @@ public interface UserService {
     void toggleFollow(String followerUsername, String followedUsername);
     void updateProfile(String username, UserDTO userDTO);
     void changePassword(String username, String currentPassword, String newPassword);
+    List<UserDTO> searchUsers(String query);
 
 }

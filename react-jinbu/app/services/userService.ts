@@ -132,6 +132,25 @@ export const changePassword = async (passwordData: { currentPassword: string; ne
     return response;
 };
 
+// Función para buscar usuarios por nombre de usuario
+export const searchUsers = async (query: string) => {
+    const token = getToken();
+
+    const response = await fetch(`${BASE_URL}/users/search?query=${query}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': token ? (token.startsWith('Bearer ') ? token : `Bearer ${token}`) : '',
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Error al buscar usuarios');
+    }
+
+    return response.json();
+};
+
 //funcion para seguir o dejar de seguir a un usuario
 export const toggleFollow = async (username: string) => {
     const token = getToken();

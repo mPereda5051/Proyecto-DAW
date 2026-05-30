@@ -69,4 +69,10 @@ public class UserController {
         userService.toggleFollow(currentUsername, username);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "Search users by username")
+    @GetMapping("/search")
+    public ResponseEntity<List<UserDTO>> searchUsers(@RequestParam String query) {
+        return new ResponseEntity<>(userService.searchUsers(query), HttpStatus.OK);
+    }
 }

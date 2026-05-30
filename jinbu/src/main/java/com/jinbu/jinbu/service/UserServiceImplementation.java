@@ -102,6 +102,14 @@ public class UserServiceImplementation implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public List<UserDTO> searchUsers(String query) {
+        return userRepository.findByUsernameContainingIgnoreCase(query)
+                .stream()
+                .map(userMapper::toDTO)
+                .toList();
+    }
+
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id, User.class));
