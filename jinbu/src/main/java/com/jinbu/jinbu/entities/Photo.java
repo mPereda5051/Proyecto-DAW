@@ -54,6 +54,13 @@ public class Photo {
     private String extension;
 
     public String getFullUrl() {
+        String projectDomain = System.getenv("S3_ENDPOINT");
+        if (projectDomain != null) {
+            // Convierte https://project.supabase.co/storage/v1/s3 en https://project.supabase.co
+            projectDomain = projectDomain.split("/storage")[0];
+            String bucketName = System.getenv("S3_BUCKET_NAME");
+            return projectDomain + "/storage/v1/object/public/" + bucketName + "/" + this.getId() + this.getExtension();
+        }
         return "https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/" + this.getId() + this.getExtension();
     }
 

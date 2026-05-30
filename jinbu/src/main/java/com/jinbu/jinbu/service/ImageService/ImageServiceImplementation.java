@@ -54,6 +54,12 @@ public class ImageServiceImplementation implements ImageService{
     }
 
     public String retrieveProfilePictureImageUrl(String username) {
+        String projectDomain = System.getenv("S3_ENDPOINT");
+        if (projectDomain != null) {
+            projectDomain = projectDomain.split("/storage")[0];
+            String bucketName = System.getenv("S3_BUCKET_NAME_PROFILE");
+            return projectDomain + "/storage/v1/object/public/" + bucketName + "/" + username;
+        }
         return "https://jinbu-s3-profilepictures.s3.us-east-1.amazonaws.com/" + username;
     }
 
