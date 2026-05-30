@@ -12,22 +12,32 @@ interface SearchInputProps {
     radio?: string;
     disabled?: boolean;
     Icon?: React.ElementType;
+    enableSearch?: boolean;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function SearchInput({
     type = "text",
     placeholder = "Buscar usuarios...",
+    value,
     radio,
     disabled = false,
-    Icon = SearchIcon }: SearchInputProps) {
+    Icon = SearchIcon,
+    enableSearch = false,
+    onChange }: SearchInputProps) {
     
-    const [query, setQuery] = useState("");
+    const [query, setQuery] = useState(value || "");
     const [results, setResults] = useState<any[]>([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
     useEffect(() => {
+        if (value !== undefined) setQuery(value);
+    }, [value]);
+
+    useEffect(() => {
+        if (!enableSearch) return;
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setShowDropdown(false);
@@ -35,25 +45,36 @@ export default function SearchInput({
         };
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+    }, [enableSearch]);
 
-    const handleSearch = async (val: string) => {
+    const handleInputChange = (val: string) => {
         setQuery(val);
-        if (val.length > 0) {
-            try {
-                const data = await searchUsers(val);
-                setResults(data);
-                setShowDropdown(true);
-            } catch (error) {
-                console.error("Error buscando usuarios", error);
-            }
+        
+        if (onChange) {
+            const event = { target: { value: val } } as React.ChangeEvent<HTMLInputElement>;
+            onChange(event);
+        }
+
+        if (enableSearch && val.length > 0) {
+            triggerSearch(val);
         } else {
             setResults([]);
             setShowDropdown(false);
         }
     };
 
+    const triggerSearch = async (val: string) => {
+        try {
+            const data = await searchUsers(val);
+            setResults(data);
+            setShowDropdown(true);
+        } catch (error) {
+            console.error("Error buscando usuarios", error);
+        }
+    };
+
     const handleResultClick = (username: string) => {
+        if (!enableSearch) return;
         setQuery("");
         setShowDropdown(false);
         router.push(`/profile/${username}`);
@@ -68,11 +89,11 @@ export default function SearchInput({
                 value={query}
                 style={{ borderRadius: radio }}
                 disabled={disabled}
-                onChange={(e) => handleSearch(e.target.value)}
-                onFocus={() => query.length > 0 && setShowDropdown(true)}
+                onChange={(e) => handleInputChange(e.target.value)}
+                onFocus={() => enableSearch && query.length > 0 && setShowDropdown(true)}
                 className="search-input"
             />
-            {showDropdown && (
+            {enableSearch && showDropdown && (
                 <div className="search-dropdown">
                     {results.length > 0 ? (
                         results.map((user) => (

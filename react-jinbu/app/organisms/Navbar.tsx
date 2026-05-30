@@ -48,7 +48,7 @@ export default function Navbar() {
 
         {/* Buscador */}
         <div className="navbar-search-wrapper">
-          <SearchInput radio="20px" />
+          <SearchInput radio="20px" enableSearch={true} />
         </div>
 
         {/* perfil */}
