@@ -53,7 +53,8 @@ public class SecurityConfig {
         if (allowedOrigins == null || allowedOrigins.isEmpty()) {
             configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         } else {
-            configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
+            //mas flexibilidad en las URL en Render
+            configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split("\\s*,\\s*")));
         }
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
