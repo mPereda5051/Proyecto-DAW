@@ -53,11 +53,9 @@ public class Photo {
     @Column(name = "extension")
     private String extension;
 
-
-    // Cambiar valor hardcodeado
-      public String getFullUrl() {
-          return "https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/" + this.getId() + this.getExtension();
-      }
+    public String getFullUrl() {
+        return "https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/" + this.getId() + this.getExtension();
+    }
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)

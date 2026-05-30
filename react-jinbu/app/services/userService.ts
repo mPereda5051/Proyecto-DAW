@@ -151,3 +151,74 @@ export const toggleFollow = async (username: string) => {
     return response;
 };
 
+// Funcion para obtener la foto de perfil del usuario
+export const getProfilePictureUrl = async (username: string) => {
+    const token = getToken();
+    
+    const response = await fetch(`${BASE_URL}/images/profilePicture/${username}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': token ? (token.startsWith('Bearer ') ? token : `Bearer ${token}`) : '',
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (response.status === 404) {
+        throw new Error('Imagen no encontrada');
+    }
+
+    if (!response.ok) {
+        throw new Error('No se pudo obtener la URL de la foto de perfil');
+    }
+
+    return response.text();
+};
+
+// Funcion para subir la foto de perfil al s3
+export const uploadProfilePicture = async (file: File) => {
+    const bearerToken = getToken();
+
+    if (!bearerToken) {
+        throw new Error("UNAUTHORIZED");
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${BASE_URL}/images/profilePicture/upload`, {
+        method: 'POST',
+        headers: {
+            'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`,
+        },
+        body: formData,
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al guardar la foto de perfil");
+    }
+    
+    return response;
+};
+
+// Función para eliminar la foto de perfil del S3
+export const deleteProfilePicture = async () => {
+    const token = getToken();
+
+    const response = await fetch(`${BASE_URL}/images/profilePicture`, {
+        method: 'DELETE', 
+        headers: {
+            'Authorization': token ? (token.startsWith('Bearer ') ? token : `Bearer ${token}`) : '',
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (response.status === 404) {
+        throw new Error('La foto de perfil no existe o ya fue eliminada');
+    }
+
+    if (!response.ok) {
+        throw new Error('No se pudo eliminar la foto de perfil');
+    }
+
+    return true; 
+};

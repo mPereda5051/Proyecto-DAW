@@ -13,7 +13,11 @@ public interface ImageService {
 
     Optional<Photo> store(Photo photo, MultipartFile file) throws IOException;
 
+    void storeProfilePicture(MultipartFile file) throws IOException;
+
     String retrieveImageUrl(Long id);
+
+    String retrieveProfilePictureImageUrl(String username);
 
     Photo retrieveLocalMetadata(MultipartFile photo);
 
@@ -22,6 +26,8 @@ public interface ImageService {
     Page<Photo> retrievePhotosPageable(Pageable pageable);
 
     void deleteImageById(Long id);
+
+    void deleteProfilePicture();
 
     Page<Photo> getFilteredPhotosSingleValue(
             Integer iso,

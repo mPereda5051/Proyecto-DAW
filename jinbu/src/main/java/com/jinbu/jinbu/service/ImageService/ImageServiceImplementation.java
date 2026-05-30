@@ -1,12 +1,15 @@
 package com.jinbu.jinbu.service.ImageService;
 
 import com.jinbu.jinbu.entities.Photo;
+import com.jinbu.jinbu.entities.User;
 import com.jinbu.jinbu.exceptions.EntityNotFoundException;
 import com.jinbu.jinbu.repository.PhotoRepository;
+import com.jinbu.jinbu.repository.UserRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +26,7 @@ public class ImageServiceImplementation implements ImageService{
     LocalImageStorage localImageStorage;
     S3ImageStorage s3ImageStorage;
     PhotoRepository photoRepository;
+    UserRepository userRepository;
 
     @Transactional
     @Override
@@ -41,10 +45,22 @@ public class ImageServiceImplementation implements ImageService{
     }
 
     @Override
+    public void storeProfilePicture(MultipartFile file) throws IOException {
+        try {
+            s3ImageStorage.storeProfilePicture(file);
+        } catch (IOException | RuntimeException e) {
+            throw new RuntimeException("Upload failed", e);
+        }
+    }
+
+    public String retrieveProfilePictureImageUrl(String username) {
+        return "https://jinbu-s3-profilepictures.s3.us-east-1.amazonaws.com/" + username;
+    }
+
+    @Override
     public String retrieveImageUrl(Long id) {
         Photo photo = photoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(id, Photo.class));
-
         return photo.getFullUrl();
     }
 
@@ -77,6 +93,11 @@ public class ImageServiceImplementation implements ImageService{
 
         photoRepository.delete(photo);
         s3ImageStorage.delete(id, extension);
+    }
+
+    @Override
+    public void deleteProfilePicture() {
+        s3ImageStorage.deleteProfilePicture();
     }
 
     @Override
