@@ -2,9 +2,8 @@
 import { useEffect, useState, use } from "react";
 import ProfileSection from "@/app/organisms/ProfileSection/ProfileSection";
 import ProfileGrid from "@/app/organisms/ProfileGrid/ProfileGrid";
-import { getUserProfile, getUserPosts } from "@/app/services/userService";
+import { getUserProfile, getUserPosts, getProfilePictureUrl } from "@/app/services/userService";
 import { getCurrentUsername } from "@/app/services/authService";
-
 
 interface ProfilePageProps {
     params: Promise<{
@@ -12,27 +11,33 @@ interface ProfilePageProps {
     }>
 }
 
-/** Página de perfil de usuario. Carga los datos del perfil y sus publicaciones desde el backend. */
 export default function ProfilePage({ params }: ProfilePageProps) {
     const { username } = use(params);
     const [user, setUser] = useState<any>(null);
     const [photos, setPhotos] = useState<any[]>([]);
+    const [avatarUrl, setAvatarUrl] = useState<string>("/images/user.jpg");
     const [loading, setLoading] = useState(true);
 
     const loggedUser = getCurrentUsername();
     const isOwnProfile = loggedUser === username;
 
     useEffect(() => {
-        /** Carga en paralelo el perfil y las publicaciones del usuario. */
         const loadData = async () => {
             try {
-                const [profileData, postsData] = await Promise.all([
+                const [profileData, postsData, s3AvatarUrl] = await Promise.all([
                     getUserProfile(username),
-                    getUserPosts(username)
+                    getUserPosts(username),
+                    getProfilePictureUrl(username).catch(() => null)
                 ]);
                 
                 setUser(profileData);
                 setPhotos(postsData);
+
+                if (s3AvatarUrl && typeof s3AvatarUrl === 'string' && s3AvatarUrl.startsWith('http')) {
+                    setAvatarUrl(s3AvatarUrl);
+                } else {
+                    setAvatarUrl("/images/user.jpg");
+                }
             } catch (error) {
                 console.error("Error cargando el perfil:", error);
             } finally {
@@ -49,7 +54,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     return (
         <main>
             <ProfileSection
-                avatarSrc={user.avatarUrl || "https://i.pravatar.cc/150"}
+                avatarSrc={avatarUrl}
                 avatarAlt={user.username}
                 username={user.username}
                 bio={user.bio || "Sin biografía"}

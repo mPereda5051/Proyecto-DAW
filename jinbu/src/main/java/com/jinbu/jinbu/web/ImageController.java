@@ -42,6 +42,17 @@ public class ImageController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Upload profile picture", description = "Saves profile picture metadata in localStorage and it sends the profile picture itself to an S3.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Image uploaded successfully", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error uploading image", content = @Content)
+    })
+    @PostMapping("/profilePicture/upload")
+    public ResponseEntity<HttpStatus> uploadProfilePicture(@RequestParam("file") MultipartFile file) throws IOException {
+        imageService.storeProfilePicture(file);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @Operation(summary = "Extract image metadata", description = "Process photo in the backend and sends back all the metadata to the frontend.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Image uploaded successfully", content = @Content),
@@ -73,6 +84,16 @@ public class ImageController {
         return new ResponseEntity<>(imageService.retrieveImageUrl(id), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get profile pricture url", description = "Fetch profile picture by username (obtained within the backend).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "URL found", content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "404", description = "Image not found", content = @Content)
+    })
+    @GetMapping("/profilePicture/{username}")
+    public ResponseEntity<String> getProfilePicureUrl(@PathVariable String username) {
+        return new ResponseEntity<>(imageService.retrieveProfilePictureImageUrl(username), HttpStatus.OK);
+    }
+
     @Operation(summary = "Delete photo by Id", description = "Deletes photo metadata and S3 file by Id (Long type).")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Image deleted", content = @Content),
@@ -81,6 +102,17 @@ public class ImageController {
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteImage(@PathVariable Long id) {
         imageService.deleteImageById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @Operation(summary = "Delete profile picture", description = "Deletes profile picture s3 file.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Image deleted", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Image not found", content = @Content)
+    })
+    @DeleteMapping("/priofilePicture/{id}")
+    public ResponseEntity<HttpStatus> deleteProfilePicture() {
+        imageService.deleteProfilePicture();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

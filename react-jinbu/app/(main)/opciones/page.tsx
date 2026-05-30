@@ -1,11 +1,17 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './opciones.css';
 import Button from '../../atoms/Button/Button';
 import Input from '../../atoms/Input/Input';
 import AvatarImage from '../../atoms/AvatarImage/AvatarImage';
-import { getCurrentUser, updateProfile, changePassword } from '../../services/userService';
+import { 
+    getCurrentUser, 
+    updateProfile, 
+    changePassword, 
+    uploadProfilePicture, 
+    getProfilePictureUrl 
+} from '../../services/userService';
 
 export default function OpcionesPage() {
     const [name, setName] = useState('');
@@ -21,6 +27,9 @@ export default function OpcionesPage() {
     const [changingPassword, setChangingPassword] = useState(false);
     const [passwordMessage, setPasswordMessage] = useState({ text: '', type: '' });
 
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [avatarUrl, setAvatarUrl] = useState('/images/user.jpg'); 
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -28,6 +37,19 @@ export default function OpcionesPage() {
                 setName(user.name || '');
                 setUsername(user.username || '');
                 setEmail(user.email || '');
+
+                try {
+                    const url = await getProfilePictureUrl(user.name);
+                    if (url && typeof url === 'string' && url.startsWith('http')) {
+                        setAvatarUrl(url);
+                    } else {
+                        setAvatarUrl('/images/user.jpg');
+                    }
+                } catch (imgError) {
+                    console.log("El usuario no tiene foto, se usa la por defecto.");
+                    setAvatarUrl('/images/user.jpg'); 
+                }
+
             } catch (error) {
                 setMessage({ text: 'Error al cargar los datos del usuario', type: 'error' });
             } finally {
@@ -37,6 +59,31 @@ export default function OpcionesPage() {
 
         fetchUserData();
     }, []);
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setMessage({ text: '', type: '' });
+        try {
+            await uploadProfilePicture(file);
+            
+            try {
+                const url = await getProfilePictureUrl(username);
+                if (url && typeof url === 'string' && url.startsWith('http')) {
+                    setAvatarUrl(url);
+                } else {
+                    setAvatarUrl(URL.createObjectURL(file));
+                }
+            } catch {
+                setAvatarUrl(URL.createObjectURL(file)); 
+            }
+
+            setMessage({ text: 'Foto de perfil actualizada correctamente', type: 'success' });
+        } catch (error) {
+            setMessage({ text: 'Error al subir la foto de perfil', type: 'error' });
+        }
+    };
 
     const handleUpdateProfile = async () => {
         setUpdatingProfile(true);
@@ -85,8 +132,19 @@ export default function OpcionesPage() {
         <div className="opciones-page">
             <header className="opciones-header">
                 <h1>Opciones</h1>
-                <div className="profile-photo-container">
-                    <AvatarImage src="/images/user.jpg" alt="Foto de perfil" />
+                <div 
+                    className="profile-photo-container" 
+                    onClick={() => fileInputRef.current?.click()} 
+                    style={{ cursor: 'pointer' }}
+                >
+                    <AvatarImage src={avatarUrl} alt="Foto de perfil" />
+                    <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        onChange={handleFileChange} 
+                        accept="image/*" 
+                        style={{ display: 'none' }} 
+                    />
                 </div>
             </header>
 
