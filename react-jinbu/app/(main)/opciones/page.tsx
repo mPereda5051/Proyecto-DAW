@@ -31,34 +31,45 @@ export default function OpcionesPage() {
     const [avatarUrl, setAvatarUrl] = useState('/images/user.jpg'); 
 
     useEffect(() => {
-        const fetchUserData = async () => {
+    // Variable de control para evitar NS_BINDING_ABORTED
+    let isMounted = true; 
+
+    const fetchUserData = async () => {
+        try {
+            const user = await getCurrentUser();
+
+            setName(user.name || '');
+            setUsername(user.username || '');
+            setEmail(user.email || '');
+
             try {
-                const user = await getCurrentUser();
-                setName(user.name || '');
-                setUsername(user.username || '');
-                setEmail(user.email || '');
-
-                try {
-                    const url = await getProfilePictureUrl(user.name);
-                    if (url && typeof url === 'string' && url.startsWith('http')) {
-                        setAvatarUrl(url);
-                    } else {
-                        setAvatarUrl('/images/user.jpg');
-                    }
-                } catch (imgError) {
-                    console.log("El usuario no tiene foto, se usa la por defecto.");
-                    setAvatarUrl('/images/user.jpg'); 
+                const url = await getProfilePictureUrl(user.username);
+                
+                if (isMounted && url && typeof url === 'string' && url.startsWith('http')) {
+                    setAvatarUrl(url);
+                } else if (isMounted) {
+                    setAvatarUrl('/images/user.jpg');
                 }
-
-            } catch (error) {
-                setMessage({ text: 'Error al cargar los datos del usuario', type: 'error' });
-            } finally {
-                setLoading(false);
+            } catch (imgError) {
+                console.log("El usuario no tiene foto, se usa la por defecto.");
+                if (isMounted) setAvatarUrl('/images/user.jpg'); 
             }
-        };
 
-        fetchUserData();
-    }, []);
+        } catch (error) {
+            if (isMounted) setMessage({ text: 'Error al cargar los datos del usuario', type: 'error' });
+        } finally {
+            if (isMounted) setLoading(false);
+        }
+    };
+
+    fetchUserData();
+
+    // Función de limpieza: si React ejecuta el efecto dos veces, 
+    // la primera ejecución se marca como false y no actualiza el estado.
+    return () => {
+        isMounted = false; 
+    };
+}, []);
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

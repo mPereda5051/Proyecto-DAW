@@ -3,14 +3,7 @@
 import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import './followers.css';
-import { getFollowersByUsername } from '@/app/services/userService';
-
-const FAKE_FOLLOWERS = [
-    { username: 'maria_photo', avatarUrl: 'https://i.pravatar.cc/150?img=1' },
-    { username: 'carlos_lens', avatarUrl: 'https://i.pravatar.cc/150?img=2' },
-    { username: 'laura_shots', avatarUrl: 'https://i.pravatar.cc/150?img=3' },
-    { username: 'pepe_foto', avatarUrl: 'https://i.pravatar.cc/150?img=4' },
-];
+import { getFollowersByUsername, getProfilePictureUrl } from '@/app/services/userService';
 
 interface FollowersPageProps {
     params: Promise<{ username: string }>;
@@ -19,23 +12,60 @@ interface FollowersPageProps {
 export default function FollowersPage({ params }: FollowersPageProps) {
     const { username } = use(params);
     const [followers, setFollowers] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        let isMounted = true;
+
         const loadFollowersData = async () => {
             try {
                 const data = await getFollowersByUsername(username); 
                 
-                setFollowers(data || []);
+                if (!data || data.length === 0) {
+                    if (isMounted) {
+                        setFollowers([]);
+                        setLoading(false);
+                    }
+                    return;
+                }
+
+                const followersWithAvatars = await Promise.all(
+                    data.map(async (follower: any) => {
+                        try {
+                            const s3AvatarUrl = await getProfilePictureUrl(follower.username);
+                            
+                            if (s3AvatarUrl && typeof s3AvatarUrl === 'string' && s3AvatarUrl.startsWith('http')) {
+                                return { ...follower, avatarUrl: s3AvatarUrl };
+                            }
+                            
+                            return { ...follower, avatarUrl: '/images/user.jpg' };
+                        } catch (e) {
+                            return { ...follower, avatarUrl: '/images/user.jpg' };
+                        }
+                    })
+                );
+
+                if (isMounted) {
+                    setFollowers(followersWithAvatars);
+                }
                 
             } catch (error) {
-                console.error("Error cargando la lista de seguidos:", error);
-            } 
+                console.error("Error cargando la lista de seguidores:", error);
+            } finally {
+                if (isMounted) setLoading(false);
+            }
         };
 
         if (username) {
             loadFollowersData();
         }
+
+        return () => {
+            isMounted = false;
+        };
     }, [username]);
+
+    if (loading) return <div style={{ padding: "2rem", textAlign: "center" }}>Cargando seguidores...</div>;
 
     return (
         <main className="follow-page">
@@ -45,16 +75,20 @@ export default function FollowersPage({ params }: FollowersPageProps) {
             </div>
 
             <div className="follow-page__list">
-                {followers?.map((user) => (
-                    <Link key={user.username} href={`/profile/${user.username}`} className="follow-page__user">
-                        <img
-                            src={user.avatarUrl || 'https://i.pravatar.cc/150'}
-                            alt={user.username}
-                            className="follow-page__avatar"
-                        />
-                        <span className="follow-page__username">@{user.username}</span>
-                    </Link>
-                ))}
+                {followers.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '1rem' }}>No hay seguidores aún.</div>
+                ) : (
+                    followers.map((user) => (
+                        <Link key={user.username} href={`/profile/${user.username}`} className="follow-page__user">
+                            <img
+                                src={user.avatarUrl}
+                                alt={user.username}
+                                className="follow-page__avatar"
+                            />
+                            <span className="follow-page__username">@{user.username}</span>
+                        </Link>
+                    ))
+                )}
             </div>
         </main>
     );

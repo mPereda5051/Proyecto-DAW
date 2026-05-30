@@ -3,13 +3,7 @@
 import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import './following.css';
-import { getFollowingByUsername } from '@/app/services/userService';
-
-const FAKE_FOLLOWING = [
-    { username: 'ana_clicks', avatarUrl: 'https://i.pravatar.cc/150?img=5' },
-    { username: 'jorge_raw', avatarUrl: 'https://i.pravatar.cc/150?img=6' },
-    { username: 'sofia_frame', avatarUrl: 'https://i.pravatar.cc/150?img=7' },
-];
+import { getFollowingByUsername, getProfilePictureUrl } from '@/app/services/userService';
 
 interface FollowingPageProps {
     params: Promise<{ username: string }>;
@@ -18,23 +12,60 @@ interface FollowingPageProps {
 export default function FollowingPage({ params }: FollowingPageProps) {
     const { username } = use(params);
     const [following, setFollowing] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
     
-        useEffect(() => {
-            const loadFollowersData = async () => {
-                try {
-                    const data = await getFollowingByUsername(username); 
-                    
-                    setFollowing(data || []);
-                    
-                } catch (error) {
-                    console.error("Error cargando la lista de seguidos:", error);
-                } 
-            };
-    
-            if (username) {
-                loadFollowersData();
+    useEffect(() => {
+        let isMounted = true;
+
+        const loadFollowingData = async () => {
+            try {
+                const data = await getFollowingByUsername(username); 
+                
+                if (!data || data.length === 0) {
+                    if (isMounted) {
+                        setFollowing([]);
+                        setLoading(false);
+                    }
+                    return;
+                }
+
+                const followingWithAvatars = await Promise.all(
+                    data.map(async (followedUser: any) => {
+                        try {
+                            const s3AvatarUrl = await getProfilePictureUrl(followedUser.username);
+                            
+                            if (s3AvatarUrl && typeof s3AvatarUrl === 'string' && s3AvatarUrl.startsWith('http')) {
+                                return { ...followedUser, avatarUrl: s3AvatarUrl };
+                            }
+                            
+                            return { ...followedUser, avatarUrl: '/images/user.jpg' };
+                        } catch (e) {
+                            return { ...followedUser, avatarUrl: '/images/user.jpg' };
+                        }
+                    })
+                );
+                
+                if (isMounted) {
+                    setFollowing(followingWithAvatars);
+                }
+                
+            } catch (error) {
+                console.error("Error cargando la lista de seguidos:", error);
+            } finally {
+                if (isMounted) setLoading(false);
             }
-        }, [username]);
+        };
+
+        if (username) {
+            loadFollowingData();
+        }
+
+        return () => {
+            isMounted = false;
+        };
+    }, [username]);
+
+    if (loading) return <div style={{ padding: "2rem", textAlign: "center" }}>Cargando seguidos...</div>;
 
     return (
         <main className="follow-page">
@@ -44,16 +75,20 @@ export default function FollowingPage({ params }: FollowingPageProps) {
             </div>
 
             <div className="follow-page__list">
-                {following?.map((user) => (
-                    <Link key={user.username} href={`/profile/${user.username}`} className="follow-page__user">
-                        <img
-                            src={user.avatarUrl || 'https://i.pravatar.cc/150'}
-                            alt={user.username}
-                            className="follow-page__avatar"
-                        />
-                        <span className="follow-page__username">@{user.username}</span>
-                    </Link>
-                ))}
+                {following.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '1rem' }}>No sigue a ningún usuario aún.</div>
+                ) : (
+                    following.map((user) => (
+                        <Link key={user.username} href={`/profile/${user.username}`} className="follow-page__user">
+                            <img
+                                src={user.avatarUrl}
+                                alt={user.username}
+                                className="follow-page__avatar"
+                            />
+                            <span className="follow-page__username">@{user.username}</span>
+                        </Link>
+                    ))
+                )}
             </div>
         </main>
     );
