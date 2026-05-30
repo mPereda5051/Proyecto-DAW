@@ -137,7 +137,7 @@ export default function UploadImage() {
                     onDrop={handleDrop}
                 >
                     {imagePreview ? (
-                        <img src={imagePreview} alt="Preview" className={styles.previewImg} />
+                        <img src={imagePreview} alt="Preview" className={styles.previewImg} crossOrigin="anonymous" />
                     ) : (
                         <div className={styles.uploadPlaceholder}>
                             <Button label="Seleccionar archivo" onClick={() => fileInputRef.current?.click()} width="200px" />

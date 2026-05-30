@@ -65,6 +65,7 @@ export default function PhotoCard(photoProps: PhotoData) {
                     src={imageUrl}
                     alt={photo.title || "Photo"}
                     className="photo-card-image"
+                    crossOrigin="anonymous"
                 />
                 <div className="photo-card-overlay">
                     <div className="photo-card-info">

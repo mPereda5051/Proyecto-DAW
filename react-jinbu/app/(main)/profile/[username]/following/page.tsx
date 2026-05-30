@@ -84,6 +84,7 @@ export default function FollowingPage({ params }: FollowingPageProps) {
                                 src={user.avatarUrl}
                                 alt={user.username}
                                 className="follow-page__avatar"
+                                crossOrigin="anonymous"
                             />
                             <span className="follow-page__username">@{user.username}</span>
                         </Link>

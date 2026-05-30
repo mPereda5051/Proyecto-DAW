@@ -32,6 +32,7 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
                 <img 
                     src={imageUrl}
                     alt={post.title} 
+                    crossOrigin="anonymous"
                 />
             </div>
 

@@ -1,4 +1,5 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9090';
+import { BASE_URL } from './config';
+import { getToken } from "./authService";
 
 // Servicio que extraer el metadata de una foto. No guarda informacion en la base de datos
 export const extractMetadata = async (photo: File) => {

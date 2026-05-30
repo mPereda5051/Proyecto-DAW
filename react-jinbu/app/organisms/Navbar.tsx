@@ -90,7 +90,7 @@ export default function Navbar() {
             >
               <p>Perfil</p>
               {/* Actualizamos la imagen para que use la variable avatarUrl */}
-              <img src={avatarUrl} alt="Perfil" className="user-avatar" />
+              <img src={avatarUrl} alt="Perfil" className="user-avatar" crossOrigin="anonymous" />
             </div>
 
             {isProfileMenuOpen && (

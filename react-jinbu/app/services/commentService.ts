@@ -1,6 +1,6 @@
+import { BASE_URL } from './config';
 import { Comment } from "./models/comment";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9090';
 const API_BASE_URL = `${BASE_URL}/comment`;
 
 export async function getCommentsByPostId(postId: number, token?: string | null): Promise<Comment[]> {
@@ -24,11 +24,14 @@ export async function getCommentsByPostId(postId: number, token?: string | null)
 }
 
 export async function addComment(postId: number, content: string, token: string): Promise<Comment> {
+    const cleanToken = token.replace(/"/g, '');
+    const bearerToken = cleanToken.startsWith("Bearer ") ? cleanToken : `Bearer ${cleanToken}`;
+
     const response = await fetch(`${API_BASE_URL}/post/${postId}`, {
         method: "POST",
         headers: {
-            "Content-Type": "text/plain", // Better match for @RequestBody String in Spring
-            "Authorization": token.startsWith("Bearer ") ? token : `Bearer ${token}`,
+            "Content-Type": "text/plain;charset=UTF-8",
+            "Authorization": bearerToken,
         },
         body: content,
     });

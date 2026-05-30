@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import { Comment } from '@/app/services/models/comment';
 import { addComment } from '@/app/services/commentService';
+import { getToken } from '@/app/services/authService';
 import Link from 'next/link';
 import { useSnackbar } from 'notistack';
 
@@ -14,12 +15,20 @@ interface CommentsSectionProps {
     postContent: string;
 }
 
-export default function CommentsSection({ initialComments, postId, token, postContent }: CommentsSectionProps) {
+export default function CommentsSection({ initialComments, postId, token: serverToken, postContent }: CommentsSectionProps) {
     const { enqueueSnackbar } = useSnackbar();
     const [comments, setComments] = useState<Comment[]>(initialComments);
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(false);
     const [cooldown, setCooldown] = useState(0);
+    const [token, setToken] = useState<string | null>(serverToken);
+
+    useEffect(() => {
+        if (!token) {
+            const clientToken = getToken();
+            if (clientToken) setToken(clientToken);
+        }
+    }, [token]);
 
     useEffect(() => {
         if (cooldown > 0) {

@@ -1,6 +1,5 @@
+import { BASE_URL } from './config';
 import Cookies from 'js-cookie';
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9090';
 
 //servicio que realiza llamada al backend
 export const login = async (username: string, password: string) => {

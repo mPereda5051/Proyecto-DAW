@@ -122,6 +122,7 @@ export default function SearchInput({
                                         src={user.avatarUrl} 
                                         alt={user.username}
                                         style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+                                        crossOrigin="anonymous"
                                     />
                                 </div>
                                 <div className="search-result-info">
