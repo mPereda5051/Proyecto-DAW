@@ -1,3 +1,5 @@
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9090';
+
 // Servicio que extraer el metadata de una foto. No guarda informacion en la base de datos
 export const extractMetadata = async (photo: File) => {
     const bearerToken = getToken();
@@ -9,7 +11,7 @@ export const extractMetadata = async (photo: File) => {
     const formData = new FormData();
     formData.append('file', photo);
 
-    const response = await fetch('http://localhost:9090/images/extractMetadata', {
+    const response = await fetch(`${BASE_URL}/images/extractMetadata`, {
         method: 'POST',
         headers: {
             'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`, // Usamos el token de atuentificacion
@@ -48,7 +50,7 @@ export const uploadPhotoAndPost = async (post: Post, photo: Photo, file: File) =
 
     formData.append('file', file);
 
-    const response = await fetch('http://localhost:9090/posts/upload', {
+    const response = await fetch(`${BASE_URL}/posts/upload`, {
         method: 'POST',
         headers: {
             'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`,
@@ -66,7 +68,7 @@ export const uploadPhotoAndPost = async (post: Post, photo: Photo, file: File) =
 export const retrievePostsWithPagination = async (pageNumber: number) => {
     const bearerToken = getToken();
 
-    const url = `http://localhost:9090/posts/retrieve/${pageNumber}?page=${pageNumber}`;
+    const url = `${BASE_URL}/posts/retrieve/${pageNumber}?page=${pageNumber}`;
 
     const headers: HeadersInit = {};
     if (bearerToken) {
@@ -89,7 +91,7 @@ export const retrievePostsWithPagination = async (pageNumber: number) => {
 export const retrieveUserPostsWithPagination = async (userId: number, pageNumber: number) => {
     const bearerToken = getToken();
 
-    const url = `http://localhost:9090/posts/${userId}/all?page=${pageNumber}`;
+    const url = `${BASE_URL}/posts/${userId}/all?page=${pageNumber}`;
 
     const headers: HeadersInit = {};
     if (bearerToken) {
@@ -116,7 +118,7 @@ export const deletePost = async (id: number) => {
         throw new Error("UNAUTHORIZED");
     }
 
-    const url = `http://localhost:9090/posts/${id}`;
+    const url = `${BASE_URL}/posts/${id}`;
 
     const response = await fetch(url, {
         method: 'DELETE',
@@ -135,7 +137,7 @@ export const deletePost = async (id: number) => {
 export const getPost = async (id: string, serverToken?: string | null) => {
     const bearerToken = serverToken !== undefined ? serverToken : getToken();
 
-    const url = `http://localhost:9090/posts/${id}`;
+    const url = `${BASE_URL}/posts/${id}`;
 
     const headers: HeadersInit = {};
     if (bearerToken) {
@@ -158,7 +160,7 @@ export const likePost = async (id: number) => {
     const bearerToken = getToken();
     if (!bearerToken) throw new Error("UNAUTHORIZED");
 
-    const response = await fetch(`http://localhost:9090/posts/${id}/like`, {
+    const response = await fetch(`${BASE_URL}/posts/${id}/like`, {
         method: 'PUT',
         headers: {
             'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`,
@@ -176,7 +178,7 @@ export const dislikePost = async (id: number) => {
     const bearerToken = getToken();
     if (!bearerToken) throw new Error("UNAUTHORIZED");
 
-    const response = await fetch(`http://localhost:9090/posts/${id}/dislike`, {
+    const response = await fetch(`${BASE_URL}/posts/${id}/dislike`, {
         method: 'PUT',
         headers: {
             'Authorization': bearerToken.startsWith('Bearer ') ? bearerToken : `Bearer ${bearerToken}`,
