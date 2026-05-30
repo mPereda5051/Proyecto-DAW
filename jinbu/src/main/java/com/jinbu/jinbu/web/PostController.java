@@ -97,8 +97,12 @@ public class PostController {
             @ApiResponse(responseCode = "404", description = "Post not found", content = @Content)
     })
     @GetMapping("/retrieve/{pageNumber}")
-    public ResponseEntity<List<PostDTO>> retrievePostWithPagination(@PageableDefault(size = 30, sort = "createdOn")Pageable pageable) {
-        return new ResponseEntity<>(postService.retrievePosts(pageable), HttpStatus.OK);
+    public ResponseEntity<List<PostDTO>> retrievePostWithPagination(
+            @PathVariable int pageNumber,
+            @PageableDefault(size = 30, sort = "createdOn") Pageable pageable) {
+        
+        Pageable pageRequest = PageRequest.of(pageNumber, pageable.getPageSize(), pageable.getSort());
+        return new ResponseEntity<>(postService.retrievePosts(pageRequest), HttpStatus.OK);
     }
 
     @Operation(summary = "Like post by Id", description = "Like a post by its id (Long type).")

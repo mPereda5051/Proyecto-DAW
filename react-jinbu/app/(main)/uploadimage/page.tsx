@@ -27,6 +27,7 @@ export default function UploadImage() {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [imageFile, setImage] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Referencia para el input del archivo a traves del boton
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -91,6 +92,8 @@ export default function UploadImage() {
     };
 
     const redirectionHandler = async () => {
+        if (isSubmitting) return; // Evitar doble envío
+
         const photo: Photo = {
             name: '',
             iso: metadata.iso,
@@ -108,12 +111,14 @@ export default function UploadImage() {
         try {
             if (!imageFile) return; 
             
+            setIsSubmitting(true);
             await uploadPhotoAndPost(post, photo, imageFile);
             enqueueSnackbar("Imagen subida con éxito", { variant: 'success' });
             router.push("/")
         } catch (error) {
             console.error("Error subiendo archivo: ", error);
             enqueueSnackbar("Error al subir la imagen. Inténtalo de nuevo.", { variant: 'error' });
+            setIsSubmitting(false);
         }
     }
 
@@ -213,7 +218,12 @@ export default function UploadImage() {
                         });
                     }}
                 />
-                <Button label='Enviar' onClick={() => redirectionHandler()} width='100%' disabled={isPhotoNotUpload} />
+                <Button 
+                    label={isSubmitting ? 'Enviando...' : 'Enviar'} 
+                    onClick={() => redirectionHandler()} 
+                    width='100%' 
+                    disabled={isPhotoNotUpload || isSubmitting} 
+                />
             </div>
         </div>
 

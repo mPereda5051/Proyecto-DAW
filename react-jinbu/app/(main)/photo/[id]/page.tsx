@@ -24,7 +24,7 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
         if (!post) notFound();
     }
 
-    const imageUrl = `https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/${post.photo.id}${post.photo.extension}`;
+    const imageUrl = post.photo.fullUrl;
 
     return (
         <div className="photo-detail-container">

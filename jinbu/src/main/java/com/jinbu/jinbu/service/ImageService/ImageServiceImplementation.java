@@ -41,7 +41,7 @@ public class ImageServiceImplementation implements ImageService{
             throw new RuntimeException("Upload failed", e);
         }
 
-        return Optional.ofNullable(photo);
+        return Optional.ofNullable(metadataPhoto);
     }
 
     @Override
