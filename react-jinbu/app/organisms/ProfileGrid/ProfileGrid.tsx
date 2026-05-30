@@ -67,6 +67,8 @@ export default function ProfileGrid({ userId, showDelete }: ProfileGridProps) {
                     id={item.id}
                     src={item.photo?.fullUrl ?? ''}
                     title={item.title || "Sin título"}
+                    iso={item.photo?.iso}
+                    aperture={item.photo?.aperture}
                     likes={item.likes}
                     likedByUser={item.likedByUser}
                     showDelete={showDelete} />

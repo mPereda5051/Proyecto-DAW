@@ -4,3 +4,32 @@
     gap: 20px;
     padding: 10px;
 }
+
+.profile-section-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px 20px 0 0;
+}
+
+.profile-section-action {
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .profile-section-header-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding-right: 0;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .profile-section-action {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0 20px;
+    }
+}

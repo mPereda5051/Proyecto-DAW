@@ -1,13 +1,21 @@
 .follow-button {
-    padding: 8px 24px;
+    padding: 6px 16px;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
     border: 2px solid #3498db;
     background-color: #3498db;
     color: white;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .follow-button {
+        width: 100%;
+        max-width: 300px;
+    }
 }
 
 .follow-button:hover {

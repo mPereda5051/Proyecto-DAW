@@ -44,9 +44,9 @@ export default async function PhotoDetailPage(props: { params: Promise<{ id: str
                         </Link>
                     )}
                     <div className="metadata">
-                        <span>ISO {post.photo.iso}</span>
-                        <span>F/{post.photo.aperture}</span>
-                        <span>{post.photo.exposure}s</span>
+                        <span>ISO {post.photo.iso ?? 100}</span>
+                        <span>F/{post.photo.aperture ?? 2.8}</span>
+                        <span>{post.photo.exposure ?? '1/125'}s</span>
                     </div>
                 </header>
 

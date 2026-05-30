@@ -60,6 +60,8 @@ export default function ImageMenu() {
                             id={item.id}
                             src={item.photo?.fullUrl ?? img1}
                             title={item.title || "Sin título"}
+                            iso={item.photo?.iso}
+                            aperture={item.photo?.aperture}
                             likes={item.likes}
                             likedByUser={item.likedByUser}
                             username={item.username} />

@@ -19,11 +19,15 @@ interface ProfileSectionProps {
 export default function ProfileSection({ avatarSrc, avatarAlt, username, bio, posts, followers, following, showFollowButton = false, isFollowing = false }: ProfileSectionProps) {
     return (
         <div className="profile-section">
-            <ProfileHeader avatarSrc={avatarSrc} avatarAlt={avatarAlt} username={username} bio={bio} />
+            <div className="profile-section-header-wrapper">
+                <ProfileHeader avatarSrc={avatarSrc} avatarAlt={avatarAlt} username={username} bio={bio} />
+                {showFollowButton && (
+                    <div className="profile-section-action">
+                        <FollowButton username={username} isFollowing={isFollowing} />
+                    </div>
+                )}
+            </div>
             <ProfileStats posts={posts} followers={followers} following={following} username={username} />
-            {showFollowButton && (
-                <FollowButton username={username} isFollowing={isFollowing} />
-            )}
         </div>
     );
 }

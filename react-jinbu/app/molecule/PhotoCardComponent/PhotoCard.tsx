@@ -88,9 +88,9 @@ export default function PhotoCard(photoProps: PhotoData) {
                                 isLiked={photo.likedByUser}
                             />
                             <div className="photo-card-meta">
-                                <span>ISO 100</span>
+                                <span>ISO {photo.iso ?? 100}</span>
                                 <span> • </span>
-                                <span>f/2.8</span>
+                                <span>f/{photo.aperture ?? 2.8}</span>
                             </div>
                         </div>
                     </div>
