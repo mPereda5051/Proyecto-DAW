@@ -1,6 +1,6 @@
 import { getToken } from "./authService";
 
-const BASE_URL = 'http://localhost:9090';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9090';
 
 // Función para obtener los datos básicos del perfil de un usuario
 export const getUserProfile = async (username: string) => {

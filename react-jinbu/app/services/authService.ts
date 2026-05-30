@@ -1,8 +1,10 @@
 import Cookies from 'js-cookie';
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9090';
+
 //servicio que realiza llamada al backend
 export const login = async (username: string, password: string) => {
-  const response = await fetch('http://localhost:9090/authenticate', {
+  const response = await fetch(`${BASE_URL}/authenticate`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -24,7 +26,7 @@ export const login = async (username: string, password: string) => {
 };
 
 export const register = async (name: string, username: string, email: string, password: string) => {
-  const response = await fetch('http://localhost:9090/user/register', {
+  const response = await fetch(`${BASE_URL}/user/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, username, email, password }),
