@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import "./searchInput.css";
-import { searchUsers } from '@/app/services/userService';
+import { searchUsers, getProfilePictureUrl } from '@/app/services/userService';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -66,7 +66,22 @@ export default function SearchInput({
     const triggerSearch = async (val: string) => {
         try {
             const data = await searchUsers(val);
-            setResults(data);
+            
+            const resultsWithAvatars = await Promise.all(
+                data.map(async (user: any) => {
+                    try {
+                        const s3AvatarUrl = await getProfilePictureUrl(user.username);
+                        if (s3AvatarUrl && typeof s3AvatarUrl === 'string' && s3AvatarUrl.startsWith('http')) {
+                            return { ...user, avatarUrl: s3AvatarUrl };
+                        }
+                        return { ...user, avatarUrl: '/images/user.jpg' };
+                    } catch (e) {
+                        return { ...user, avatarUrl: '/images/user.jpg' };
+                    }
+                })
+            );
+
+            setResults(resultsWithAvatars);
             setShowDropdown(true);
         } catch (error) {
             console.error("Error buscando usuarios", error);
@@ -102,7 +117,13 @@ export default function SearchInput({
                                 className="search-result-item"
                                 onClick={() => handleResultClick(user.username)}
                             >
-                                <div className="search-result-avatar"></div>
+                                <div className="search-result-avatar">
+                                    <img 
+                                        src={user.avatarUrl} 
+                                        alt={user.username}
+                                        style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+                                    />
+                                </div>
                                 <div className="search-result-info">
                                     <span className="search-result-username">@{user.username}</span>
                                     <span className="search-result-name">{user.name}</span>

@@ -7,6 +7,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddButton from "../atoms/AddButtonComponent/AddButton";
 import SearchInput from "../atoms/SearchInput/SearchInput";
 import { getCurrentUsername, logout } from "@/app/services/authService";
+// Añadimos la importación de la foto de perfil
+import { getProfilePictureUrl } from "@/app/services/userService";
 import { useRouter } from "next/navigation";
 
 export default function Navbar() {
@@ -15,10 +17,36 @@ export default function Navbar() {
   const [username, setUsername] = useState<string | null>(null);
   const router = useRouter();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  
+  // Añadimos el estado para la URL del avatar
+  const [avatarUrl, setAvatarUrl] = useState<string>("/images/user.jpg");
 
   useEffect(() => {
+    let isMounted = true;
     setMounted(true);
-    setUsername(getCurrentUsername());
+    
+    const currentUser = getCurrentUsername();
+    setUsername(currentUser);
+
+    // Función asíncrona para cargar el avatar
+    const loadAvatar = async () => {
+      if (currentUser) {
+        try {
+          const url = await getProfilePictureUrl(currentUser);
+          if (isMounted && url && typeof url === 'string' && url.startsWith('http')) {
+            setAvatarUrl(url);
+          }
+        } catch (error) {
+          // Si falla, se queda con /images/user.jpg por defecto
+        }
+      }
+    };
+
+    loadAvatar();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const toggleMenu = () => {
@@ -61,7 +89,8 @@ export default function Navbar() {
               onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
             >
               <p>Perfil</p>
-              <img src="/images/user.jpg" alt="Perfil" className="user-avatar" />
+              {/* Actualizamos la imagen para que use la variable avatarUrl */}
+              <img src={avatarUrl} alt="Perfil" className="user-avatar" />
             </div>
 
             {isProfileMenuOpen && (
