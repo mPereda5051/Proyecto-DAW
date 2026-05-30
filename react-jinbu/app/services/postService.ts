@@ -192,10 +192,3 @@ export const dislikePost = async (id: number) => {
 
     return response;
 };
-
-export const getToken = () => {
-    if (typeof window !== 'undefined') {
-        return localStorage.getItem('token');
-    }
-    return null;
-};
