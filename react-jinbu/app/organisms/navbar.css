@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    flex: 1;
 }
 
 .logo-link {
@@ -125,6 +126,8 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  flex: 1;
+  justify-content: flex-end;
 }
 
 .user-profile-link {
@@ -150,12 +153,13 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-color: #555;
-    transition: background-color 0.3s;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: border-color 0.3s;
 }
 
 .user-profile:hover .user-avatar {
-    background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
   .user-profile-wrapper {

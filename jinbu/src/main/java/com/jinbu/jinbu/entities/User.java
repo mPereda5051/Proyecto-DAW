@@ -38,8 +38,10 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @JsonIgnore
+// linea de codigo para evitar que las contraseñas se consigan mediante GET
+    @com.fasterxml.jackson.annotation.JsonProperty(access = com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY)
     @NonNull
+    @Size(min = 6, message = "Password must be at least 6 characters long")
     @Column(name = "password", nullable = false)
     private String password;
 
