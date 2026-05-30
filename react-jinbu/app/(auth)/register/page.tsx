@@ -37,6 +37,11 @@ export default function Register() {
             return;
         }
 
+        if (password.length < 6) {
+            enqueueSnackbar("La contraseña debe tener al menos 6 caracteres", { variant: 'warning' });
+            return;
+        }
+
         setLoading(true);
         try {
             await register(name, username, email, password);

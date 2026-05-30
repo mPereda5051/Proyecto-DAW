@@ -61,7 +61,7 @@ export default function Navbar() {
               onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
             >
               <p>Perfil</p>
-              <div className="user-avatar"></div>
+              <img src="/images/user.jpg" alt="Perfil" className="user-avatar" />
             </div>
 
             {isProfileMenuOpen && (
