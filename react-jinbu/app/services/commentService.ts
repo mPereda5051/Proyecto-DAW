@@ -1,6 +1,7 @@
 import { Comment } from "./models/comment";
 
-const API_BASE_URL = "http://localhost:9090/comment";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:9090';
+const API_BASE_URL = `${BASE_URL}/comment`;
 
 export async function getCommentsByPostId(postId: number, token?: string | null): Promise<Comment[]> {
     const headers: HeadersInit = {};
