@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import PhotoCard from '../molecule/PhotoCardComponent/PhotoCard';
-import img1 from './testimg/horizontal/kanenori-train-6907884.jpg';
 import { retrievePostsWithPagination } from '../services/postService';
 
 interface PostItem {
@@ -51,35 +50,37 @@ export default function ImageMenu() {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <>
-            <main className="main">
-                <div className="gallery-container">
-                    {photos.map((item) => (
-                        <PhotoCard
-                            key={item.id}
-                            id={item.id}
-                            src={item.photo?.fullUrl ?? img1}
-                            title={item.title || "Sin título"}
-                            iso={item.photo?.iso}
-                            aperture={item.photo?.aperture}
-                            likes={item.likes}
-                            likedByUser={item.likedByUser}
-                            username={item.username} />
-                    ))}
-                </div>
-            </main>
-            <div className="pagination-controls">
-                <button
-                    onClick={() => setPageNumber((prev) => Math.max(prev - 1, 0))}
-                    disabled={pageNumber === 0}
-                >
-                    Anterior
-                </button>
-                <span>{pageNumber}</span>
-                <button onClick={() => setPageNumber((prev) => prev + 1)}>
-                    Siguiente
-                </button>
+    <>
+        <main className="main">
+            <div className="gallery-container">
+                {photos.map((item) => (
+                    <PhotoCard
+                        key={item.id}
+                        id={item.id}
+                        src={item.photo?.fullUrl ?? ''}
+                        title={item.title || "Sin título"}
+                        iso={item.photo?.iso}
+                        aperture={item.photo?.aperture}
+                        likes={item.likes}
+                        likedByUser={item.likedByUser}
+                        username={item.username} 
+                    />
+                ))}
             </div>
-        </>
-    );
+        </main>
+        
+        <div className="pagination-controls">
+            <button
+                onClick={() => setPageNumber((prev) => Math.max(prev - 1, 0))}
+                disabled={pageNumber === 0}
+            >
+                Anterior
+            </button>
+            <span>{pageNumber}</span>
+            <button onClick={() => setPageNumber((prev) => prev + 1)}>
+                Siguiente
+            </button>
+        </div>
+    </>
+);
 }
