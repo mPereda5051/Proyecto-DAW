@@ -60,42 +60,48 @@ export default function ProfileGrid({ userId, showDelete }: ProfileGridProps) {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <><div className="profile-grid">
-            {photos.map((item) => (
-                <PhotoCard
-                    key={item.id}
-                    id={item.id}
-                    src={item.photo?.fullUrl ?? ''}
-                    title={item.title || "Sin título"}
-                    iso={item.photo?.iso}
-                    aperture={item.photo?.aperture}
-                    likes={item.likes}
-                    likedByUser={item.likedByUser}
-                    showDelete={showDelete} />
-            ))}
+        <div style={{ paddingBottom: '100px' }}>
+
+            <div className="profile-grid">
+                {photos.map((item) => (
+                    <PhotoCard
+                        key={item.id}
+                        id={item.id}
+                        src={item.photo?.fullUrl ?? ''}
+                        title={item.title || "Sin título"}
+                        iso={item.photo?.iso}
+                        aperture={item.photo?.aperture}
+                        likes={item.likes}
+                        likedByUser={item.likedByUser}
+                        showDelete={showDelete}
+                    />
+                ))}
+            </div>
+
+            <div
+                className="pagination-controls"
+                style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    position: 'fixed',
+                    bottom: 0,
+                    left: 0,
+                    width: '100%',
+                    padding: '1rem',
+                    justifyContent: 'center',
+                    zIndex: 50,
+                    backgroundColor: 'white' /* Añadido para que las fotos no se vean a través */
+                }}
+            >
+                <button onClick={() => setPageNumber((prev) => Math.max(prev - 1, 0))} disabled={pageNumber === 0}>
+                    Anterior
+                </button>
+                <span>{pageNumber}</span>
+                <button onClick={() => setPageNumber((prev) => prev + 1)}>
+                    Siguiente
+                </button>
+            </div>
+
         </div>
-            <div 
-    className="pagination-controls" 
-    style={{ 
-        display: 'flex', 
-        gap: '1rem', 
-        position: 'fixed', 
-        bottom: 0, 
-        left: 0, 
-        width: '100%',  
-        padding: '1rem',
-        justifyContent: 'center',
-        zIndex: 50
-    }}
->
-    <button onClick={() => setPageNumber((prev) => Math.max(prev - 1, 0))} disabled={pageNumber === 0}>
-        Anterior
-    </button>
-    <span>{pageNumber}</span>
-    <button onClick={() => setPageNumber((prev) => prev + 1)}>
-        Siguiente
-    </button>
-</div>
-        </>
     );
 }
