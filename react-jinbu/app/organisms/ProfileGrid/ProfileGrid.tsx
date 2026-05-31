@@ -73,17 +73,29 @@ export default function ProfileGrid({ userId, showDelete }: ProfileGridProps) {
                     likedByUser={item.likedByUser}
                     showDelete={showDelete} />
             ))}
-        </div><div className="pagination-controls" style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-                <button
-                    onClick={() => setPageNumber((prev) => Math.max(prev - 1, 0))}
-                    disabled={pageNumber === 0}
-                >
-                    Anterior
-                </button>
-                <span>{pageNumber}</span>
-                <button onClick={() => setPageNumber((prev) => prev + 1)}>
-                    Siguiente
-                </button>
-            </div></>
+        </div>
+            <div 
+    className="pagination-controls" 
+    style={{ 
+        display: 'flex', 
+        gap: '1rem', 
+        position: 'fixed', 
+        bottom: 0, 
+        left: 0, 
+        width: '100%',  
+        padding: '1rem',
+        justifyContent: 'center',
+        zIndex: 50
+    }}
+>
+    <button onClick={() => setPageNumber((prev) => Math.max(prev - 1, 0))} disabled={pageNumber === 0}>
+        Anterior
+    </button>
+    <span>{pageNumber}</span>
+    <button onClick={() => setPageNumber((prev) => prev + 1)}>
+        Siguiente
+    </button>
+</div>
+        </>
     );
 }
