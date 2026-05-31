@@ -90,7 +90,6 @@ export default function ProfileGrid({ userId, showDelete }: ProfileGridProps) {
                     padding: '1rem',
                     justifyContent: 'center',
                     zIndex: 50,
-                    backgroundColor: 'white' /* Añadido para que las fotos no se vean a través */
                 }}
             >
                 <button onClick={() => setPageNumber((prev) => Math.max(prev - 1, 0))} disabled={pageNumber === 0}>
